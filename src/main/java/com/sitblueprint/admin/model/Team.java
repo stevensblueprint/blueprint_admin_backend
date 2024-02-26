@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,4 +30,7 @@ public class Team {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_manager_id")
     private User productManager;
+
+    @Column(nullable = false)
+    private LocalDateTime dateCreated;
 }
