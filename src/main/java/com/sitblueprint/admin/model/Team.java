@@ -21,4 +21,12 @@ public class Team {
 
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<User> users = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_lead_id")
+    private User teamLead;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_manager_id")
+    private User productManager;
 }
