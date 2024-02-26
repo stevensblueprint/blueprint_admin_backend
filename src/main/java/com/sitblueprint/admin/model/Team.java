@@ -1,12 +1,12 @@
 package com.sitblueprint.admin.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,5 +17,8 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String teamName; // Will vary depending on Blueprint projects
+    private String name;
+
+    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<User> users = new HashSet<>();
 }

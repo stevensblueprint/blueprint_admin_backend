@@ -18,12 +18,10 @@ public class User {
     private long id;
 
     private String name;
-
     private String email;
-
     private String password;
-
     private String hasBlueprintEmail;
+    private boolean isEnabled;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
@@ -32,10 +30,8 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    private boolean isEnabled;
-
-    public void addRole(Role role) {
-        this.roles.add(role);
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 }
 
