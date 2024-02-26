@@ -14,4 +14,8 @@ public interface UserService {
     User updateUser(User user);
 
     void deleteUserById(Long userId);
+
+    void enableUserById(Long userId);
+
+    void disableUserById(Long userId);
 }

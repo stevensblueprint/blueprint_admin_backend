@@ -32,6 +32,8 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    private boolean isEnabled;
+
     public void addRole(Role role) {
         this.roles.add(role);
     }
