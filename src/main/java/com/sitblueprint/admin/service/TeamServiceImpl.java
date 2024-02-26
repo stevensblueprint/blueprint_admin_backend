@@ -4,10 +4,12 @@ import com.sitblueprint.admin.model.Team;
 import com.sitblueprint.admin.model.User;
 import com.sitblueprint.admin.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class TeamServiceImpl implements TeamService {
 
     @Autowired
