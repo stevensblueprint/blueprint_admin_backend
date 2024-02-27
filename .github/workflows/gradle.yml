@@ -7,6 +7,27 @@ on:
     branches: [ "main" ]
 
 jobs:
+  database-creation:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Docker and Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+      - name: Start PostgreSQL with Docker Compose
+        run: docker-compose up -d
+      - name: Perform Database Operation
+        run: |
+          echo "Waiting for PostgreSQL to be ready..."
+          until docker exec $(docker-compose ps -q postgres) pg_isready; do
+            sleep 1;
+          done
+          echo "PostgreSQL is ready."
+      - name: Shutdown PostgreSQL
+        run: docker-compose down
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -38,25 +59,3 @@ jobs:
           distribution: 'temurin'
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
-
-  database-operation:
-    needs: [build]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Docker and Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-      - name: Start PostgreSQL with Docker Compose
-        run: docker-compose up -d
-      - name: Perform Database Operation
-        run: |
-          echo "Waiting for PostgreSQL to be ready..."
-          until docker exec $(docker-compose ps -q postgres) pg_isready; do
-            sleep 1;
-          done
-          echo "PostgreSQL is ready."
-      - name: Shutdown PostgreSQL
-        run: docker-compose down
