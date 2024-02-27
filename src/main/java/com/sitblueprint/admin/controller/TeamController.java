@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/team")
+@RequestMapping("/api/v1/team/")
 public class TeamController {
 
     @Autowired
@@ -41,13 +41,13 @@ public class TeamController {
         teamService.deleteTeam(Long.parseLong(teamId));
     }
 
-    @GetMapping
-    public User getTeamLeadById(@Param("teamId") String teamId) {
+    @GetMapping("teamLead/{teamId}")
+    public User getTeamLeadById(@PathVariable("teamId") String teamId) {
         return teamService.getTeamLeadById(Long.parseLong(teamId));
     }
 
-    @GetMapping
-    public User getProductManagerById(@Param("productId") String productId) {
-        return teamService.getProductManagerById(Long.parseLong(productId));
+    @GetMapping("productManager/{teamId}")
+    public User getProductManagerById(@PathVariable("teamId") String teamId) {
+        return teamService.getProductManagerById(Long.parseLong(teamId));
     }
 }

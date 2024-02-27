@@ -40,13 +40,13 @@ public class UserController {
         userService.deleteUserById(Long.parseLong(customerId));
     }
 
-    @PostMapping
-    public void enableUser(@Param("userId") String userId) {
+    @PostMapping("enable/{userId}")
+    public void enableUser(@PathVariable("userId") String userId) {
         userService.enableUserById(Long.parseLong(userId));
     }
 
-    @PostMapping
-    public void disableUser(@Param("userId") String userId) {
+    @PostMapping("disable/{userId}")
+    public void disableUser(@PathVariable("userId") String userId) {
         userService.disableUserById(Long.parseLong(userId));
     }
 }
