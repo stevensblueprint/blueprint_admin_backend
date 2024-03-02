@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
-    ExternalApiService externalApiService;
+    AuthApiService authApiService;
 
     @Override
     public List<User> getAllUsers() {
