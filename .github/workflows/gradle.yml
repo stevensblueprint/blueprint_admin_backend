@@ -27,7 +27,6 @@ jobs:
             sleep 1;
           done
           echo "PostgreSQL is ready."
-      - uses: actions/checkout@v4
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
