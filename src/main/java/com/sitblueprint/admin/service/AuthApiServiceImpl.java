@@ -26,7 +26,7 @@ public class AuthApiServiceImpl implements AuthApiService {
     public List<AuthUser> getAllAuthUsers() {
         final String endpoint = "/users/all";
         final String url = baseUrl + endpoint;
-        ResponseEntity<List<AuthUser>> response =
+        final ResponseEntity<List<AuthUser>> response =
                 restTemplate
                         .exchange(
                                 url,
@@ -39,7 +39,15 @@ public class AuthApiServiceImpl implements AuthApiService {
 
     @Override
     public AuthUser getAuthUser(String username) {
-        return null;
+        final String endpoint = "/users/user?username={username}";
+        final String url = baseUrl + endpoint;
+        final ResponseEntity<AuthUser> response =
+                restTemplate
+                        .getForEntity(
+                                url,
+                                AuthUser.class
+                        );
+        return response.getBody();
     }
 
     @Override
