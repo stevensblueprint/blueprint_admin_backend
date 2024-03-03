@@ -2,13 +2,11 @@ package com.sitblueprint.admin.service;
 
 import com.sitblueprint.admin.model.AuthUser;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -21,41 +19,6 @@ public class AuthApiServiceImpl implements AuthApiService {
     public AuthApiServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
-    @Override
-    public List<AuthUser> getAllAuthUsers() {
-        final String endpoint = "/users/all";
-        final String url = baseUrl + endpoint;
-        final ResponseEntity<List<AuthUser>> response =
-                restTemplate
-                        .exchange(
-                                url,
-                                HttpMethod.GET,
-                                null,
-                                new ParameterizedTypeReference<>() {
-                                }
-                        );
-        return response.getBody();
-    }
-
-    @Override
-    public AuthUser getAuthUser(String username) {
-        final String endpoint = "/users/user?username={username}";
-        final String url = baseUrl + endpoint;
-
-        // Map URI variables
-        Map<String, String> uriVariables = returnURIWithUsername(username);
-
-        final ResponseEntity<AuthUser> response =
-                restTemplate
-                        .getForEntity(
-                                url,
-                                AuthUser.class,
-                                uriVariables
-                        );
-        return response.getBody();
-    }
-
     @Override
     public AuthUser updateAuthUser(AuthUser authUser) {
         final String username = authUser.getUsername();

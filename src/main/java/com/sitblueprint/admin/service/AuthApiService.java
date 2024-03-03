@@ -6,10 +6,6 @@ import java.util.List;
 
 public interface AuthApiService {
     // Define Methods to interact with the external API service
-    List<AuthUser> getAllAuthUsers();
-
-    AuthUser getAuthUser(String username);
-
     AuthUser updateAuthUser(AuthUser authUser);
 
     AuthUser deleteAuthUser(String username);
