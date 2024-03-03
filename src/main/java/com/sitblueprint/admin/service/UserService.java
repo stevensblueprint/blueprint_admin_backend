@@ -18,4 +18,6 @@ public interface UserService {
     void enableUserById(Long userId);
 
     void disableUserById(Long userId);
+
+    void resetPassword(Long userId, String password);
 }

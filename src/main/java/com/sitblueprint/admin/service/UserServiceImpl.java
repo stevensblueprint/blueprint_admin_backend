@@ -32,6 +32,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         user.setDateJoined(LocalDateTime.now());
+        AuthUser authUser = new AuthUser(user);
+
+        try {
+            authApiService.createAuthUser(authUser);
+        } catch (Exception e) {
+            throw new RuntimeException("Auth API failed to create user " + user.getUsername());
+        }
         return userRepository.save(user);
     }
 
@@ -90,5 +97,20 @@ public class UserServiceImpl implements UserService {
         }
         user.setEnabled(false);
         userRepository.save(user);
+    }
+
+    @Override
+    public void resetPassword(Long userId, String newPassword) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (!userOptional.isPresent()) {
+            throw new RuntimeException("User not found with id " + userId);
+        }
+        User user = userOptional.get();
+        user.setPassword(newPassword);
+        try {
+            authApiService.resetPasswordAuthUser(user.getUsername(), newPassword);
+        } catch (Exception e) {
+            throw new RuntimeException("Auth API failed to reset password of user " + user.getUsername());
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.sitblueprint.admin.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sitblueprint.admin.model.AuthUser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 @Service
 public class AuthApiServiceImpl implements AuthApiService {
+    private final ObjectMapper mapper = new ObjectMapper();
     private final RestTemplate restTemplate;
 
     @Value("${blueprint_yaml.api.baseurl}")
@@ -19,6 +21,30 @@ public class AuthApiServiceImpl implements AuthApiService {
     public AuthApiServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
+
+    @Override
+    public AuthUser createAuthUser(AuthUser user) {
+        final String endpoint = "/users/user";
+        final String url = baseUrl + endpoint;
+
+        // Set Headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Create HTTP Entity
+        HttpEntity<AuthUser> requestEntity = new HttpEntity<>(user, headers);
+
+        ResponseEntity<AuthUser> response =
+                restTemplate
+                        .exchange(
+                                url,
+                                HttpMethod.POST,
+                                requestEntity,
+                                AuthUser.class
+                        );
+        return response.getBody();
+    }
+
     @Override
     public AuthUser updateAuthUser(AuthUser authUser) {
         final String username = authUser.getUsername();
@@ -93,11 +119,12 @@ public class AuthApiServiceImpl implements AuthApiService {
     }
 
     @Override
-    public AuthUser resetPasswordAuthUser(String username) {
+    public AuthUser resetPasswordAuthUser(String username, String password) {
         final String endpoint = "/users/reset_password";
         final String url = baseUrl + endpoint;
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("username", username);
+        requestBody.put("password", password);
 
         // Set Headers
         HttpHeaders headers = new HttpHeaders();
