@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -15,5 +15,14 @@ public class AuthUser {
     String email;
     String password;
     Boolean disabled;
-    List<String> groups;
+    Set<Role> groups;
+
+    public AuthUser(User user) {
+        this.username = user.getUsername();
+        this.displayName = user.getName();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.disabled = user.isEnabled();
+        this.groups = user.getRoles();
+    }
 }
