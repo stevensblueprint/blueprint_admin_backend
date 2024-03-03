@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthUser {
+    String username;
     String displayName;
     String email;
     String password;
