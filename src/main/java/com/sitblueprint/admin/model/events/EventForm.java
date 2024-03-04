@@ -1,6 +1,5 @@
 package com.sitblueprint.admin.model.events;
 
-import com.sitblueprint.admin.model.events.Event;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Form {
+public class EventForm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

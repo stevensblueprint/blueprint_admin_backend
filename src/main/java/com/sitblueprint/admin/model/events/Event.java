@@ -26,5 +26,5 @@ public class Event {
     private LocalDateTime date;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Form> satisfactionForms;
+    private List<EventForm> satisfactionForms;
 }
