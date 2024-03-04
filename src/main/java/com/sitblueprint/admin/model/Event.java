@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -23,4 +24,7 @@ public class Event {
     private Long budget;
     private int numberOfAttendees;
     private LocalDateTime date;
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Form> satisfactionForms;
 }
