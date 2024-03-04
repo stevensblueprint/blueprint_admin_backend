@@ -1,5 +1,6 @@
-package com.sitblueprint.admin.model;
+package com.sitblueprint.admin.model.events;
 
+import com.sitblueprint.admin.model.events.Event;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
-package com.sitblueprint.admin.service;
+package com.sitblueprint.admin.service.users;
 
-import com.sitblueprint.admin.model.Team;
-import com.sitblueprint.admin.model.User;
+import com.sitblueprint.admin.model.users.Team;
+import com.sitblueprint.admin.model.users.User;
 
 import java.util.List;
 

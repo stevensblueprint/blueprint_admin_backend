@@ -1,5 +1,7 @@
-package com.sitblueprint.admin.model;
+package com.sitblueprint.admin.model.users;
 
+import com.sitblueprint.admin.model.users.Role;
+import com.sitblueprint.admin.model.users.Team;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

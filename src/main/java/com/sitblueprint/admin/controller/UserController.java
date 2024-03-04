@@ -1,7 +1,7 @@
 package com.sitblueprint.admin.controller;
 
-import com.sitblueprint.admin.model.User;
-import com.sitblueprint.admin.service.UserService;
+import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.service.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;

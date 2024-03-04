@@ -1,4 +1,4 @@
-package com.sitblueprint.admin.model;
+package com.sitblueprint.admin.model.users;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

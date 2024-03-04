@@ -1,6 +1,6 @@
-package com.sitblueprint.admin.service;
+package com.sitblueprint.admin.service.users;
 
-import com.sitblueprint.admin.model.Role;
+import com.sitblueprint.admin.model.users.Role;
 
 import java.util.List;
 

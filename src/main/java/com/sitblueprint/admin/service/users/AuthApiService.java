@@ -1,8 +1,6 @@
-package com.sitblueprint.admin.service;
+package com.sitblueprint.admin.service.users;
 
-import com.sitblueprint.admin.model.AuthUser;
-
-import java.util.List;
+import com.sitblueprint.admin.model.users.AuthUser;
 
 public interface AuthApiService {
     // Define Methods to interact with the external API service

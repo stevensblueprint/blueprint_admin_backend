@@ -1,8 +1,8 @@
-package com.sitblueprint.admin.service;
+package com.sitblueprint.admin.service.users;
 
-import com.sitblueprint.admin.model.AuthUser;
-import com.sitblueprint.admin.model.User;
-import com.sitblueprint.admin.repository.UserRepository;
+import com.sitblueprint.admin.model.users.AuthUser;
+import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.repository.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
