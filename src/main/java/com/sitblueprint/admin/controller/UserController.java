@@ -49,4 +49,9 @@ public class UserController {
     public void disableUser(@PathVariable("userId") String userId) {
         userService.disableUserById(Long.parseLong(userId));
     }
+
+    @PutMapping("reset_password")
+    public void resetPassword(@RequestBody String userId, @RequestBody String newPassword) {
+        userService.resetPassword(Long.parseLong(userId), newPassword);
+    }
 }
