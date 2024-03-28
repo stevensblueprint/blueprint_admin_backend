@@ -1,7 +1,7 @@
 name: build and publish dockerfile
 on:
   push:
-    branches: ["main", "ci/docker"]
+    branches: ["main"]
 
 jobs:
   docker:
