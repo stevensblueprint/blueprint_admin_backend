@@ -12,12 +12,12 @@ jobs:
       with:
         registry: ghcr.io
         username: "jli198"
-        password: ${{ secrets.ACCESS_TOKEN }}
+        password: ${{ secrets.BLUEPRINT_ADMIN_BACKEND }}
 
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v4
       with:
         push: true
         tags: |
-          ghcr.io/stevensblueprint/nycmesh-node-visualizer:${{ github.sha }}
-          ghcr.io/stevensblueprint/nycmesh-node-visualizer:latest
+          ghcr.io/stevensblueprint/blueprint_admin_backend:${{ github.sha }}
+          ghcr.io/stevensblueprint/blueprint_admin_backend:latest
