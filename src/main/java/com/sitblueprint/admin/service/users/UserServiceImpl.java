@@ -2,7 +2,9 @@ package com.sitblueprint.admin.service.users;
 
 import com.sitblueprint.admin.model.users.AuthUser;
 import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.model.users.Attendance;
 import com.sitblueprint.admin.repository.users.UserRepository;
+import com.sitblueprint.admin.repository.users.AttendanceRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     AuthApiService authApiService;
 
+    @Autowired
+    AttendenceRecordRepository attendenceRecordRepository;
+    
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -113,4 +118,56 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Auth API failed to reset password of user " + user.getUsername());
         }
     }
+
+    @Override
+    public Attendance getAttendanceById (Long attendanceId){
+    	try {
+		Attendance attendance = attendanceRecordRepository.findById(attendanceId).get();
+	} catch (Exception e) {
+		throw new RuntimeException("Attendance not found with id " + attendanceId);
+	}
+    }
+	
+    @Override
+    public Attendance createAttendance(Attendance attendance){
+    	attendance.setDate(LocalDateTime.now());
+	attendanceRecordRepository.save(attendance);
+	return attendance;
+    }
+
+    @Override
+    public List<Attendance> getAttendances(Long teamId, Long memberId) {
+        if (memberId != null) {
+            return attendanceRecordRepository.findByTeamIdAndMemberId(teamId, memberId);
+        } else if (teamId != null) {
+            return attendanceRecordRepository.findByTeamId(teamId);
+        }
+    }
+
+    @Override
+    public Attendance updateAttendance (Long attendanceId, Attendance attendance){
+    	Attendance existingAttendance = attendanceRecordRepository.findById(attendanceId);
+	existingAttendance.setDate(attendance.getDate());
+        existingAttendance.setStatus(attendance.getStatus());
+        attendanceRecordRepository.save(existingAttendance);
+    	return existingAttendance;
+    }
+
+    @Override
+    public Attendance deleteAttendance (Long attendanceId) {
+    	Optional<Attendance> optionalAttendanceToDelete = attendanceRecordRepository.findById(attendanceId);
+        if (optionalAttendanceToDelete.isEmpty()) {
+            throw new RuntimeException("Attendance with id " + attendanceId + "was not found");
+        }
+        Attendance AttendanceToDelete = optionalAttendanceToDelete.get();
+        attendanceRecordRepository.deleteById(attendanceId);
+    	return AttendanceToDelete;
+    }
+
+
+
+
+
+
+
 }

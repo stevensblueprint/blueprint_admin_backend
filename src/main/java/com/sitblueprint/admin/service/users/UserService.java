@@ -20,4 +20,16 @@ public interface UserService {
     void disableUserById(Long userId);
 
     void resetPassword(Long userId, String password);
+
+    Attendance getAttendanceById(Long attendanceId);
+
+    List<Attendance> getUserAttendance(Long userId);
+
+    List<Attendance> getTeamAttendance(Long userId);
+
+    Attendance createAttendance(Attendance attendance);
+
+    Attendance updateAttendance(Long attendanceId, Attendance attendance);
+
+    Attendance deleteAttendance(String attendanceID);
 }
