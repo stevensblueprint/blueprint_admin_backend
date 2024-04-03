@@ -37,13 +37,13 @@ public class AttendanceController {
     @PutMapping("/{attendanceId}")
     public Attendance updateAttendance(@RequestParam("attendanceId") String attendanceId, @RequestBody Attendance attendance) {
 	//makes attendance object fills fields but with ID supplied. return attendance ID and https response
-        return userService.updateAttendance(Long.parseLone(attendanceId), attendance);
+        return userService.updateAttendance(Long.parseLong(attendanceId), attendance);
     }
 
     @DeleteMapping("/{attendanceId}")
     public Attendance deleteAttendance(@RequestParam("attendanceId") String attendanceId) {
 	//removes attendance object from database and returns the id along with https response
-        userService.deleteAttendanceById(Long.parseLong(attendanceId));
+        userService.deleteAttendance(Long.parseLong(attendanceId));
     }
 
 }
