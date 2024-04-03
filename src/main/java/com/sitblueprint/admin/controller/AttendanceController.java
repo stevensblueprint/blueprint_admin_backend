@@ -43,7 +43,7 @@ public class AttendanceController {
     @DeleteMapping("/{attendanceId}")
     public Attendance deleteAttendance(@RequestParam("attendanceId") String attendanceId) {
 	//removes attendance object from database and returns the id along with https response
-        userService.deleteAttendance(Long.parseLong(attendanceId));
+        return userService.deleteAttendance(Long.parseLong(attendanceId));
     }
 
 }
