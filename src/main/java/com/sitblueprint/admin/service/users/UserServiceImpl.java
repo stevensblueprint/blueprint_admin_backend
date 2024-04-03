@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     AuthApiService authApiService;
 
     @Autowired
-    AttendenceRecordRepository attendenceRecordRepository;
+    AttendanceRecordRepository attendanceRecordRepository;
     
     @Override
     public List<User> getAllUsers() {
