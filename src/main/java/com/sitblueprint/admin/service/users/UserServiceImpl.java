@@ -136,16 +136,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Attendance> getUserAttendances(Long teamId, Long memberId) {
-    	return NULL;
+    	return null;
     }
 
     @Override
     public Attendance updateAttendance (Long attendanceId, Attendance attendance){
-    	return NULL;
+    	return null;
     }
 
     @Override
     public Attendance deleteAttendance (Long attendanceId) {
-    	return NULL;
+    	return null;
     }
 }
