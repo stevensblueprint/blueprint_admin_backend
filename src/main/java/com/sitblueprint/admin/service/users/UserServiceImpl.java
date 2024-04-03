@@ -123,6 +123,7 @@ public class UserServiceImpl implements UserService {
     public Attendance getAttendanceById (Long attendanceId){
     	try {
 		Attendance attendance = attendanceRecordRepository.findById(attendanceId).get();
+		return attendance;
 	} catch (Exception e) {
 		throw new RuntimeException("Attendance not found with id " + attendanceId);
 	}
