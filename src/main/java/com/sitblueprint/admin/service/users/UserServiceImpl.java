@@ -131,43 +131,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public Attendance createAttendance(Attendance attendance){
     	attendance.setDate(LocalDateTime.now());
-	attendanceRecordRepository.save(attendance);
-	return attendance;
+	return attendanceRecordRepository.save(attendance);
     }
 
     @Override
-    public List<Attendance> getAttendances(Long teamId, Long memberId) {
-        if (memberId != null) {
-            return attendanceRecordRepository.findByTeamIdAndMemberId(teamId, memberId);
-        } else if (teamId != null) {
-            return attendanceRecordRepository.findByTeamId(teamId);
-        }
+    public List<Attendance> getUserAttendances(Long teamId, Long memberId) {
+    	return NULL;
     }
 
     @Override
     public Attendance updateAttendance (Long attendanceId, Attendance attendance){
-    	Attendance existingAttendance = attendanceRecordRepository.findById(attendanceId);
-	existingAttendance.setDate(attendance.getDate());
-        existingAttendance.setStatus(attendance.getStatus());
-        attendanceRecordRepository.save(existingAttendance);
-    	return existingAttendance;
+    	return NULL;
     }
 
     @Override
     public Attendance deleteAttendance (Long attendanceId) {
-    	Optional<Attendance> optionalAttendanceToDelete = attendanceRecordRepository.findById(attendanceId);
-        if (optionalAttendanceToDelete.isEmpty()) {
-            throw new RuntimeException("Attendance with id " + attendanceId + "was not found");
-        }
-        Attendance AttendanceToDelete = optionalAttendanceToDelete.get();
-        attendanceRecordRepository.deleteById(attendanceId);
-    	return AttendanceToDelete;
+    	return NULL;
     }
-
-
-
-
-
-
-
 }

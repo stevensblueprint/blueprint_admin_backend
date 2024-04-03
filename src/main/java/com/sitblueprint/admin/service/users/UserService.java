@@ -24,9 +24,7 @@ public interface UserService {
 
     Attendance getAttendanceById(Long attendanceId);
 
-    List<Attendance> getUserAttendance(Long userId);
-
-    List<Attendance> getTeamAttendance(Long userId);
+    List<Attendance> getUserAttendance(Long teamId, Long userId);
 
     Attendance createAttendance(Attendance attendance);
 
