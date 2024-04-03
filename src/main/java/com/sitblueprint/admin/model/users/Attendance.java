@@ -27,7 +27,7 @@ public class Attendance {
     	@JoinColumn(name = "user_id")
     	private User user;
 	
-    	private LocalDate date;
+    	private LocalDateTime date;
 	
 	private enum Status {
 		Present,

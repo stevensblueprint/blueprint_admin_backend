@@ -17,14 +17,14 @@ public class AttendanceController {
 
     @GetMapping("/{attendanceId}")
     public List<Attendance> getAttendanceByID(@PathVariable("attendanceId") String attendanceId) {
-        return userService.getUserAttendance(Long.parseLong(attendanceId));
+        return userService.getAttendanceById(Long.parseLong(attendanceId));
     }
 	
     @GetMapping
-    public List<Attendance> getTeamAttendance(@RequestParam("teamId") String teamId, @RequestParam("userId") String userId) {
+    public List<Attendance> getUserAttendances(@RequestParam("teamId") String teamId, @RequestParam("userId") String userId) {
 	//returns a list of attendances of a particular team
 	//gets teamId in the impl
-        return userService.getTeamAttendance(Long.parseLong(teamId), Long.parseLong(userId));
+        return userService.getUserAttendances(Long.parseLong(teamId), Long.parseLong(userId));
     }
 
     @PostMapping

@@ -24,11 +24,11 @@ public interface UserService {
 
     Attendance getAttendanceById(Long attendanceId);
 
-    List<Attendance> getUserAttendance(Long teamId, Long userId);
+    List<Attendance> getUserAttendances(Long teamId, Long userId);
 
     Attendance createAttendance(Attendance attendance);
 
     Attendance updateAttendance(Long attendanceId, Attendance attendance);
 
-    Attendance deleteAttendance(String attendanceID);
+    Attendance deleteAttendance(Long attendanceID);
 }
