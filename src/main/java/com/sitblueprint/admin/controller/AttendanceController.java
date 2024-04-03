@@ -16,7 +16,7 @@ public class AttendanceController {
     UserService userService;
 
     @GetMapping("/{attendanceId}")
-    public List<Attendance> getAttendanceById(@PathVariable("attendanceId") String attendanceId) {
+    public Attendance getAttendanceById(@PathVariable("attendanceId") String attendanceId) {
         return userService.getAttendanceById(Long.parseLong(attendanceId));
     }
 	
