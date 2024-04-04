@@ -14,4 +14,6 @@ public interface ApplicationFormService {
     ApplicationForm updateApplicationForm(ApplicationForm application);
 
     void deleteApplicationFormById(Long applicationId);
+
+    List<ApplicationForm> getByRole(String role);
 }

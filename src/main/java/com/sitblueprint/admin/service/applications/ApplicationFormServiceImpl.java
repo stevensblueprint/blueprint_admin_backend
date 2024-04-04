@@ -36,4 +36,9 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
     public void deleteApplicationFormById(Long applicationId) {
         applicationFormRepository.deleteById(applicationId);
     }
+
+    @Override
+    public List<ApplicationForm> getByRole(String role) {
+        return applicationFormRepository.findApplicationFormByRole(role);
+    }
 }
