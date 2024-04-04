@@ -33,4 +33,9 @@ public class ApplicationFormController {
     public ApplicationForm updateApplicationForm(@RequestBody ApplicationForm applicationForm) {
         return applicationFormService.updateApplicationForm(applicationForm);
     }
+
+    @DeleteMapping
+    public void deleteApplicationFormById(@Param("applicationFormId") String applicationFormId) {
+        applicationFormService.deleteApplicationFormById(Long.parseLong(applicationFormId));
+    }
 }
