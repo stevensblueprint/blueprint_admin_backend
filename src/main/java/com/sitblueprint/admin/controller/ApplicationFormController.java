@@ -44,7 +44,7 @@ public class ApplicationFormController {
         return applicationFormService.getByRole(role);
     }
 
-    @GetMapping("/graduationyear/")
+    @GetMapping("/graduation/")
     public List<ApplicationForm> getApplicationFormByGraduationYear(@Param("graduationYear") String graduationYear) {
         return applicationFormService.getByGraduationYear(graduationYear);
     }
