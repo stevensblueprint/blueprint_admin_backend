@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ApplicationFormRepository extends JpaRepository<ApplicationForm, Long> {
     List<ApplicationForm> findApplicationFormByRole(String role);
+
+    List<ApplicationForm> findApplicationFormByGraduationYear(String graduationYear);
 }

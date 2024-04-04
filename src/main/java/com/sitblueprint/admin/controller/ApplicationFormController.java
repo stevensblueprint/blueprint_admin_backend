@@ -38,4 +38,14 @@ public class ApplicationFormController {
     public void deleteApplicationFormById(@Param("applicationFormId") String applicationFormId) {
         applicationFormService.deleteApplicationFormById(Long.parseLong(applicationFormId));
     }
+
+    @GetMapping("/role/")
+    public List<ApplicationForm> getApplicationFormByRole(@Param("role") String role) {
+        return applicationFormService.getByRole(role);
+    }
+
+    @GetMapping("/graduationyear/")
+    public List<ApplicationForm> getApplicationFormByGraduationYear(@Param("graduationYear") String graduationYear) {
+        return applicationFormService.getByGraduationYear(graduationYear);
+    }
 }

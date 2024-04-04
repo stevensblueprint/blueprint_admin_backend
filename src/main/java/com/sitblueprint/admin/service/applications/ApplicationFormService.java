@@ -16,4 +16,6 @@ public interface ApplicationFormService {
     void deleteApplicationFormById(Long applicationId);
 
     List<ApplicationForm> getByRole(String role);
+
+    List<ApplicationForm> getByGraduationYear(String graduationYear);
 }

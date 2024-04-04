@@ -41,4 +41,9 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
     public List<ApplicationForm> getByRole(String role) {
         return applicationFormRepository.findApplicationFormByRole(role);
     }
+
+    @Override
+    public List<ApplicationForm> getByGraduationYear(String graduationYear) {
+        return applicationFormRepository.findApplicationFormByGraduationYear(graduationYear);
+    }
 }
