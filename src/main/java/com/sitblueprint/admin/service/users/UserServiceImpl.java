@@ -2,7 +2,9 @@ package com.sitblueprint.admin.service.users;
 
 import com.sitblueprint.admin.model.users.AuthUser;
 import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.model.users.Attendance;
 import com.sitblueprint.admin.repository.users.UserRepository;
+import com.sitblueprint.admin.repository.users.AttendanceRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     AuthApiService authApiService;
 
+    @Autowired
+    AttendanceRecordRepository attendanceRecordRepository;
+    
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -112,5 +117,36 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new RuntimeException("Auth API failed to reset password of user " + user.getUsername());
         }
+    }
+
+    @Override
+    public Attendance getAttendanceById (Long attendanceId){
+    	try {
+		Attendance attendance = attendanceRecordRepository.findById(attendanceId).get();
+		return attendance;
+	} catch (Exception e) {
+		throw new RuntimeException("Attendance not found with id " + attendanceId);
+	}
+    }
+	
+    @Override
+    public Attendance createAttendance(Attendance attendance){
+    	attendance.setDate(LocalDateTime.now());
+	return attendanceRecordRepository.save(attendance);
+    }
+
+    @Override
+    public List<Attendance> getUserAttendances(Long teamId, Long memberId) {
+    	return null;
+    }
+
+    @Override
+    public Attendance updateAttendance (Long attendanceId, Attendance attendance){
+    	return null;
+    }
+
+    @Override
+    public Attendance deleteAttendance (Long attendanceId) {
+    	return null;
     }
 }

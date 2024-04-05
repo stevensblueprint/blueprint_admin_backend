@@ -1,6 +1,7 @@
 package com.sitblueprint.admin.service.users;
 
 import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.model.users.Attendance;
 
 import java.util.List;
 
@@ -20,4 +21,14 @@ public interface UserService {
     void disableUserById(Long userId);
 
     void resetPassword(Long userId, String password);
+
+    Attendance getAttendanceById(Long attendanceId);
+
+    List<Attendance> getUserAttendances(Long teamId, Long userId);
+
+    Attendance createAttendance(Attendance attendance);
+
+    Attendance updateAttendance(Long attendanceId, Attendance attendance);
+
+    Attendance deleteAttendance(Long attendanceID);
 }
