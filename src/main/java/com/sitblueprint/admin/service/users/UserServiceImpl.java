@@ -4,6 +4,8 @@ import com.sitblueprint.admin.model.users.AuthUser;
 import com.sitblueprint.admin.model.users.User;
 import com.sitblueprint.admin.repository.users.UserRepository;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
     private final AuthApiService authApiService;
 
@@ -33,10 +36,10 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         user.setDateJoined(LocalDateTime.now());
         AuthUser authUser = new AuthUser(user);
-
         try {
             authApiService.createAuthUser(authUser);
         } catch (Exception e) {
+            log.error("Failed to create Auth user for username: {}", user.getUsername(), e.getMessage());
             throw new RuntimeException("Auth API failed to create user " + user.getUsername());
         }
         return userRepository.save(user);
