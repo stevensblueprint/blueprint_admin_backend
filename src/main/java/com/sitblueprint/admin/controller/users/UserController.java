@@ -4,6 +4,7 @@ import com.sitblueprint.admin.model.users.User;
 import com.sitblueprint.admin.service.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +21,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping
-    public User getUser(@Param("userId") String userId) {
-        return userService.getUserById(Long.parseLong(userId));
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable("userId") Long userId) {
+        try {
+            User user = userService.getUserById(userId);
+            return ResponseEntity.ok(user);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body("Invalid user id format");
+        }
     }
 
     @PostMapping
