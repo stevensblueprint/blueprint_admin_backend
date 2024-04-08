@@ -9,8 +9,11 @@ import java.util.List;
 
 @Service
 public class EventFormServiceImpl implements EventFormService {
-    @Autowired
     EventFormRepository eventFormRepository;
+
+    public EventFormServiceImpl(EventFormRepository eventFormRepository) {
+        this.eventFormRepository = eventFormRepository;
+    }
 
     @Override
     public List<EventForm> getAllEventForms() {
