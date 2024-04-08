@@ -5,9 +5,9 @@ import com.sitblueprint.admin.model.events.EventForm;
 import java.util.List;
 
 public interface EventFormService {
-    List<EventFormService> getAllEventForms();
+    List<EventForm> getAllEventForms();
 
-    EventForm getEventFormServiceById(Long eventId);
+    EventForm getEventFormServiceById(Long eventFormId);
 
     List<EventForm> getEventFormsByEventId(Long eventId);
 
@@ -15,5 +15,7 @@ public interface EventFormService {
 
     EventForm updateEventForm(EventForm eventForm);
 
-    void deleteEventForm(EventForm eventForm);
+    void deleteEventFormById(Long eventId);
+
+    void deleteEventFormByEventId(Long event);
 }
