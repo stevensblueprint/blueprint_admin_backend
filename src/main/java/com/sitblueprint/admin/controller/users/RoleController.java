@@ -1,4 +1,4 @@
-package com.sitblueprint.admin.controller;
+package com.sitblueprint.admin.controller.users;
 
 import com.sitblueprint.admin.model.users.Role;
 import com.sitblueprint.admin.service.users.RoleService;

@@ -1,4 +1,4 @@
-package com.sitblueprint.admin.controller;
+package com.sitblueprint.admin.controller.applications;
 
 import com.sitblueprint.admin.model.applications.ApplicationForm;
 import com.sitblueprint.admin.service.applications.ApplicationFormService;
