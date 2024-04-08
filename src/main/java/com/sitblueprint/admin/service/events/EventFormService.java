@@ -7,7 +7,7 @@ import java.util.List;
 public interface EventFormService {
     List<EventForm> getAllEventForms();
 
-    EventForm getEventFormServiceById(Long eventFormId);
+    EventForm getEventFormById(Long eventFormId);
 
     List<EventForm> getEventFormsByEventId(Long eventId);
 

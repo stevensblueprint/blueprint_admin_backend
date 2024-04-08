@@ -20,8 +20,8 @@ public class EventFormServiceImpl implements EventFormService {
     }
 
     @Override
-    public EventForm getEventFormServiceById(Long eventId) {
-        return eventFormRepository.findById(eventId).get();
+    public EventForm getEventFormById(Long eventId) {
+        return eventFormRepository.findById(eventId).orElse(null);
     }
 
     @Override
