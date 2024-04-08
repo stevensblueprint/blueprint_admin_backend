@@ -1,6 +1,5 @@
 package com.sitblueprint.admin.service.users;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sitblueprint.admin.model.users.AuthUser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;

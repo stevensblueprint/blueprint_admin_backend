@@ -2,7 +2,6 @@ package com.sitblueprint.admin.service.events;
 
 import com.sitblueprint.admin.model.events.EventForm;
 import com.sitblueprint.admin.repository.events.EventFormRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -2,7 +2,6 @@ package com.sitblueprint.admin.service.applications;
 
 import com.sitblueprint.admin.model.applications.ApplicationForm;
 import com.sitblueprint.admin.repository.applications.ApplicationFormRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
