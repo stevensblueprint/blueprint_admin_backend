@@ -12,12 +12,13 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-    @Autowired
     UserRepository userRepository;
-
-    @Autowired
     AuthApiService authApiService;
+
+    public UserServiceImpl(UserRepository userRepository, AuthApiService authApiService) {
+        this.userRepository = userRepository;
+        this.authApiService = authApiService;
+    }
 
     @Override
     public List<User> getAllUsers() {

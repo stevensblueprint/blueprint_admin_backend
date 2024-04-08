@@ -9,8 +9,11 @@ import java.util.List;
 
 @Service
 public class ApplicationFormServiceImpl implements ApplicationFormService {
-    @Autowired
     ApplicationFormRepository applicationFormRepository;
+
+    public ApplicationFormServiceImpl(ApplicationFormRepository applicationFormRepository) {
+        this.applicationFormRepository = applicationFormRepository;
+    }
 
     @Override
     public List<ApplicationForm> getApplicationForms() {

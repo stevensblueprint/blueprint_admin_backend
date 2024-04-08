@@ -12,9 +12,11 @@ import java.util.Optional;
 
 @Service
 public class TeamServiceImpl implements TeamService {
-
-    @Autowired
     TeamRepository teamRepository;
+
+    public TeamServiceImpl(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
+    }
     @Override
     public List<Team> getAllTeams() {
         return teamRepository.findAll();
