@@ -3,12 +3,14 @@ package com.sitblueprint.admin.service.users;
 import com.sitblueprint.admin.model.users.AuthUser;
 import com.sitblueprint.admin.model.users.User;
 import com.sitblueprint.admin.repository.users.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -29,7 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElse(null);
+        return userRepository.findById(userId).orElseThrow(
+                () -> new NoSuchElementException("User with id " + userId + " was not found")
+        );
     }
 
     @Override
@@ -55,6 +59,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.saveAndFlush(user);
     }
 
+    @Transactional
     @Override
     public void deleteUserById(Long userId) {
         Optional<User> optionalUserToDelete = userRepository.findById(userId);
