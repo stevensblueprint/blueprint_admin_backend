@@ -21,7 +21,7 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 
     @Override
     public ApplicationForm getApplicationFormById(Long applicationId) {
-        return applicationFormRepository.findById(applicationId).get();
+        return applicationFormRepository.findById(applicationId).orElse(null);
     }
 
     @Override
