@@ -12,7 +12,6 @@ import java.util.Map;
 
 @Service
 public class AuthApiServiceImpl implements AuthApiService {
-    private final ObjectMapper mapper = new ObjectMapper();
     private final RestTemplate restTemplate;
 
     @Value("${blueprint_yaml.api.baseurl}")
