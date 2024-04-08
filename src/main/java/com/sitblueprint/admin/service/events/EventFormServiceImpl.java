@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class EventFormServiceImpl implements EventFormService {
-    EventFormRepository eventFormRepository;
+    private final EventFormRepository eventFormRepository;
 
     public EventFormServiceImpl(EventFormRepository eventFormRepository) {
         this.eventFormRepository = eventFormRepository;

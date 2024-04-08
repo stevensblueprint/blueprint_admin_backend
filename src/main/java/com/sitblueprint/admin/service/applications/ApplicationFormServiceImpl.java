@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class ApplicationFormServiceImpl implements ApplicationFormService {
-    ApplicationFormRepository applicationFormRepository;
+    private final ApplicationFormRepository applicationFormRepository;
 
     public ApplicationFormServiceImpl(ApplicationFormRepository applicationFormRepository) {
         this.applicationFormRepository = applicationFormRepository;
