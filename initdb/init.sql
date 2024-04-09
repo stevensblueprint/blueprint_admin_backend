@@ -75,7 +75,6 @@ create table application_forms (
 
 create table application_satisfaction_forms (
 	id bigint primary key generated always as identity,
-	satisfactionForm bigint,
 	rating int not null,
 	body varchar(255) not null,
 	application_form_id bigint,
