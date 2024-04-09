@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "teams")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,4 +34,6 @@ public class Team {
 
     @Column(nullable = false)
     private LocalDateTime dateCreated;
+
+    private int teamClass;
 }
