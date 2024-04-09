@@ -68,7 +68,7 @@ create table application_forms (
 	name varchar(255) not null,
 	graduation_year varchar(255) not null,
 	major varchar(255) not null,
-	times_applied_prviously int not null,
+	times_applied_previously int not null,
 	role varchar(255) not null,
 	is_accepted boolean not null,
 );
