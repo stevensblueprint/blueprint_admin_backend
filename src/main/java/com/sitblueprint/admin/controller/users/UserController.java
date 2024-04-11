@@ -42,8 +42,8 @@ public class UserController {
     }
 
     @DeleteMapping
-    public void deleteUser(String customerId) {
-        userService.deleteUserById(Long.parseLong(customerId));
+    public void deleteUser(String userId) {
+        userService.deleteUserById(Long.parseLong(userId));
     }
 
     @PostMapping("enable/{userId}")
