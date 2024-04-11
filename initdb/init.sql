@@ -80,3 +80,13 @@ create table application_satisfaction_forms (
 	application_form_id bigint,
 	foreign key (application_form_id) references application_form(id) unique
 );
+
+-- Blogs
+create table blogs (
+	id bigint primary key generated always as identity,
+	title varchar(255) not null,
+	date_published timestamp not null,
+	last_modified timestamp not null,
+	status varchar(50) not null check (name in ('Published', 'In Progress', 'Deleted')),
+	path_to_markdown varchar(255) not null
+);
