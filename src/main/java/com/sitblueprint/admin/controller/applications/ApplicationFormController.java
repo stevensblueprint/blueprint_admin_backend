@@ -14,7 +14,7 @@ public class ApplicationFormController {
     @Autowired
     ApplicationFormService applicationFormService;
 
-    @GetMapping
+    @GetMapping("all")
     public List<ApplicationForm> getApplicationForms() {
         return applicationFormService.getApplicationForms();
     }
@@ -24,7 +24,7 @@ public class ApplicationFormController {
         return applicationFormService.getApplicationFormById(Long.parseLong(applicationFormId));
     }
 
-    @PostMapping("/submit")
+    @PostMapping("submit")
     public ApplicationForm submitApplicationForm(@RequestBody ApplicationForm applicationForm) {
         return applicationFormService.createApplicationForm(applicationForm);
     }
@@ -39,12 +39,12 @@ public class ApplicationFormController {
         applicationFormService.deleteApplicationFormById(Long.parseLong(applicationFormId));
     }
 
-    @GetMapping("/role/")
+    @GetMapping("role/")
     public List<ApplicationForm> getApplicationFormByRole(@Param("role") String role) {
         return applicationFormService.getByRole(role);
     }
 
-    @GetMapping("/graduation/")
+    @GetMapping("graduation/")
     public List<ApplicationForm> getApplicationFormByGraduationYear(@Param("graduationYear") String graduationYear) {
         return applicationFormService.getByGraduationYear(graduationYear);
     }
