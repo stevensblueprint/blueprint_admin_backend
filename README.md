@@ -20,7 +20,7 @@ docker-compose up
 
 Connect to psql shell
 ```
-docker exec -it blueprint_admin_backend-postgres-1 psql -U blueprint_admin_backend
+docker exec -it blueprint_admin_backend-postgres-1 psql -U blueprint_admin_backend -d postgres
 ```
 To see all the available tables run
 ```
