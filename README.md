@@ -11,3 +11,22 @@ Build the application
 ./gradlew build
 ```
 Run the application. (You have to run the ```admin/BlueprintAdmin.java``` this is the entry point of the Spring application).
+
+## How to connect to database in Docker Container?
+Start the docker container
+```
+docker-compose up
+```
+
+Connect to psql shell
+```
+docker exec -it blueprint_admin_backend-postgres-1 psql -U blueprint_admin_backend -d postgres
+```
+To see all the available tables run
+```
+\dt
+```
+To view data inside a Table
+```
+TABLE {table_name};
+```
