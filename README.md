@@ -12,6 +12,33 @@ Build the application
 ```
 Run the application. (You have to run the ```admin/BlueprintAdmin.java``` this is the entry point of the Spring application).
 
+
+## Available Endpoints
+For users:
+```
+GET /api/v1/user/all
+```
+```
+GET /api/v1/user/{userId}
+```
+```
+POST /api/v1/user/
+```
+```
+PUT /api/v1/user/
+```
+```
+DELETE /api/v1/user/
+```
+```
+POST /api/v1/user/enable/{userId}
+```
+```
+POST /api/v1/user/disable/{userId}
+```
+```
+PUT /api/v1/user/reset_password
+```
 ## How to connect to database in Docker Container?
 Start the docker container
 ```
