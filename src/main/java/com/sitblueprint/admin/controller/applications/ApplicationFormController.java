@@ -19,11 +19,6 @@ public class ApplicationFormController {
         return applicationFormService.getApplicationForms();
     }
 
-    @GetMapping
-    public ApplicationForm getApplicationFormById(@Param("applicationFormId") String applicationFormId) {
-        return applicationFormService.getApplicationFormById(Long.parseLong(applicationFormId));
-    }
-
     @PostMapping("/submit")
     public ApplicationForm submitApplicationForm(@RequestBody ApplicationForm applicationForm) {
         return applicationFormService.createApplicationForm(applicationForm);
