@@ -2,6 +2,10 @@
 Spring Java application that hosts the backend for our Blueprint Admin application. This project will help us manage Blueprint members.
 
 ## Running the service
+Copy the environment variables from .env.example
+```
+cp .env.example .env
+```
 Initialize docker container with postgres service. If you don't have docker installed you can install [here](https://docs.docker.com/engine/install/).
 ```
 docker-compose up -d
