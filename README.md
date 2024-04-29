@@ -16,6 +16,32 @@ Run the application. (You have to run the ```admin/BlueprintAdmin.java``` this i
 ## Available Endpoints
 For users:
 ```
+GET /api/v1/team/all
+```
+```
+GET /api/v1/team/{teamId}
+```
+```
+POST /api/v1/team/
+```
+```
+PUT /api/v1/team/
+```
+```
+DELETE /api/v1/team/
+```
+```
+POST /api/v1/user/enable/{userId}
+```
+```
+POST /api/v1/user/disable/{userId}
+```
+```
+PUT /api/v1/user/reset_password
+```
+
+For teams:
+```
 GET /api/v1/user/all
 ```
 ```
@@ -31,14 +57,13 @@ PUT /api/v1/user/
 DELETE /api/v1/user/
 ```
 ```
-POST /api/v1/user/enable/{userId}
+GET
 ```
 ```
-POST /api/v1/user/disable/{userId}
+GET
 ```
-```
-PUT /api/v1/user/reset_password
-```
+
+
 ## How to connect to database in Docker Container?
 Start the docker container
 ```
