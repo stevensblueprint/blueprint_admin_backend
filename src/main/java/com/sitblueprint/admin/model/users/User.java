@@ -1,7 +1,5 @@
 package com.sitblueprint.admin.model.users;
 
-import com.sitblueprint.admin.model.users.Role;
-import com.sitblueprint.admin.model.users.Team;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +29,7 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime dateJoined;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
