@@ -87,6 +87,12 @@ insert into user_roles (user_id, role_id) values
 (2, 2), -- Jane Smith with TEAM_LEAD role
 (3, 3); -- Michael Johnson with PRODUCT_MANAGER role
 
+-- NPOS Insert
+insert into npos (name, team_id, project_proposal_url, date_of_recruitment) values
+('NPOS 1', 1, 'https://example.com/project_proposal_1', CURRENT_TIMESTAMP),
+('NPOS 2', 2, 'https://example.com/project_proposal_2', CURRENT_TIMESTAMP),
+('NPOS 3', 3, 'https://example.com/project_proposal_3', CURRENT_TIMESTAMP);
+
 -- Insert blogs to the blogs table
 insert into blogs (author, title, date_created) values
 ('John Doe', 'Blog 1', CURRENT_TIMESTAMP),
