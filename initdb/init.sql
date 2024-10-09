@@ -37,6 +37,14 @@ create table teams (
 	team_class int not null
 );
 
+
+create table blogs  (
+    id bigint primary key generated always as identity,
+    author varchar(255) not null,
+    title varchar(255) not null,
+    date_created timestamp not null
+)
+
 alter table users
     add constraint fk_team_id
         foreign key (team_id) references teams(id);
@@ -71,3 +79,9 @@ insert into user_roles (user_id, role_id) values
 (1, 1), -- John Doe with E-BOARD role
 (2, 2), -- Jane Smith with TEAM_LEAD role
 (3, 3); -- Michael Johnson with PRODUCT_MANAGER role
+
+-- Insert blogs to the blogs table
+insert into blogs (author, title, date_created) values
+('John Doe', 'Blog 1', CURRENT_TIMESTAMP),
+('Jane Smith', 'Blog 2', CURRENT_TIMESTAMP),
+('Michael Johnson', 'Blog 3', CURRENT_TIMESTAMP);
