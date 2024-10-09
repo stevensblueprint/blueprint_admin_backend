@@ -37,6 +37,13 @@ create table teams (
 	team_class int not null
 );
 
+create table npos (
+    id bigint primary key generated always as identity,
+    name varchar(255) not null,
+    foreign key (team_id) references teams(id),
+    project_proposal_url varchar(255) not null,
+    date_of_recruitment timestamp not null
+)
 
 create table blogs  (
     id bigint primary key generated always as identity,
