@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+@Service
 public class BlogsServiceImpl implements BlogsService {
     private static final Logger log = LoggerFactory.getLogger(BlogsServiceImpl.class);
     private final BlogRepository blogRepository;

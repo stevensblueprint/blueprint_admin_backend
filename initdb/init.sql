@@ -37,6 +37,13 @@ create table teams (
 	team_class int not null
 );
 
+create table npos (
+    id bigint primary key generated always as identity,
+    name varchar(255) not null,
+    foreign key (team_id) references teams(id),
+    project_proposal_url varchar(255) not null,
+    date_of_recruitment timestamp not null
+)
 
 create table blogs  (
     id bigint primary key generated always as identity,
@@ -79,6 +86,12 @@ insert into user_roles (user_id, role_id) values
 (1, 1), -- John Doe with E-BOARD role
 (2, 2), -- Jane Smith with TEAM_LEAD role
 (3, 3); -- Michael Johnson with PRODUCT_MANAGER role
+
+-- NPOS Insert
+insert into npos (name, team_id, project_proposal_url, date_of_recruitment) values
+('NPOS 1', 1, 'https://example.com/project_proposal_1', CURRENT_TIMESTAMP),
+('NPOS 2', 2, 'https://example.com/project_proposal_2', CURRENT_TIMESTAMP),
+('NPOS 3', 3, 'https://example.com/project_proposal_3', CURRENT_TIMESTAMP);
 
 -- Insert blogs to the blogs table
 insert into blogs (author, title, date_created) values
