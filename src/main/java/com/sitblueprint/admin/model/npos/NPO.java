@@ -6,14 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.sitblueprint.admin.model.users.Team;
 
+import java.time.LocalDate;
+
+@Entity
 public class NPO {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private String name;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn()
-    private Team team_assigned;
+    @JoinColumn(name = "team_id")
+    private Team teamAssigned;
 
+    private String url;
 
-
-
+    private LocalDate dateOfRecruitment;
 }
