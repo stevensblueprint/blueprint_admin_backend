@@ -9,6 +9,10 @@ import com.sitblueprint.admin.model.users.Team;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "npos")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class NPO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +26,6 @@ public class NPO {
 
     private String url;
 
+    @Column(nullable = false)
     private LocalDate dateOfRecruitment;
 }
