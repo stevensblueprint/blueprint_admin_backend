@@ -1,100 +1,65 @@
--- Users
-create table roles (
-	id bigint primary key generated always as identity,
-	name varchar(50) not null check (name in ('E-BOARD', 'TEAM_LEAD', 'PRODUCT_MANAGER', 'DEVELOPER', 'BLUEPRINT_INTERNAL_TEAM'))
-);
+    -- Enum type for roles
+    CREATE TYPE member_role AS ENUM ('E-BOARD', 'TEAM_LEAD', 'PRODUCT_MANAGER', 'DEVELOPER', 'BLUEPRINT_INTERNAL_TEAM');
 
--- Roles Insert
-insert into roles (name)
-values ('E-BOARD'), ('TEAM_LEAD'), ('PRODUCT_MANAGER'), ('DEVELOPER'), ('BLUEPRINT_INTERNAL_TEAM');
+    -- Create organization table
+    CREATE TABLE Organization (
+        orgId INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL,
+        orgName VARCHAR(255) NOT NULL,
+        PRIMARY KEY (orgId)
+    );
 
-create table users (
-	id bigint primary key generated always as identity, 
-	name varchar(255) not null,
-	username varchar(255) not null,
-	email varchar(255) not null,
-	password varchar(255) not null,
-	has_blueprint_email varchar(255) not null,
-	is_enabled boolean not null,
-	date_joined timestamp not null,
-	team_id bigint
-);
+    -- Create Team table
+    CREATE TABLE Team (
+        teamId INTEGER GENERATED ALWAYS AS IDENTITY,
+        orgId INTEGER NOT NULL,
+        teamName VARCHAR(255),
+        teamLeadId INTEGER,
+        projectManagerId INTEGER,
+        dateCreated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        PRIMARY KEY (teamId),
+        FOREIGN KEY (orgId) REFERENCES Organization(orgId)
+    );
 
-create table user_roles (
-	user_id bigint,
-	role_id bigint,
-	primary key(user_id, role_id),
-	foreign key (user_id) references users(id),
-	foreign key (role_id) references roles(id)
-);
+    -- Create Member table
+    CREATE TABLE Member (
+        memberId INTEGER GENERATED ALWAYS AS IDENTITY,
+        teamId INTEGER,
+        name VARCHAR(255) NOT NULL,
+        username VARCHAR(255) NOT NULL,
+        email VARCHAR(255) UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        role member_role,
+        isActive BOOLEAN,
+        dateJoined TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (memberId)
+    );
 
-create table teams (
-	id bigint primary key generated always as identity,
-	name varchar(255) not null,
-	team_lead_id bigint,
-	team_manager_id bigint,
-	date_created timestamp not null,
-	team_class int not null
-);
+    ALTER TABLE Member
+    ADD CONSTRAINT fk_teamId FOREIGN KEY (teamId) REFERENCES Team(teamId);
 
-create table npos (
-    id bigint primary key generated always as identity,
-    name varchar(255) not null,
-    foreign key (team_id) references teams(id),
-    project_proposal_url varchar(255) not null,
-    date_of_recruitment timestamp not null
-)
+    ALTER TABLE Team
+    ADD CONSTRAINT fk_teamLeadId FOREIGN KEY (teamLeadId) REFERENCES Member(memberId),
+    ADD CONSTRAINT fk_projectManagerId FOREIGN KEY (projectManagerId) REFERENCES Member(memberId);
 
-create table blogs  (
-    id bigint primary key generated always as identity,
-    author varchar(255) not null,
-    title varchar(255) not null,
-    date_created timestamp not null
-)
+    CREATE INDEX idx_member_teamid ON Member(teamId);
+    CREATE INDEX idx_team_orgid ON Team(orgId);
 
-alter table users
-    add constraint fk_team_id
-        foreign key (team_id) references teams(id);
+    -- Insert sample organizations
+    INSERT INTO Organization (orgName) VALUES
+    ('Strawberry Fields'),
+    ('Fields of Gold');
 
-alter table teams
-    add constraint fk_team_lead_id
-        foreign key (team_lead_id) references users(id);
+    -- Insert sample teams
+    INSERT INTO Team (orgId, teamName, teamLeadId, projectManagerId, dateCreated) VALUES
+    (1, 'TeachTeam', NULL, NULL, '2021-09-01 00:00:00'),
+    (2, 'Backend Team', NULL, NULL, '2024-10-01 00:00:00');
 
-alter table teams
-    add constraint fk_team_manager_id
-        foreign key (team_manager_id) references users(id);
+    -- Insert sample members
+    INSERT INTO Member (teamId, name, username, email, password, role, isActive) VALUES
+    (1, 'John Doe', 'jdoe', 'jdoe@stevens.edu', 'password', 'E-BOARD', TRUE),
+    (2, 'Jane Smith', 'janesmith', 'janesmith@stevens.edu', 'password2', 'TEAM_LEAD', TRUE),
+    (2, 'Alice Johnson', 'alicej', 'alicej@stevens.edu', 'a1234', 'DEVELOPER', FALSE);
 
-
--- Insert users into the users table
-insert into users (name, username, email, password, has_blueprint_email, is_enabled, date_joined, team_id) values
-('John Doe', 'john_doe', 'john@example.com', 'password123', 'yes', true, CURRENT_TIMESTAMP, null),
-('Jane Smith', 'jane_smith', 'jane@example.com', 'password456', 'no', true, CURRENT_TIMESTAMP, null),
-('Michael Johnson', 'michael_johnson', 'michael@example.com', 'password789', 'yes', true, CURRENT_TIMESTAMP, null);
-
--- Teams Insert
-insert into teams (name, team_lead_id, team_manager_id, date_created, team_class) values
-('Team Alpha', 1, 2, CURRENT_TIMESTAMP, 1),
-('Team Beta', 3, 4, CURRENT_TIMESTAMP, 2),
-('Team Gamma', 5, 6, CURRENT_TIMESTAMP, 1),
-('Team Delta', 7, 8, CURRENT_TIMESTAMP, 2),
-('Team Epsilon', 9, 10, CURRENT_TIMESTAMP, 1),
-('Team Zeta', 11, 12, CURRENT_TIMESTAMP, 2),
-('Team Theta', 13, 14, CURRENT_TIMESTAMP, 1);
-
--- User_Roles Insert
-insert into user_roles (user_id, role_id) values
-(1, 1), -- John Doe with E-BOARD role
-(2, 2), -- Jane Smith with TEAM_LEAD role
-(3, 3); -- Michael Johnson with PRODUCT_MANAGER role
-
--- NPOS Insert
-insert into npos (name, team_id, project_proposal_url, date_of_recruitment) values
-('NPOS 1', 1, 'https://example.com/project_proposal_1', CURRENT_TIMESTAMP),
-('NPOS 2', 2, 'https://example.com/project_proposal_2', CURRENT_TIMESTAMP),
-('NPOS 3', 3, 'https://example.com/project_proposal_3', CURRENT_TIMESTAMP);
-
--- Insert blogs to the blogs table
-insert into blogs (author, title, date_created) values
-('John Doe', 'Blog 1', CURRENT_TIMESTAMP),
-('Jane Smith', 'Blog 2', CURRENT_TIMESTAMP),
-('Michael Johnson', 'Blog 3', CURRENT_TIMESTAMP);
+    -- Update Team table to set teamLeadId and projectManagerId after members have been inserted
+    UPDATE Team SET teamLeadId = 2, projectManagerId = 2 WHERE teamId = 1;
+    UPDATE Team SET teamLeadId = 1, projectManagerId = 1 WHERE teamId = 2;
