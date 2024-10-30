@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -59,5 +60,45 @@ public class UserController {
     @PutMapping("reset_password")
     public void resetPassword(@RequestBody String userId, @RequestBody String newPassword) {
         userService.resetPassword(Long.parseLong(userId), newPassword);
+    }
+
+    @PostMapping("/{userId}/attendance")
+    public ResponseEntity<?> recordAttendance(@PathVariable Long userId, @RequestParam LocalDateTime date, @RequestParam Boolean status) {
+        try {
+            userService.recordAttendance(userId, date, status);
+            return ResponseEntity.ok("Attendance recorded successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to record attendance.");
+        }
+    }
+
+    @GetMapping("/{userId}/attendance")
+    public ResponseEntity<?> getAttendance(@PathVariable Long userId, @RequestParam LocalDateTime date) {
+        try {
+            Boolean attendanceStatus = userService.getAttendance(userId, date);
+            return ResponseEntity.ok(attendanceStatus != null ? attendanceStatus : "No attendance record for this date.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to retrieve attendance.");
+        }
+    }
+
+    @PutMapping("/{userId}/attendance")
+    public ResponseEntity<?> updateAttendance(@PathVariable Long userId, @RequestParam LocalDateTime date, @RequestParam Boolean status) {
+        try {
+            userService.recordAttendance(userId, date, status);
+            return ResponseEntity.ok("Attendance updated successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to update attendance.");
+        }
+    }
+
+    @DeleteMapping("/{userId}/attendance")
+    public ResponseEntity<?> deleteAttendance(@PathVariable Long userId, @RequestParam LocalDateTime date) {
+        try {
+            userService.deleteAttendance(userId, date);
+            return ResponseEntity.ok("Attendance deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to delete attendance.");
+        }
     }
 }

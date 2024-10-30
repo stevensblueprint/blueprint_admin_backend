@@ -37,6 +37,27 @@ create table teams (
 	team_class int not null
 );
 
+create table npos (
+    id bigint primary key generated always as identity,
+    name varchar(255) not null,
+    foreign key (team_id) references teams(id),
+    project_proposal_url varchar(255) not null,
+    date_of_recruitment timestamp not null
+)
+
+create table blogs  (
+    id bigint primary key generated always as identity,
+    author varchar(255) not null,
+    title varchar(255) not null,
+    date_created timestamp not null
+)
+
+create table user_attendance (
+    id bigint primary key generated always as identity,
+    date timestamp not null,
+    status boolean not null,
+)
+
 alter table users
     add constraint fk_team_id
         foreign key (team_id) references teams(id);

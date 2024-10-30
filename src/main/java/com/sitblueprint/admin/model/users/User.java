@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -39,5 +42,10 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
-}
 
+    @ElementCollection
+    @CollectionTable(name = "user_attendance", joinColumns = @JoinColumn(name = "user_id"))
+    @MapKeyColumn(name = "date")
+    @Column(name = "status")
+    private Map<LocalDateTime, Boolean> attendance = new HashMap<>();
+}

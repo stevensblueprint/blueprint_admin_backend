@@ -4,6 +4,7 @@ import com.sitblueprint.admin.model.users.AuthUser;
 import com.sitblueprint.admin.model.users.User;
 import com.sitblueprint.admin.repository.users.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,6 +120,30 @@ public class UserServiceImpl implements UserService {
             authApiService.resetPasswordAuthUser(user.getUsername(), newPassword);
         } catch (Exception e) {
             throw new RuntimeException("Auth API failed to reset password of user " + user.getUsername());
+        }
+    }
+
+    @Override
+    public void recordAttendance(Long userId, LocalDateTime date, Boolean status) {
+        User user = getUserById(userId);
+        user.getAttendance().put(date, status);
+        userRepository.save(user);
+    }
+
+    @Override
+    public Boolean getAttendance(Long userId, LocalDateTime date) {
+        User user = getUserById(userId);
+        return user.getAttendance().getOrDefault(date, null);
+    }
+
+    @Override
+    public void deleteAttendance(Long userId, LocalDateTime date) {
+        User user = userRespository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found with such Id."));
+        if (user.getAttendance().containsKey(date)) {
+            user.getAttendance().remove(date);
+            userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("No attendance found on such date.");
         }
     }
 }
