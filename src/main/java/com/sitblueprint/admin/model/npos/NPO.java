@@ -18,12 +18,14 @@ public class NPO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String name;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team teamAssigned;
 
+    @Column(nullable = false)
     private String url;
 
     @Column(nullable = false)
