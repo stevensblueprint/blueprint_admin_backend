@@ -15,11 +15,15 @@ public class NPOController {
     @Autowired
     NPOService npoService;
 
-    public List<NPO> getAllNPOs() {}
+    @GetMapping("all")
+    public List<NPO> getAllNPOs() { return npoService.getAllNPOs(); }
 
-    public NPO getNPOById() {}
+    @GetMapping
+    public NPO getNPOById(@Param("npoId") String npoId) { return npoService.getNPOById(Long.parseLong(npoId)); }
 
-    public NPO createNPO() {}
+    @PostMapping
+    public NPO createNPO(@RequestBody NPO npo) { return npoService.createNPO(npo); }
 
-    public void deleteNPO() {}
+    @DeleteMapping
+    public void deleteNPO(String npoId) { npoService.deleteNPOById(Long.parseLong(npoId)); }
 }
