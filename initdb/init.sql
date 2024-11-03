@@ -88,14 +88,14 @@
     INSERT INTO members (team_id, name, username, email, password, is_active) VALUES
     (1, 'John Doe', 'jdoe', 'jdoe@stevens.edu', 'password', TRUE),
     (2, 'Jane Smith', 'janesmith', 'janesmith@stevens.edu', 'password2', TRUE),
-    (2, 'Alice Johnson', 'alicej', 'alicej@stevens.edu', 'a1234', FALSE);
+    (2, 'Sophia Johnson', 'sophiaj', 'sophiaj@stevens.edu', 'a1234', FALSE);
 
     -- Insert sample member roles
     INSERT INTO member_roles (member_id, role_id) VALUES
     (1, 1), -- John Doe as E-BOARD member.
     (1, 5), -- John Doe as PROJECT_MANAGER.
     (2, 2), -- Jane Smith as TEAM_LEAD.
-    (3, 3); -- Alice Johnson as DEVELOPER.
+    (3, 3); -- Sophia Johnson as DEVELOPER.
 
     -- Insert sample blogs
     INSERT INTO blogs (author, title, date_created) VALUES
@@ -106,3 +106,5 @@
     UPDATE teams SET team_lead_id = 2, project_manager_id = 2, designer_id = 3 WHERE id = 1;
     UPDATE teams SET team_lead_id = 1, project_manager_id = 1, designer_id = 3 WHERE id = 2;
     UPDATE organizations SET team_lead_id = 2, project_manager_id = 2 WHERE id = 1;
+    UPDATE organizations SET team_lead_id = 1, project_manager_id = 2 WHERE id = 2;
+
