@@ -92,3 +92,8 @@ insert into user_roles (user_id, role_id) values
 (1, 1), -- John Doe with E-BOARD role
 (2, 2), -- Jane Smith with TEAM_LEAD role
 (3, 3); -- Michael Johnson with PRODUCT_MANAGER role
+
+insert into user_attendance (user_id, team_id, date, status) values
+('1', '1', '2024-11-06 12:00', 'True'),
+('2', '1', '2024-11-06 12:02', 'True'),
+('3', '2', '2024-11-06 12:10', 'True')

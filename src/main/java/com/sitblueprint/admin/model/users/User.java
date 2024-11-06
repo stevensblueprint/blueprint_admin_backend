@@ -44,5 +44,5 @@ public class User {
     private Team team;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Attendance> attendanceRecrods = new HashSet<>();
+    private Set<Attendance> attendanceRecords = new HashSet<>();
 }
