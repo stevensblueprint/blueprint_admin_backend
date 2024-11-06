@@ -2,11 +2,13 @@ package com.sitblueprint.admin.controller.users;
 
 import com.sitblueprint.admin.model.users.Team;
 import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.model.users.Attendance;
 import com.sitblueprint.admin.service.users.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -49,5 +51,30 @@ public class TeamController {
     @GetMapping("productManager/{teamId}")
     public User getProductManagerById(@PathVariable("teamId") String teamId) {
         return teamService.getProductManagerById(Long.parseLong(teamId));
+    }
+
+    @PostMapping("attendance")
+    public List<Attendance> markTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date, @RequestParam Boolean status) {
+        return teamService.markTeamAttendance(teamId, date, status);
+    }
+
+    @GetMapping("attendance")
+    public List<Attendance> getTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
+        return teamService.getTeamAttendance(teamId, date);
+    }
+
+    @GetMapping("attendance/all")
+    public List<Attendance> getTeamAllAttendance(@RequestParam Long teamId) {
+        return teamService.getTeamAllAttendance(teamId);
+    }
+
+    @PutMapping("attendance")
+    public List<Attendance> updateTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date, @RequestParam Boolean status) {
+        return teamService.updateTeamAttendance(teamId, date, status);
+    }
+
+    @DeleteMapping("attendance")
+    public void deleteTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
+        teamService.deleteTeamAttendance(teamId, date);
     }
 }

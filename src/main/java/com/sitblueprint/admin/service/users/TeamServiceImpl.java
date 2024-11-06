@@ -1,20 +1,29 @@
 package com.sitblueprint.admin.service.users;
 
 import com.sitblueprint.admin.model.users.Team;
+import com.sitblueprint.admin.model.users.Attendance;
 import com.sitblueprint.admin.model.users.User;
 import com.sitblueprint.admin.repository.users.TeamRepository;
+import com.sitblueprint.admin.repository.users.AttendanceRepository;
+import com.sitblueprint.admin.repository.users.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
 public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
+    private final AttendanceRepository attendanceRepository;
+    private final UserRepository userRepository;
 
-    public TeamServiceImpl(TeamRepository teamRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository, AttendanceRepository attendanceRepository, UserRepository userRepository) {
         this.teamRepository = teamRepository;
+        this.attendanceRepository = attendanceRepository;
+        this.userRepository = userRepository;
     }
     @Override
     public List<Team> getAllTeams() {
@@ -58,5 +67,60 @@ public class TeamServiceImpl implements TeamService {
             throw new RuntimeException("Team not found: " + teamId);
         }
         return optionalTeam.get().getProductManager();
+    }
+
+    @Override
+    public List<Attendance> markTeamAttendance(Long teamId, LocalDateTime date, Boolean status) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new NoSuchElementException("Team not found"));
+
+        List<User> teamMembers = new ArrayList<>(team.getMembers());
+        List<Attendance> attendanceList = new ArrayList<>();
+
+        for (User member : teamMembers) {
+            Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(member.getId(), date);
+
+            Attendance attendance = existingAttendance.orElse(new Attendance(null, date, status, member));
+            attendance.setStatus(status);
+
+            attendanceList.add(attendanceRepository.save(attendance));
+        }
+        return attendanceList;
+    }
+
+    @Override
+    public List<Attendance> getTeamAttendance(Long teamId, LocalDateTime date) {
+        return attendanceRepository.findAllByTeamIdAndDate(teamId, date);
+    }
+
+    @Override
+    public List<Attendance> getTeamAllAttendance(Long teamId) {
+        return attendanceRepository.findAllByTeamId(teamId);
+    }
+
+    @Override
+    public List<Attendance> updateTeamAttendance(Long teamId, LocalDateTime date, Boolean status) {
+        List<Attendance> attendances = attendanceRepository.findAllByTeamIdAndDate(teamId, date);
+
+        if (attendances.isEmpty()) {
+            throw new NoSuchElementException("No attendance records found.");
+        }
+
+        for (Attendance attendance : attendances) {
+            attendance.setStatus(status);
+        }
+
+        return attendanceRepository.saveAll(attendances);
+    }
+
+    @Override
+    public void deleteTeamAttendance(Long teamId, LocalDateTime date) {
+        List<Attendance> attendances = attendanceRepository.findAllByTeamIdAndDate(teamId, date);
+
+        if (attendances.isEmpty()) {
+            throw new NoSuchElementException("No attendance records found.");
+        }
+
+        attendanceRepository.deleteAll(attendances);
     }
 }

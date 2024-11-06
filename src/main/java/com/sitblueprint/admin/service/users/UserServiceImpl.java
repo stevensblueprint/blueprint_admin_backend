@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Attendance markAttendance(Long userId, LocalDateTime date, Boolean status) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(userId, date);
 
@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Attendance getAttendance(Long userId, LocalDateTime date) {
         return attendanceRepository.findByUserIdAndDate(userId, date)
-                .orElseThrow(() -> new RuntimeException("Attendance record not found."));
+                .orElseThrow(() -> new NoSuchElementException("Attendance record not found."));
     }
 
     @Override
@@ -154,7 +154,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Attendance updateAttendance(Long userId, LocalDateTime date, Boolean status) {
         Attendance attendance = attendanceRepository.findByUserIdAndDate(userId, date)
-                .orElseThrow(() -> new RuntimeException("Attendance not found."));
+                .orElseThrow(() -> new NoSuchElementException("Attendance not found."));
 
         attendance.setStatus(status);
         return attendanceRepository.save(attendance);
