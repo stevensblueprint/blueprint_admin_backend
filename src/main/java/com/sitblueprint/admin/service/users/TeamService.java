@@ -26,7 +26,7 @@ public interface TeamService {
 
     List<Attendance> getTeamAttendance(Long teamId, LocalDateTime date);
 
-    List<Attendance> getTeamAllAttendance(Long teamId);
+    List<Attendance> getTeamAllAttendance(Long teamId, LocalDateTime startDate, LocalDateTime endDate);
 
     List<Attendance> updateTeamAttendance(Long teamId, LocalDateTime date, Boolean status);
 

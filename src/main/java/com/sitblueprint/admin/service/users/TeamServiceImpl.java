@@ -94,8 +94,16 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Attendance> getTeamAllAttendance(Long teamId) {
-        return attendanceRepository.findAllByTeamId(teamId);
+    public List<Attendance> getTeamAllAttendance(Long teamId, LocalDateTime startDate, LocalDateTime endDate) {
+        if (startDate != null && endDate != null) {
+            return attendanceRepository.findAllByTeamIdAndDateBetween(teamId, startDate, endDate);
+        } else if (startDate != null) {
+            return attendanceRepository.findAllByTeamIdAndDateAfter(teamId, startDate);
+        } else if (endDate != null) {
+            return attendanceRepository.findAllByTeamIdAndDateBefore(teamId, endDate);
+        } else {
+            return attendanceRepository.findAllByTeamId(teamId);
+        }
     }
 
     @Override

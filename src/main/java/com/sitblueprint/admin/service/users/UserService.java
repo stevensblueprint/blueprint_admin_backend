@@ -27,7 +27,7 @@ public interface UserService {
 
     Attendance getAttendance(Long userId, LocalDateTime date);
 
-    List<Attendance> getAllAttendance(Long userId);
+    List<Attendance> getAllAttendance(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 
     Attendance updateAttendance(Long userId, LocalDateTime date, Boolean status);
 

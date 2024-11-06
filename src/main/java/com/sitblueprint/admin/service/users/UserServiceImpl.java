@@ -147,8 +147,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Attendance> getAllAttendance(Long userId) {
-        return attendanceRepository.findAllByUserId(userId);
+    public List<Attendance> getAllAttendance(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+        if (startDate != null && endDate != null) {
+            return attendanceRepository.findAllByUserIdAndDateBetween(userId, startDate, endDate);
+        } else if (startDate != null) {
+            return attendanceRepository.findAllByUserIdAndDateAfter(userId, startDate);
+        } else if (endDate != null) {
+            return attendanceRepository.findAllByUserIdAndDateBefore(userId, endDate);
+        } else {
+            return attendanceRepository.findAllByUserId(userId);
+        }
     }
 
     @Override

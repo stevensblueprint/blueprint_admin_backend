@@ -64,8 +64,8 @@ public class TeamController {
     }
 
     @GetMapping("attendance/all")
-    public List<Attendance> getTeamAllAttendance(@RequestParam Long teamId) {
-        return teamService.getTeamAllAttendance(teamId);
+    public List<Attendance> getTeamAllAttendance(@RequestParam Long teamId, @RequestParam(required = false) LocalDateTime startDate, @RequestParam(required = false) LocalDateTime endDate) {
+        return teamService.getTeamAllAttendance(teamId, startDate, endDate);
     }
 
     @PutMapping("attendance")

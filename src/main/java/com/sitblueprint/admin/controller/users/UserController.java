@@ -76,8 +76,8 @@ public class UserController {
     }
 
     @GetMapping("/attendance")
-    public ResponseEntity<List<Attendance>> getAllAttendance(@PathVariable("userId") Long userId) {
-        List<Attendance> attendances = userService.getAllAttendance(userId);
+    public ResponseEntity<List<Attendance>> getAllAttendance(@PathVariable("userId") Long userId, @RequestParam(required = false) LocalDateTime startDate, @RequestParam(required = false) LocalDateTime endDate) {
+        List<Attendance> attendances = userService.getAllAttendance(userId, startDate, endDate);
         return ResponseEntity.ok(attendances);
     }
 
