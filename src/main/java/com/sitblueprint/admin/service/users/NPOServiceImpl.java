@@ -2,9 +2,11 @@ package com.sitblueprint.admin.service.users;
 
 import com.sitblueprint.admin.model.npos.NPO;
 import com.sitblueprint.admin.repository.users.NPORepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class NPOServiceImpl implements NPOService {
 
     NPORepository npoRepository;

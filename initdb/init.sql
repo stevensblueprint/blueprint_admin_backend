@@ -43,14 +43,14 @@ create table npos (
     foreign key (team_id) references teams(id),
     project_proposal_url varchar(255) not null,
     date_of_recruitment timestamp not null
-)
+);
 
 create table blogs  (
     id bigint primary key generated always as identity,
     author varchar(255) not null,
     title varchar(255) not null,
     date_created timestamp not null
-)
+);
 
 alter table users
     add constraint fk_team_id
@@ -63,7 +63,6 @@ alter table teams
 alter table teams
     add constraint fk_team_manager_id
         foreign key (team_manager_id) references users(id);
-
 
 -- Insert users into the users table
 insert into users (name, username, email, password, has_blueprint_email, is_enabled, date_joined, team_id) values
