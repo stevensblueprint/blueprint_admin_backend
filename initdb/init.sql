@@ -40,7 +40,8 @@ create table teams (
 create table npos (
     id bigint primary key generated always as identity,
     name varchar(255) not null,
-    foreign key (team_id) references teams(id),
+    --foreign key (team_id) references teams(id),
+    team_id bigint,
     project_proposal_url varchar(255) not null,
     date_of_recruitment timestamp not null
 );
@@ -64,12 +65,17 @@ alter table teams
     add constraint fk_team_manager_id
         foreign key (team_manager_id) references users(id);
 
+alter table npos
+    add constraint fk_team_id
+        foreign key (team_id) references teams(id);
+
 -- Insert users into the users table
 insert into users (name, username, email, password, has_blueprint_email, is_enabled, date_joined, team_id) values
 ('John Doe', 'john_doe', 'john@example.com', 'password123', 'yes', true, CURRENT_TIMESTAMP, null),
 ('Jane Smith', 'jane_smith', 'jane@example.com', 'password456', 'no', true, CURRENT_TIMESTAMP, null),
 ('Michael Johnson', 'michael_johnson', 'michael@example.com', 'password789', 'yes', true, CURRENT_TIMESTAMP, null);
 
+/*
 -- Teams Insert
 insert into teams (name, team_lead_id, team_manager_id, date_created, team_class) values
 ('Team Alpha', 1, 2, CURRENT_TIMESTAMP, 1),
@@ -79,6 +85,18 @@ insert into teams (name, team_lead_id, team_manager_id, date_created, team_class
 ('Team Epsilon', 9, 10, CURRENT_TIMESTAMP, 1),
 ('Team Zeta', 11, 12, CURRENT_TIMESTAMP, 2),
 ('Team Theta', 13, 14, CURRENT_TIMESTAMP, 1);
+*/
+
+-- Temporary Teams table for NPO testing
+-- Above Table caused FK violations
+insert into teams (name, team_lead_id, team_manager_id, date_created, team_class) values
+('Team Alpha', 1, 2, CURRENT_TIMESTAMP, 1),
+('Team Beta', 3, 2, CURRENT_TIMESTAMP, 2),
+('Team Gamma', 1, 3, CURRENT_TIMESTAMP, 1),
+('Team Delta', 1, 1, CURRENT_TIMESTAMP, 2),
+('Team Epsilon', 2, 2, CURRENT_TIMESTAMP, 1),
+('Team Zeta', 1, 1, CURRENT_TIMESTAMP, 2),
+('Team Theta', 3, 3, CURRENT_TIMESTAMP, 1);
 
 -- User_Roles Insert
 insert into user_roles (user_id, role_id) values
