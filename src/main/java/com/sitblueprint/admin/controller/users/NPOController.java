@@ -24,6 +24,9 @@ public class NPOController {
     @PostMapping
     public NPO createNPO(@RequestBody NPO npo) { return npoService.createNPO(npo); }
 
+    @PutMapping
+    public NPO updateNPO(@RequestBody NPO npo) { return npoService.updateNPO(npo); }
+
     @DeleteMapping
     public void deleteNPO(String npoId) { npoService.deleteNPOById(Long.parseLong(npoId)); }
 }
