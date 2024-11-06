@@ -1,5 +1,6 @@
 package com.sitblueprint.admin.controller.users;
 
+import com.sitblueprint.admin.model.users.Attendance;
 import com.sitblueprint.admin.model.users.User;
 import com.sitblueprint.admin.service.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,43 +63,33 @@ public class UserController {
         userService.resetPassword(Long.parseLong(userId), newPassword);
     }
 
-    @PostMapping("/{userId}/attendance")
-    public ResponseEntity<?> recordAttendance(@PathVariable Long userId, @RequestParam LocalDateTime date, @RequestParam Boolean status) {
-        try {
-            userService.recordAttendance(userId, date, status);
-            return ResponseEntity.ok("Attendance recorded successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Failed to record attendance.");
-        }
+    @PostMapping
+    public ResponseEntity<Attendance> markAttendance(@PathVariable("userId") Long userId, @RequestParam("date") LocalDateTime date, @RequestParam("status") Boolean status) {
+        Attendance attendance = userService.markAttendance(userId, date, status);
+        return ResponseEntity.ok(attendance);
     }
 
-    @GetMapping("/{userId}/attendance")
-    public ResponseEntity<?> getAttendance(@PathVariable Long userId, @RequestParam LocalDateTime date) {
-        try {
-            Boolean attendanceStatus = userService.getAttendance(userId, date);
-            return ResponseEntity.ok(attendanceStatus != null ? attendanceStatus : "No attendance record for this date.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Failed to retrieve attendance.");
-        }
+    @GetMapping("/attendance/{date}")
+    public ResponseEntity<Attendance> getAttendance(@PathVariable("userId") Long userId, @RequestParam("date") LocalDateTime date) {
+        Attendance attendance = userService.getAttendance(userId, date);
+        return ResponseEntity.ok(attendance);
     }
 
-    @PutMapping("/{userId}/attendance")
-    public ResponseEntity<?> updateAttendance(@PathVariable Long userId, @RequestParam LocalDateTime date, @RequestParam Boolean status) {
-        try {
-            userService.recordAttendance(userId, date, status);
-            return ResponseEntity.ok("Attendance updated successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Failed to update attendance.");
-        }
+    @GetMapping("/attendance")
+    public ResponseEntity<List<Attendance>> getAllAttendance(@PathVariable("userId") Long userId) {
+        List<Attendance> attendances = userService.getAllAttendance(userId);
+        return ResponseEntity.ok(attendances);
     }
 
-    @DeleteMapping("/{userId}/attendance")
-    public ResponseEntity<?> deleteAttendance(@PathVariable Long userId, @RequestParam LocalDateTime date) {
-        try {
-            userService.deleteAttendance(userId, date);
-            return ResponseEntity.ok("Attendance deleted successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Failed to delete attendance.");
-        }
+    @PutMapping("/attendance/{date}")
+    public ResponseEntity<Attendance> updateAttendance(@PathVariable("userId") Long userId, @RequestParam("date") LocalDateTime date, @RequestParam("status") Boolean status) {
+        Attendance updateAttendance = userService.updateAttendance(userId, date, status);
+        return ResponseEntity.ok(updateAttendance);
+    }
+
+    @DeleteMapping("/attendance/{date}")
+    public ResponseEntity<Attendance> deleteAttendance(@PathVariable("userId") Long userId, @RequestParam("date") LocalDateTime date, @RequestParam("status") Boolean status) {
+        userService.deleteAttendance(userId, date);
+        return ResponseEntity.noContent().build();
     }
 }

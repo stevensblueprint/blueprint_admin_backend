@@ -1,7 +1,9 @@
 package com.sitblueprint.admin.service.users;
 
+import com.sitblueprint.admin.model.users.Attendance;
 import com.sitblueprint.admin.model.users.AuthUser;
 import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.repository.users.AttendanceRepository;
 import com.sitblueprint.admin.repository.users.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.cglib.core.Local;
@@ -19,10 +21,12 @@ public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
     private final AuthApiService authApiService;
+    private final AttendanceRepository attendanceRepository;
 
-    public UserServiceImpl(UserRepository userRepository, AuthApiService authApiService) {
+    public UserServiceImpl(UserRepository userRepository, AuthApiService authApiService, AttendanceRepository attendanceRepository) {
         this.userRepository = userRepository;
         this.authApiService = authApiService;
+        this.attendanceRepository = attendanceRepository;
     }
 
     @Override
@@ -124,26 +128,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void recordAttendance(Long userId, LocalDateTime date, Boolean status) {
-        User user = getUserById(userId);
-        user.getAttendance().put(date, status);
-        userRepository.save(user);
+    public Attendance markAttendance(Long userId, LocalDateTime date, Boolean status) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(userId, date);
+
+        Attendance attendance = existingAttendance.orElse(new Attendance(null, date, status, user));
+        attendance.setStatus(status);
+
+        return attendanceRepository.save(attendance);
     }
 
     @Override
-    public Boolean getAttendance(Long userId, LocalDateTime date) {
-        User user = getUserById(userId);
-        return user.getAttendance().getOrDefault(date, null);
+    public Attendance getAttendance(Long userId, LocalDateTime date) {
+        return attendanceRepository.findByUserIdAndDate(userId, date)
+                .orElseThrow(() -> new RuntimeException("Attendance record not found."));
+    }
+
+    @Override
+    public List<Attendance> getAllAttendance(Long userId) {
+        return attendanceRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public Attendance updateAttendance(Long userId, LocalDateTime date, Boolean status) {
+        Attendance attendance = attendanceRepository.findByUserIdAndDate(userId, date)
+                .orElseThrow(() -> new RuntimeException("Attendance not found."));
+
+        attendance.setStatus(status);
+        return attendanceRepository.save(attendance);
     }
 
     @Override
     public void deleteAttendance(Long userId, LocalDateTime date) {
-        User user = userRespository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found with such Id."));
-        if (user.getAttendance().containsKey(date)) {
-            user.getAttendance().remove(date);
-            userRepository.save(user);
-        } else {
-            throw new IllegalArgumentException("No attendance found on such date.");
-        }
+        Attendance attendance = getAttendance(userId, date);
+        attendanceRepository.delete(attendance);
     }
 }

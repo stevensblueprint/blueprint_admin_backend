@@ -1,5 +1,6 @@
 package com.sitblueprint.admin.service.users;
 
+import com.sitblueprint.admin.model.users.Attendance;
 import com.sitblueprint.admin.model.users.User;
 
 import java.time.LocalDateTime;
@@ -22,9 +23,13 @@ public interface UserService {
 
     void resetPassword(Long userId, String password);
 
-    void recordAttendance(Long userId, LocalDateTime date, Boolean status);
+    Attendance markAttendance(Long userId, LocalDateTime date, Boolean status);
 
-    Boolean getAttendance(Long userId, LocalDateTime date);
+    Attendance getAttendance(Long userId, LocalDateTime date);
+
+    List<Attendance> getAllAttendance(Long userId);
+
+    Attendance updateAttendance(Long userId, LocalDateTime date, Boolean status);
 
     void deleteAttendance(Long userId, LocalDateTime date);
 }

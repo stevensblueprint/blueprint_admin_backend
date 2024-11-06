@@ -43,9 +43,6 @@ public class User {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @ElementCollection
-    @CollectionTable(name = "user_attendance", joinColumns = @JoinColumn(name = "user_id"))
-    @MapKeyColumn(name = "date")
-    @Column(name = "status")
-    private Map<LocalDateTime, Boolean> attendance = new HashMap<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Attendance> attendanceRecrods = new HashSet<>();
 }
