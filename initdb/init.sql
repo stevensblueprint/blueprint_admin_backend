@@ -1,100 +1,110 @@
--- Users
-create table roles (
-	id bigint primary key generated always as identity,
-	name varchar(50) not null check (name in ('E-BOARD', 'TEAM_LEAD', 'PRODUCT_MANAGER', 'DEVELOPER', 'BLUEPRINT_INTERNAL_TEAM'))
-);
+   -- Create roles table
+   CREATE TABLE roles (
+       id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
+       name VARCHAR(255) NOT NULL,
+       PRIMARY key(id)
+   );
 
--- Roles Insert
-insert into roles (name)
-values ('E-BOARD'), ('TEAM_LEAD'), ('PRODUCT_MANAGER'), ('DEVELOPER'), ('BLUEPRINT_INTERNAL_TEAM');
+   -- Insert roles into roles table
+   INSERT INTO roles (name) VALUES
+   ('E-BOARD'),
+   ('TEAM_LEAD'),
+   ('DEVELOPER'),
+   ('TECH_TEAM'),
+   ('PROJECT_MANAGER');
 
-create table users (
-	id bigint primary key generated always as identity, 
-	name varchar(255) not null,
-	username varchar(255) not null,
-	email varchar(255) not null,
-	password varchar(255) not null,
-	has_blueprint_email varchar(255) not null,
-	is_enabled boolean not null,
-	date_joined timestamp not null,
-	team_id bigint
-);
+   -- Create members table
+   CREATE TABLE members (
+       id BIGINT GENERATED ALWAYS AS IDENTITY,
+       team_id BIGINT,
+       name VARCHAR(255) NOT NULL,
+       username VARCHAR(255) NOT NULL,
+       email VARCHAR(255) UNIQUE,
+       password VARCHAR(255) NOT NULL,
+       is_active BOOLEAN,
+       date_joined TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+       PRIMARY KEY (id)
+   );
 
-create table user_roles (
-	user_id bigint,
-	role_id bigint,
-	primary key(user_id, role_id),
-	foreign key (user_id) references users(id),
-	foreign key (role_id) references roles(id)
-);
+   -- Create organizations table
+   CREATE TABLE organizations (
+       id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
+       name VARCHAR(255) NOT NULL,
+       team_lead_id BIGINT,
+       project_manager_id BIGINT,
+       PRIMARY KEY (id),
+       FOREIGN KEY (team_lead_id) REFERENCES members(id),
+       FOREIGN KEY (project_manager_id) REFERENCES members(id)
+   );
 
-create table teams (
-	id bigint primary key generated always as identity,
-	name varchar(255) not null,
-	team_lead_id bigint,
-	team_manager_id bigint,
-	date_created timestamp not null,
-	team_class int not null
-);
+   -- Create teams table
+   CREATE TABLE teams (
+       id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
+       organization_id BIGINT NOT NULL,
+       name VARCHAR(255),
+       team_lead_id BIGINT,
+       project_manager_id BIGINT,
+       designer_id BIGINT,
+       date_created TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+       PRIMARY KEY (id),
+       FOREIGN KEY (organization_id) REFERENCES organizations(id),
+       FOREIGN KEY (team_lead_id) REFERENCES members(id),
+       FOREIGN KEY (project_manager_id) REFERENCES members(id),
+       FOREIGN KEY (designer_id) REFERENCES members(id)
+   );
 
-create table npos (
-    id bigint primary key generated always as identity,
-    name varchar(255) not null,
-    foreign key (team_id) references teams(id),
-    project_proposal_url varchar(255) not null,
-    date_of_recruitment timestamp not null
-)
+   -- Create member_roles table (to handle many-to-many relationship between members and roles)
+   CREATE TABLE member_roles (
+       member_id BIGINT NOT NULL,
+       role_id BIGINT NOT NULL,
+       PRIMARY KEY (member_id, role_id),
+       FOREIGN KEY (member_id) REFERENCES members(id),
+       FOREIGN KEY (role_id) REFERENCES roles(id)
+   );
 
-create table blogs  (
-    id bigint primary key generated always as identity,
-    author varchar(255) not null,
-    title varchar(255) not null,
-    date_created timestamp not null
-)
+   --Create blogs table
+   CREATE TABLE blogs (
+       id BIGINT GENERATED ALWAYS AS IDENTITY,
+       author VARCHAR(255) NOT NULL,
+       title VARCHAR(255) NOT NULL,
+       date_created TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+       PRIMARY KEY (id)
+   );
 
-alter table users
-    add constraint fk_team_id
-        foreign key (team_id) references teams(id);
+   ALTER TABLE members
+   ADD CONSTRAINT fk_team_id FOREIGN KEY (team_id) REFERENCES teams(id);
 
-alter table teams
-    add constraint fk_team_lead_id
-        foreign key (team_lead_id) references users(id);
+   -- Insert sample organizations
+   INSERT INTO organizations (name, team_lead_id, project_manager_id) VALUES
+   ('Strawberry Fields', NULL, NULL),
+   ('Fields of Gold',  NULL, NULL);
 
-alter table teams
-    add constraint fk_team_manager_id
-        foreign key (team_manager_id) references users(id);
+   -- Insert sample teams
+   INSERT INTO teams (organization_id, name, team_lead_id, project_manager_id, designer_id, date_created) VALUES
+   (1, 'Frontend Team', NULL, NULL, NULL, '2021-09-01 00:00:00'),
+   (2, 'Backend Team', NULL, NULL, NULL, '2024-10-01 00:00:00');
 
+    -- Insert sample members
+    INSERT INTO members (team_id, name, username, email, password, is_active) VALUES
+    (1, 'John Doe', 'jdoe', 'jdoe@stevens.edu', 'password', TRUE),
+    (2, 'Jane Smith', 'janesmith', 'janesmith@stevens.edu', 'password2', TRUE),
+    (2, 'Sophia Johnson', 'sophiaj', 'sophiaj@stevens.edu', 'a1234', FALSE);
 
--- Insert users into the users table
-insert into users (name, username, email, password, has_blueprint_email, is_enabled, date_joined, team_id) values
-('John Doe', 'john_doe', 'john@example.com', 'password123', 'yes', true, CURRENT_TIMESTAMP, null),
-('Jane Smith', 'jane_smith', 'jane@example.com', 'password456', 'no', true, CURRENT_TIMESTAMP, null),
-('Michael Johnson', 'michael_johnson', 'michael@example.com', 'password789', 'yes', true, CURRENT_TIMESTAMP, null);
+    -- Insert sample member roles
+    INSERT INTO member_roles (member_id, role_id) VALUES
+    (1, 1), -- John Doe as E-BOARD member.
+    (1, 5), -- John Doe as PROJECT_MANAGER.
+    (2, 2), -- Jane Smith as TEAM_LEAD.
+    (3, 3); -- Sophia Johnson as DEVELOPER.
 
--- Teams Insert
-insert into teams (name, team_lead_id, team_manager_id, date_created, team_class) values
-('Team Alpha', 1, 2, CURRENT_TIMESTAMP, 1),
-('Team Beta', 3, 4, CURRENT_TIMESTAMP, 2),
-('Team Gamma', 5, 6, CURRENT_TIMESTAMP, 1),
-('Team Delta', 7, 8, CURRENT_TIMESTAMP, 2),
-('Team Epsilon', 9, 10, CURRENT_TIMESTAMP, 1),
-('Team Zeta', 11, 12, CURRENT_TIMESTAMP, 2),
-('Team Theta', 13, 14, CURRENT_TIMESTAMP, 1);
+    -- Insert sample blogs
+    INSERT INTO blogs (author, title, date_created) VALUES
+    ('John Doe', 'Welcome to the Team!', '2021-09-01 00:00:00'),
+    ('Jane Smith', 'New Project Launch', '2024-10-01 00:00:00');
 
--- User_Roles Insert
-insert into user_roles (user_id, role_id) values
-(1, 1), -- John Doe with E-BOARD role
-(2, 2), -- Jane Smith with TEAM_LEAD role
-(3, 3); -- Michael Johnson with PRODUCT_MANAGER role
+    -- Update Team table to set team_lead_id, project_manager_id and designer_id after members have been inserted
+    UPDATE teams SET team_lead_id = 2, project_manager_id = 2, designer_id = 3 WHERE id = 1;
+    UPDATE teams SET team_lead_id = 1, project_manager_id = 1, designer_id = 3 WHERE id = 2;
+    UPDATE organizations SET team_lead_id = 2, project_manager_id = 2 WHERE id = 1;
+    UPDATE organizations SET team_lead_id = 1, project_manager_id = 2 WHERE id = 2;
 
--- NPOS Insert
-insert into npos (name, team_id, project_proposal_url, date_of_recruitment) values
-('NPOS 1', 1, 'https://example.com/project_proposal_1', CURRENT_TIMESTAMP),
-('NPOS 2', 2, 'https://example.com/project_proposal_2', CURRENT_TIMESTAMP),
-('NPOS 3', 3, 'https://example.com/project_proposal_3', CURRENT_TIMESTAMP);
-
--- Insert blogs to the blogs table
-insert into blogs (author, title, date_created) values
-('John Doe', 'Blog 1', CURRENT_TIMESTAMP),
-('Jane Smith', 'Blog 2', CURRENT_TIMESTAMP),
-('Michael Johnson', 'Blog 3', CURRENT_TIMESTAMP);
