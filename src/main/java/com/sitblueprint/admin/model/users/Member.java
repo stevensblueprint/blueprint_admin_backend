@@ -7,36 +7,51 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-@Table(name = "users")
+@Table(name = "members")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-public class User {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonBackReference(value = "team-members")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String username;
+
+    @Column(unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
-    private String hasBlueprintEmail;
-    private boolean isEnabled;
+
+    private boolean isActive;
 
     @Column(nullable = false)
     private LocalDateTime dateJoined;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
+    @JoinTable(name = "member_roles",
+            joinColumns = @JoinColumn(name = "member_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
+
 }
 
