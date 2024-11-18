@@ -13,41 +13,41 @@ import java.util.List;
 @RequestMapping("/api/v1/team/")
 public class TeamController {
 
-    @Autowired
-    TeamService teamService;
+	@Autowired
+	TeamService teamService;
 
-    @GetMapping("all")
-    public List<Team> getAllTeams() {
-        return teamService.getAllTeams();
-    }
+	@GetMapping("all")
+	public List<Team> getAllTeams() {
+		return teamService.getAllTeams();
+	}
 
-    @GetMapping
-    public Team getTeam(@Param("teamId") String teamId) {
-        return teamService.getTeamById(Long.parseLong(teamId));
-    }
+	@GetMapping
+	public Team getTeam(@Param("teamId") String teamId) {
+		return teamService.getTeamById(Long.parseLong(teamId));
+	}
 
-    @PostMapping
-    public Team createTeam(@RequestBody Team team) {
-        return teamService.createTeam(team);
-    }
+	@PostMapping
+	public Team createTeam(@RequestBody Team team) {
+		return teamService.createTeam(team);
+	}
 
-    @PutMapping
-    public Team updateTeam(@RequestBody Team team) {
-        return teamService.updateTeam(team);
-    }
+	@PutMapping
+	public Team updateTeam(@RequestBody Team team) {
+		return teamService.updateTeam(team);
+	}
 
-    @DeleteMapping
-    public void deleteTeam(String teamId) {
-        teamService.deleteTeam(Long.parseLong(teamId));
-    }
+	@DeleteMapping
+	public void deleteTeam(String teamId) {
+		teamService.deleteTeam(Long.parseLong(teamId));
+	}
 
-    @GetMapping("teamLead/{teamId}")
-    public User getTeamLeadById(@PathVariable("teamId") String teamId) {
-        return teamService.getTeamLeadById(Long.parseLong(teamId));
-    }
+	@GetMapping("teamLead/{teamId}")
+	public User getTeamLeadById(@PathVariable("teamId") String teamId) {
+		return teamService.getTeamLeadById(Long.parseLong(teamId));
+	}
 
-    @GetMapping("productManager/{teamId}")
-    public User getProductManagerById(@PathVariable("teamId") String teamId) {
-        return teamService.getProductManagerById(Long.parseLong(teamId));
-    }
+	@GetMapping("productManager/{teamId}")
+	public User getProductManagerById(@PathVariable("teamId") String teamId) {
+		return teamService.getProductManagerById(Long.parseLong(teamId));
+	}
 }

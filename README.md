@@ -10,10 +10,6 @@ Initialize docker container with postgres service. If you don't have docker inst
 ```
 docker-compose up -d
 ```
-Build the application
-```
-./gradlew build
-```
 Run the application. (You have to run the ```admin/BlueprintAdmin.java``` this is the entry point of the Spring application).
 Else, you can use the following command to run the Spring application:
 ```
@@ -25,6 +21,60 @@ o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) wi
 com.sitblueprint.admin.BlueprintAdmin    : Started BlueprintAdmin in 2.255 seconds (process running for 2.392)
 
 ```
+
+You can also run the server directly from the terminal 
+
+
+## Available Endpoints
+For users:
+```
+GET /api/v1/team/all
+```
+```
+GET /api/v1/team/{teamId}
+```
+```
+POST /api/v1/team/
+```
+```
+PUT /api/v1/team/
+```
+```
+DELETE /api/v1/team/
+```
+```
+POST /api/v1/user/enable/{userId}
+```
+```
+POST /api/v1/user/disable/{userId}
+```
+```
+PUT /api/v1/user/reset_password
+```
+
+For teams:
+```
+GET /api/v1/user/all
+```
+```
+GET /api/v1/user/{userId}
+```
+```
+POST /api/v1/user/
+```
+```
+PUT /api/v1/user/
+```
+```
+DELETE /api/v1/user/
+```
+```
+GET
+```
+```
+GET
+```
+
 
 ## How to connect to database in Docker Container?
 Start the docker container
