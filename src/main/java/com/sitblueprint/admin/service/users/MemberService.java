@@ -2,6 +2,7 @@ package com.sitblueprint.admin.service.users;
 
 import com.sitblueprint.admin.dtos.member.MemberDTO;
 
+import com.sitblueprint.admin.dtos.member.RegistrationRequestDTO;
 import java.util.List;
 
 public interface MemberService {
@@ -20,4 +21,6 @@ public interface MemberService {
     void disableMemberById(Long memberId);
 
     void resetPassword(Long memberId, String password);
+
+    String signUpMember(RegistrationRequestDTO registrationRequestDTO);
 }

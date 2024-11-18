@@ -6,11 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class Token {
   @Id
   @SequenceGenerator(
@@ -50,4 +51,14 @@ public class Token {
       name = "member_id"
   )
   private Member member;
+
+  public static Token of(String token, LocalDateTime createdAt, LocalDateTime expiresAt,
+      Member member) {
+    return Token.builder()
+        .token(token)
+        .createdAt(createdAt)
+        .expiresAt(expiresAt)
+        .member(member)
+        .build();
+  }
 }

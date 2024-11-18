@@ -15,9 +15,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegistrationRequest {
+public class RegistrationRequestDTO {
   @NonNull
   private String username;
+
+  @NonNull
+  private String name;
 
   @NonNull
   @Size(min = 8)
