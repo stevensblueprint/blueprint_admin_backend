@@ -20,13 +20,6 @@ jobs:
           sudo apt-get install -y docker-compose
       - name: Start PostgreSQL with Docker Compose
         run: docker-compose up -d
-      - name: Perform Database Operation
-        run: |
-          echo "Waiting for PostgreSQL to be ready..."
-          until docker exec $(docker-compose ps -q postgres) pg_isready; do
-            sleep 1;
-          done
-          echo "PostgreSQL is ready."
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
