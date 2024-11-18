@@ -40,13 +40,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member createMember(Member member) {
         member.setDateJoined(LocalDate.now());
-        AuthMember AuthMember = new AuthMember(member);
-        try {
-            authApiService.createAuthMember(AuthMember);
-        } catch (Exception e) {
-            log.error("Failed to create Auth user for username: {}", member.getUsername(), e.getMessage());
-            throw new RuntimeException("Auth API failed to create member " + member.getUsername());
-        }
         return memberRepository.save(member);
     }
 
