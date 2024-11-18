@@ -1,15 +1,14 @@
 package com.sitblueprint.admin.service.users;
 
-import com.sitblueprint.admin.model.users.AuthMember;
+import com.sitblueprint.admin.dtos.member.MemberDTO;
 import com.sitblueprint.admin.model.users.Member;
 import com.sitblueprint.admin.repository.users.MemberRepository;
 import jakarta.transaction.Transactional;
-import java.time.LocalDate;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -18,39 +17,45 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
     private static final Logger log = LoggerFactory.getLogger(MemberServiceImpl.class);
     private final MemberRepository memberRepository;
-    private final AuthApiService authApiService;
 
-    public MemberServiceImpl(MemberRepository memberRepository, AuthApiService authApiService) {
+    public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
-        this.authApiService = authApiService;
     }
 
     @Override
-    public List<Member> getAllMembers() {
-        return memberRepository.findAll();
+    public List<MemberDTO> getAllMembers() {
+        return memberRepository.findAll()
+            .stream()
+            .map(Member::toDTO)
+            .collect(Collectors.toList());
     }
 
     @Override
-    public Member getMemberById(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(
+    public MemberDTO getMemberById(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new NoSuchElementException("Member with id " + memberId + " was not found")
         );
+        return member.toDTO();
     }
 
     @Override
-    public Member createMember(Member member) {
-        member.setDateJoined(LocalDate.now());
-        return memberRepository.save(member);
+    public MemberDTO createMember(MemberDTO member) {
+        Member savedMember =  memberRepository.save(member.toEntity());
+        return savedMember.toDTO();
     }
 
     @Override
-    public Member updateMember(Member member) {
-        try {
-            authApiService.updateAuthMember(new AuthMember(member));
-        } catch (Exception e) {
-            throw new RuntimeException("Auth API failed to update member " + member.getUsername());
+    public MemberDTO updateMember(MemberDTO member) {
+        Long memberId = member.getId();
+        if (memberRepository.existsById(memberId)) {
+            Optional<Member> existingMember = memberRepository.findById(memberId);
+            if (existingMember.isPresent()) {
+                Member newMember = member.toEntity();
+                newMember.setId(memberId);
+                return memberRepository.save(newMember).toDTO();
+            }
         }
-        return memberRepository.saveAndFlush(member);
+        throw new RuntimeException("Member with id " + memberId + " was not found");
     }
 
     @Transactional
@@ -59,12 +64,6 @@ public class MemberServiceImpl implements MemberService {
         Optional<Member> optionalMemberToDelete = memberRepository.findById(memberId);
         if (optionalMemberToDelete.isEmpty()) {
             throw new RuntimeException("Member with id " + memberId + " was not found");
-        }
-        Member memberToDelete = optionalMemberToDelete.get();
-        try {
-            authApiService.deleteAuthMember(memberToDelete.getUsername());
-        } catch (Exception e) {
-            throw new RuntimeException("Auth API failed to delete member " + memberToDelete.getId());
         }
         memberRepository.deleteById(memberId);
     }
@@ -76,11 +75,6 @@ public class MemberServiceImpl implements MemberService {
             throw new RuntimeException("Member not found with id " + memberId);
         }
         Member member = memberOptional.get();
-        try {
-            authApiService.enableAuthMember(member.getUsername());
-        } catch (Exception e) {
-            throw new RuntimeException("Authentication API failed to enable member " + member.getUsername());
-        }
         member.setActive(true);
         memberRepository.save(member);
     }
@@ -92,11 +86,6 @@ public class MemberServiceImpl implements MemberService {
             throw new RuntimeException("Member not found with id " + memberId);
         }
         Member member = memberOptional.get();
-        try {
-            authApiService.disableAuthMember(member.getUsername());
-        } catch (Exception e) {
-            throw new RuntimeException("Authentication API failed to disable member " + member.getUsername());
-        }
         member.setActive(false);
         memberRepository.save(member);
     }
@@ -109,11 +98,6 @@ public class MemberServiceImpl implements MemberService {
         }
         Member member = memberOptional.get();
         member.setPassword(newPassword);
-        try {
-            authApiService.resetPasswordAuthMember(member.getUsername(), newPassword);
-        } catch (Exception e) {
-            throw new RuntimeException("Auth API failed to reset password of member " + member.getUsername());
-        }
         memberRepository.save(member);
     }
 }

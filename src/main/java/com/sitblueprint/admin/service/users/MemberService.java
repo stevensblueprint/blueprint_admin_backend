@@ -1,17 +1,17 @@
 package com.sitblueprint.admin.service.users;
 
-import com.sitblueprint.admin.model.users.Member;
+import com.sitblueprint.admin.dtos.member.MemberDTO;
 
 import java.util.List;
 
 public interface MemberService {
-    List<Member> getAllMembers();
+    List<MemberDTO> getAllMembers();
 
-    Member getMemberById(Long memberId);
+    MemberDTO getMemberById(Long memberId);
 
-    Member createMember(Member member);
+    MemberDTO createMember(MemberDTO member);
 
-    Member updateMember(Member member);
+    MemberDTO updateMember(MemberDTO member);
 
     void deleteMemberById(Long memberId);
 

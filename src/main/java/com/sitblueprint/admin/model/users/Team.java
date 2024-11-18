@@ -1,6 +1,9 @@
 package com.sitblueprint.admin.model.users;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,39 +20,36 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id"
+)
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonBackReference(value = "organization-teams")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "organization_id")
+    @ManyToOne
+    @JoinColumn(name = "organization_id", nullable = false)
     private Organization organization;
 
     private String name;
 
-    @JsonIgnoreProperties({"team", "roles"})
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "team_lead_id")
     private Member teamLead;
 
-    @JsonIgnoreProperties({"team", "roles"})
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "project_manager_id")
     private Member projectManager;
 
-    @JsonIgnoreProperties({"team", "roles"})
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "designer_id")
     private Member designer;
 
-    @JsonManagedReference(value = "team-members")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
-    private Set<Member> members = new HashSet<>();
-
     @Column(nullable = false)
-    private LocalDateTime dateCreated;
+    private LocalDate dateCreated;
+
+    @OneToMany(mappedBy = "team")
+    private Set<Member> members;
 }

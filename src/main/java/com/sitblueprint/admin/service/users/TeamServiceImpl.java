@@ -3,6 +3,7 @@ package com.sitblueprint.admin.service.users;
 import com.sitblueprint.admin.model.users.Team;
 import com.sitblueprint.admin.model.users.Member;
 import com.sitblueprint.admin.repository.users.TeamRepository;
+import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,7 +30,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team createTeam(Team team) {
-        team.setDateCreated(LocalDateTime.now());
+        team.setDateCreated(LocalDate.now());
         return teamRepository.save(team);
     }
 

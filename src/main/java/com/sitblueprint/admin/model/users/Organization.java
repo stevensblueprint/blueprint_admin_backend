@@ -1,5 +1,7 @@
 package com.sitblueprint.admin.model.users;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +16,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id"
+)
 public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,15 +27,14 @@ public class Organization {
 
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "team_lead_id")
     private Member teamLead;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_manager_id")
     private Member projectManager;
 
-    @JsonManagedReference(value = "organization-teams")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization")
-    private Set<Team> teams = new HashSet<>();
+    @OneToMany(mappedBy = "organization")
+    private Set<Team> teams;
 }

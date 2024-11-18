@@ -1,9 +1,8 @@
 package com.sitblueprint.admin.controller.users;
 
-import com.sitblueprint.admin.model.users.Member;
+import com.sitblueprint.admin.dtos.member.MemberDTO;
 import com.sitblueprint.admin.service.users.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,18 +12,22 @@ import java.util.List;
 @RequestMapping("/api/v1/member")
 public class MemberController {
 
-    @Autowired
     MemberService memberService;
 
+    @Autowired
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
     @GetMapping
-    public List<Member> getAllMembers() {
+    public List<MemberDTO> getAllMembers() {
         return memberService.getAllMembers();
     }
 
     @GetMapping("/{memberId}")
     public ResponseEntity<?> getMember(@PathVariable("memberId") Long memberId) {
         try {
-            Member member = memberService.getMemberById(memberId);
+            MemberDTO member = memberService.getMemberById(memberId);
             return ResponseEntity.ok(member);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().body("Invalid member id format");
@@ -32,12 +35,12 @@ public class MemberController {
     }
 
     @PostMapping
-    public Member createMember(@RequestBody Member member) {
+    public MemberDTO createMember(@RequestBody MemberDTO member) {
         return memberService.createMember(member);
     }
 
     @PutMapping
-    public Member updateMember(@RequestBody Member member) {
+    public MemberDTO updateMember(@RequestBody MemberDTO member) {
         return memberService.updateMember(member);
     }
 
