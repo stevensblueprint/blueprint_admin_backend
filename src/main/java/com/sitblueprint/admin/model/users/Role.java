@@ -12,9 +12,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    private String name; // E-BOARD, TEAM_LEAD, PRODUCT_MANAGER, DEVELOPER, BLUEPRINT_INTERNAL_TEAM
+	private String name; // E-BOARD, TEAM_LEAD, PRODUCT_MANAGER, DEVELOPER, BLUEPRINT_INTERNAL_TEAM
 }

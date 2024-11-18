@@ -6,17 +6,17 @@ import com.sitblueprint.admin.model.users.User;
 import java.util.List;
 
 public interface TeamService {
-    List<Team> getAllTeams();
+	List<Team> getAllTeams();
 
-    Team getTeamById(Long teamId);
+	Team getTeamById(Long teamId);
 
-    Team createTeam(Team team);
+	Team createTeam(Team team);
 
-    Team updateTeam(Team team);
+	Team updateTeam(Team team);
 
-    void deleteTeam(Long teamId);
+	void deleteTeam(Long teamId);
 
-    User getTeamLeadById(Long teamId);
+	User getTeamLeadById(Long teamId);
 
-    User getProductManagerById(Long teamId);
+	User getProductManagerById(Long teamId);
 }
