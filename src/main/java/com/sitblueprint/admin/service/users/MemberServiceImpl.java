@@ -4,6 +4,7 @@ import com.sitblueprint.admin.model.users.AuthMember;
 import com.sitblueprint.admin.model.users.Member;
 import com.sitblueprint.admin.repository.users.MemberRepository;
 import jakarta.transaction.Transactional;
+import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member createMember(Member member) {
-        member.setDateJoined(LocalDateTime.now());
+        member.setDateJoined(LocalDate.now());
         AuthMember AuthMember = new AuthMember(member);
         try {
             authApiService.createAuthMember(AuthMember);

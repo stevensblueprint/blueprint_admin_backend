@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/member/")
+@RequestMapping("/api/v1/member")
 public class MemberController {
 
     @Autowired
     MemberService memberService;
 
-    @GetMapping("all")
+    @GetMapping
     public List<Member> getAllMembers() {
         return memberService.getAllMembers();
     }

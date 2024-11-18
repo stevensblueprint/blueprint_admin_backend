@@ -22,7 +22,7 @@
        email VARCHAR(255) UNIQUE,
        password VARCHAR(255) NOT NULL,
        is_active BOOLEAN,
-       date_joined TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+       date_joined DATE DEFAULT CURRENT_DATE NOT NULL,
        PRIMARY KEY (id)
    );
 

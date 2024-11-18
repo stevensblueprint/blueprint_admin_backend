@@ -1,6 +1,7 @@
 package com.sitblueprint.admin.model.users;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -40,10 +41,11 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private boolean isActive;
 
     @Column(nullable = false)
-    private LocalDateTime dateJoined;
+    private LocalDate dateJoined;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "member_roles",
