@@ -22,7 +22,7 @@ com.sitblueprint.admin.BlueprintAdmin    : Started BlueprintAdmin in 2.255 secon
 
 ```
 
-You can also run the server directly from the terminal 
+You can also run the server directly from the terminal
 
 
 ## Available Endpoints
