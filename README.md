@@ -6,11 +6,9 @@ Initialize docker container with postgres service. If you don't have docker inst
 ```
 docker-compose up -d
 ```
-Build the application
-```
-./gradlew build
-```
 Run the application. (You have to run the ```admin/BlueprintAdmin.java``` this is the entry point of the Spring application).
+
+You can also run the server directly from the terminal 
 
 
 ## Available Endpoints

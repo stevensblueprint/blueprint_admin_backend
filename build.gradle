@@ -3,10 +3,12 @@ plugins {
    id 'org.springframework.boot' version '3.2.3'
    id 'io.spring.dependency-management' version '1.1.4'
    id "com.diffplug.spotless" version "5.16.0"
+   id 'application'
 }
 
 group = 'com.sitblueprint'
 version = '0.0.1-SNAPSHOT'
+mainClassName = 'com.sitblueprint.admin.BlueprintAdmin'
 
 java {
    sourceCompatibility = '17'
