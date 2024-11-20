@@ -13,51 +13,51 @@ import java.util.List;
 @RequestMapping("/api/v1/user/")
 public class UserController {
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
-    @GetMapping("all")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
+	@GetMapping("all")
+	public List<User> getAllUsers() {
+		return userService.getAllUsers();
+	}
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<?> getUser(@PathVariable("userId") Long userId) {
-        try {
-            User user = userService.getUserById(userId);
-            return ResponseEntity.ok(user);
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().body("Invalid user id format");
-        }
-    }
+	@GetMapping("/{userId}")
+	public ResponseEntity<?> getUser(@PathVariable("userId") Long userId) {
+		try {
+			User user = userService.getUserById(userId);
+			return ResponseEntity.ok(user);
+		} catch (NumberFormatException e) {
+			return ResponseEntity.badRequest().body("Invalid user id format");
+		}
+	}
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
-    }
+	@PostMapping
+	public User createUser(@RequestBody User user) {
+		return userService.createUser(user);
+	}
 
-    @PutMapping
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
-    }
+	@PutMapping
+	public User updateUser(@RequestBody User user) {
+		return userService.updateUser(user);
+	}
 
-    @DeleteMapping
-    public void deleteUser(String userId) {
-        userService.deleteUserById(Long.parseLong(userId));
-    }
+	@DeleteMapping
+	public void deleteUser(String userId) {
+		userService.deleteUserById(Long.parseLong(userId));
+	}
 
-    @PostMapping("enable/{userId}")
-    public void enableUser(@PathVariable("userId") String userId) {
-        userService.enableUserById(Long.parseLong(userId));
-    }
+	@PostMapping("enable/{userId}")
+	public void enableUser(@PathVariable("userId") String userId) {
+		userService.enableUserById(Long.parseLong(userId));
+	}
 
-    @PostMapping("disable/{userId}")
-    public void disableUser(@PathVariable("userId") String userId) {
-        userService.disableUserById(Long.parseLong(userId));
-    }
+	@PostMapping("disable/{userId}")
+	public void disableUser(@PathVariable("userId") String userId) {
+		userService.disableUserById(Long.parseLong(userId));
+	}
 
-    @PutMapping("reset_password")
-    public void resetPassword(@RequestBody String userId, @RequestBody String newPassword) {
-        userService.resetPassword(Long.parseLong(userId), newPassword);
-    }
+	@PutMapping("reset_password")
+	public void resetPassword(@RequestBody String userId, @RequestBody String newPassword) {
+		userService.resetPassword(Long.parseLong(userId), newPassword);
+	}
 }
