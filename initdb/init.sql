@@ -92,10 +92,6 @@ INSERT INTO teams (organization_id, name, team_lead_id, project_manager_id, desi
 (1, 'Frontend Team', NULL, NULL, NULL, '2021-09-01 00:00:00'),
 (2, 'Backend Team', NULL, NULL, NULL, '2024-10-01 00:00:00');
 
-alter table npos
-    add constraint fk_team_id
-        foreign key (team_id) references teams(id);
-
 ALTER TABLE npos
     ADD CONSTRAINT fk_team_id
         FOREIGN KEY (team_id) references teams(id);
