@@ -14,20 +14,20 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NPO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team teamAssigned;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "team_id")
+	private Team teamAssigned;
 
-    @Column(nullable = false)
-    private String projectProposalUrl;
+	@Column(nullable = false)
+	private String projectProposalUrl;
 
-    @Column(nullable = false)
-    private LocalDate dateOfRecruitment;
+	@Column(nullable = false)
+	private LocalDate dateOfRecruitment;
 }

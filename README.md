@@ -8,7 +8,7 @@ docker-compose up -d
 ```
 Run the application. (You have to run the ```admin/BlueprintAdmin.java``` this is the entry point of the Spring application).
 
-You can also run the server directly from the terminal 
+You can also run the server directly from the terminal
 
 
 ## Available Endpoints
