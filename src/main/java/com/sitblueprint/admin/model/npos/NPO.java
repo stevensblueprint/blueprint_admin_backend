@@ -26,7 +26,7 @@ public class NPO {
     private Team teamAssigned;
 
     @Column(nullable = false)
-    private String url;
+    private String projectProposalUrl;
 
     @Column(nullable = false)
     private LocalDate dateOfRecruitment;
