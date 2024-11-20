@@ -29,7 +29,7 @@ public class NPOServiceImpl implements NPOService {
 
     @Override
     public NPO createNPO(NPO npo) {
-        npo.setDateOfRecruitment(LocalDate.now());
+        //npo.setDateOfRecruitment(LocalDate.now());
         return npoRepository.save(npo);
     }
 
