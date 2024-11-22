@@ -3,6 +3,7 @@ plugins {
    id 'org.springframework.boot' version '3.2.3'
    id 'io.spring.dependency-management' version '1.1.4'
    id "com.diffplug.spotless" version "5.16.0"
+   id 'jacoco'
    id 'application'
 }
 
@@ -55,6 +56,20 @@ dependencies {
    runtimeOnly 'org.postgresql:postgresql:42.2.23'
 }
 
+jacocoTestReport {
+   dependsOn test
+   jacocoTestCoverageVerification {
+      violationRules {
+         rule {
+            limit {
+               minimum = 0.10
+            }
+         }
+      }
+   }
+}
+
 tasks.named('test') {
    useJUnitPlatform()
+   finalizedBy jacocoTestCoverageVerification
 }
