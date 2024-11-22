@@ -7,21 +7,21 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface UserService {
-    List<User> getAllUsers();
+	List<User> getAllUsers();
 
-    User getUserById(Long userId);
+	User getUserById(Long userId);
 
-    User createUser(User user);
+	User createUser(User user);
 
-    User updateUser(User user);
+	User updateUser(User user);
 
-    void deleteUserById(Long userId);
+	void deleteUserById(Long userId);
 
-    void enableUserById(Long userId);
+	void enableUserById(Long userId);
 
-    void disableUserById(Long userId);
+	void disableUserById(Long userId);
 
-    void resetPassword(Long userId, String password);
+	void resetPassword(Long userId, String password);
 
     Attendance markAttendance(Long userId, LocalDateTime date);
 

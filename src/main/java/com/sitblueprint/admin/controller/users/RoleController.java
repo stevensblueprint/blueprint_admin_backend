@@ -12,26 +12,26 @@ import java.util.List;
 @RequestMapping("/api/v1/role/")
 public class RoleController {
 
-    @Autowired
-    RoleService roleService;
+	@Autowired
+	RoleService roleService;
 
-    @GetMapping("all")
-    public List<Role> getAllRoles() {
-        return roleService.getAllRoles();
-    }
+	@GetMapping("all")
+	public List<Role> getAllRoles() {
+		return roleService.getAllRoles();
+	}
 
-    @GetMapping
-    public Role getRoleById(@Param("roleId") String roleId) {
-        return roleService.getRoleById(Long.parseLong(roleId));
-    }
+	@GetMapping
+	public Role getRoleById(@Param("roleId") String roleId) {
+		return roleService.getRoleById(Long.parseLong(roleId));
+	}
 
-    @PostMapping
-    public Role createRole(@RequestBody Role role) {
-        return roleService.createRole(role);
-    }
+	@PostMapping
+	public Role createRole(@RequestBody Role role) {
+		return roleService.createRole(role);
+	}
 
-    @DeleteMapping
-    public void deleteRole(String roleId) {
-        roleService.deleteRole(Long.parseLong(roleId));
-    }
+	@DeleteMapping
+	public void deleteRole(String roleId) {
+		roleService.deleteRole(Long.parseLong(roleId));
+	}
 }

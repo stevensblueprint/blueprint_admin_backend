@@ -1,9 +1,7 @@
 package com.sitblueprint.admin.model.users;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -11,29 +9,30 @@ import java.util.Set;
 
 @Entity
 @Table(name = "teams")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Team {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    private String name;
+	private String name;
 
-    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<User> members = new HashSet<>();
+	@OneToMany(mappedBy = "team", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<User> members = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_lead_id")
-    private User teamLead;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "team_lead_id")
+	private User teamLead;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_manager_id")
-    private User productManager;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_manager_id")
+	private User productManager;
 
-    @Column(nullable = false)
-    private LocalDateTime dateCreated;
+	@Column(nullable = false)
+	private LocalDateTime dateCreated;
 
-    private int teamClass;
+	private int teamClass;
 }

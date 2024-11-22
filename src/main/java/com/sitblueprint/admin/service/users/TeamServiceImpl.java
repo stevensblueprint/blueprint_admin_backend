@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class TeamServiceImpl implements TeamService {
-    private final TeamRepository teamRepository;
+	private final TeamRepository teamRepository;
     private final AttendanceRepository attendanceRepository;
     private final UserRepository userRepository;
 
@@ -30,44 +30,45 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.findAll();
     }
 
-    @Override
-    public Team getTeamById(Long teamId) {
-        return teamRepository.findById(teamId).orElse(null);
-    }
+	@Override
+	public Team getTeamById(Long teamId) {
+		return teamRepository.findById(teamId).orElse(null);
+	}
 
-    @Override
-    public Team createTeam(Team team) {
-        team.setDateCreated(LocalDateTime.now());
-        return teamRepository.save(team);
-    }
+	@Override
+	public Team createTeam(Team team) {
+		team.setDateCreated(LocalDateTime.now());
+		return teamRepository.save(team);
+	}
 
-    @Override
-    public Team updateTeam(Team team) {
-        return teamRepository.saveAndFlush(team);
-    }
+	@Override
+	public Team updateTeam(Team team) {
+		return teamRepository.saveAndFlush(team);
+	}
 
-    @Override
-    public void deleteTeam(Long teamId) {
-        teamRepository.deleteById(teamId);
-    }
+	@Override
+	public void deleteTeam(Long teamId) {
+		teamRepository.deleteById(teamId);
+	}
 
-    @Override
-    public User getTeamLeadById(Long teamId) {
-        Optional<Team> optionalTeam = teamRepository.findById(teamId);
-        if (!optionalTeam.isPresent()) {
-            throw new RuntimeException("Team not found: " + teamId);
-        }
-        return optionalTeam.get().getTeamLead();
-    }
+	@Override
+	public User getTeamLeadById(Long teamId) {
+		Optional<Team> optionalTeam = teamRepository.findById(teamId);
+		if (!optionalTeam.isPresent()) {
+			throw new RuntimeException("Team not found: " + teamId);
+		}
+		return optionalTeam.get().getTeamLead();
+	}
 
-    @Override
-    public User getProductManagerById(Long teamId) {
-        Optional<Team> optionalTeam = teamRepository.findById(teamId);
-        if (!optionalTeam.isPresent()) {
-            throw new RuntimeException("Team not found: " + teamId);
-        }
-        return optionalTeam.get().getProductManager();
-    }
+	@Override
+	public User getProductManagerById(Long teamId) {
+		Optional<Team> optionalTeam = teamRepository.findById(teamId);
+		if (!optionalTeam.isPresent()) {
+			throw new RuntimeException("Team not found: " + teamId);
+		}
+		return optionalTeam.get().getProductManager();
+	}
+}
 
     @Override
     public List<Attendance> markTeamAttendance(Long teamId, LocalDateTime date) {
