@@ -21,9 +21,6 @@ public class Attendance {
     @Column(name = "attendance_date", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "status", nullable = false)
-    private Boolean status;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

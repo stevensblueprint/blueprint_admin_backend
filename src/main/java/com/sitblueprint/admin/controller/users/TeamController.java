@@ -54,8 +54,8 @@ public class TeamController {
     }
 
     @PostMapping("attendance")
-    public List<Attendance> markTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date, @RequestParam Boolean status) {
-        return teamService.markTeamAttendance(teamId, date, status);
+    public List<Attendance> markTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
+        return teamService.markTeamAttendance(teamId, date);
     }
 
     @GetMapping("attendance")
@@ -69,8 +69,8 @@ public class TeamController {
     }
 
     @PutMapping("attendance")
-    public List<Attendance> updateTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date, @RequestParam Boolean status) {
-        return teamService.updateTeamAttendance(teamId, date, status);
+    public List<Attendance> updateTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
+        return teamService.updateTeamAttendance(teamId, date);
     }
 
     @DeleteMapping("attendance")

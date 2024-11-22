@@ -23,13 +23,13 @@ public interface UserService {
 
     void resetPassword(Long userId, String password);
 
-    Attendance markAttendance(Long userId, LocalDateTime date, Boolean status);
+    Attendance markAttendance(Long userId, LocalDateTime date);
 
     Attendance getAttendance(Long userId, LocalDateTime date);
 
     List<Attendance> getAllAttendance(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 
-    Attendance updateAttendance(Long userId, LocalDateTime date, Boolean status);
+    Attendance updateAttendance(Long userId, LocalDateTime date);
 
     void deleteAttendance(Long userId, LocalDateTime date);
 }

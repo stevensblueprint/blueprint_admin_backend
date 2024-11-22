@@ -64,8 +64,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Attendance> markAttendance(@PathVariable("userId") Long userId, @RequestParam("date") LocalDateTime date, @RequestParam("status") Boolean status) {
-        Attendance attendance = userService.markAttendance(userId, date, status);
+    public ResponseEntity<Attendance> markAttendance(@PathVariable("userId") Long userId, @PathVariable("date") LocalDateTime date) {
+        Attendance attendance = userService.markAttendance(userId, date);
         return ResponseEntity.ok(attendance);
     }
 
@@ -82,9 +82,14 @@ public class UserController {
     }
 
     @PutMapping("/attendance/{date}")
-    public ResponseEntity<Attendance> updateAttendance(@PathVariable("userId") Long userId, @RequestParam("date") LocalDateTime date, @RequestParam("status") Boolean status) {
-        Attendance updateAttendance = userService.updateAttendance(userId, date, status);
-        return ResponseEntity.ok(updateAttendance);
+    public ResponseEntity<Attendance> updateAttendance(@PathVariable("userId") Long userId, @RequestParam("date") LocalDateTime date) {
+        Attendance updatedAttendance = userService.updateAttendance(userId, date);
+
+        if (updatedAttendance == null) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(updatedAttendance);
+        }
     }
 
     @DeleteMapping("/attendance/{date}")

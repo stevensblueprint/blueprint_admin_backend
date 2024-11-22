@@ -128,14 +128,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Attendance markAttendance(Long userId, LocalDateTime date, Boolean status) {
+    public Attendance markAttendance(Long userId, LocalDateTime date) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(userId, date);
 
-        Attendance attendance = existingAttendance.orElse(new Attendance(null, date, status, user));
-        attendance.setStatus(status);
+        Attendance attendance = existingAttendance.orElse(new Attendance(null, date, user));
 
         return attendanceRepository.save(attendance);
     }
@@ -143,7 +142,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Attendance getAttendance(Long userId, LocalDateTime date) {
         return attendanceRepository.findByUserIdAndDate(userId, date)
-                .orElseThrow(() -> new NoSuchElementException("Attendance record not found."));
+                .orElseThrow(() -> new NoSuchElementException("Attendance record not found, user was absent."));
     }
 
     @Override
@@ -160,12 +159,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Attendance updateAttendance(Long userId, LocalDateTime date, Boolean status) {
-        Attendance attendance = attendanceRepository.findByUserIdAndDate(userId, date)
-                .orElseThrow(() -> new NoSuchElementException("Attendance not found."));
+    public Attendance updateAttendance(Long userId, LocalDateTime date) {
+        Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(userId, date);
 
-        attendance.setStatus(status);
-        return attendanceRepository.save(attendance);
+        if (existingAttendance.isPresent()) {
+            attendanceRepository.delete(existingAttendance.get());
+            return null;
+        } else {
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+            Attendance attendance = new Attendance(null, date, user);
+            return attendanceRepository.save(attendance);
+        }
     }
 
     @Override

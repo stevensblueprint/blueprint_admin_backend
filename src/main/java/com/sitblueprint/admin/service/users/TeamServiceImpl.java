@@ -70,7 +70,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Attendance> markTeamAttendance(Long teamId, LocalDateTime date, Boolean status) {
+    public List<Attendance> markTeamAttendance(Long teamId, LocalDateTime date) {
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new NoSuchElementException("Team not found"));
 
@@ -80,10 +80,10 @@ public class TeamServiceImpl implements TeamService {
         for (User member : teamMembers) {
             Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(member.getId(), date);
 
-            Attendance attendance = existingAttendance.orElse(new Attendance(null, date, status, member));
-            attendance.setStatus(status);
-
-            attendanceList.add(attendanceRepository.save(attendance));
+            if (existingAttendance.isEmpty()) {
+                Attendance attendance = new Attendance(null, date, member);
+                attendanceList.add(attendanceRepository.save(attendance));
+            }
         }
         return attendanceList;
     }
@@ -107,18 +107,25 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Attendance> updateTeamAttendance(Long teamId, LocalDateTime date, Boolean status) {
-        List<Attendance> attendances = attendanceRepository.findAllByTeamIdAndDate(teamId, date);
+    public List<Attendance> updateTeamAttendance(Long teamId, LocalDateTime date) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new NoSuchElementException("Team not found"));
 
-        if (attendances.isEmpty()) {
-            throw new NoSuchElementException("No attendance records found.");
+        List<User> teamMembers = new ArrayList<>(team.getMembers());
+        List<Attendance> attendanceList = new ArrayList<>();
+
+        for (User member : teamMembers) {
+            Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(member.getId(), date);
+
+            if (existingAttendance.isEmpty()) {
+                Attendance attendance = new Attendance(null, date, member);
+                attendanceList.add(attendanceRepository.save(attendance));
+            } else {
+                attendanceRepository.delete(existingAttendance.get());
+            }
         }
 
-        for (Attendance attendance : attendances) {
-            attendance.setStatus(status);
-        }
-
-        return attendanceRepository.saveAll(attendances);
+        return attendanceList;
     }
 
     @Override

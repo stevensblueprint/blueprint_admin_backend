@@ -22,13 +22,13 @@ public interface TeamService {
 
     User getProductManagerById(Long teamId);
 
-    List<Attendance> markTeamAttendance(Long teamId, LocalDateTime date, Boolean status);
+    List<Attendance> markTeamAttendance(Long teamId, LocalDateTime date);
 
     List<Attendance> getTeamAttendance(Long teamId, LocalDateTime date);
 
     List<Attendance> getTeamAllAttendance(Long teamId, LocalDateTime startDate, LocalDateTime endDate);
 
-    List<Attendance> updateTeamAttendance(Long teamId, LocalDateTime date, Boolean status);
+    List<Attendance> updateTeamAttendance(Long teamId, LocalDateTime date);
 
     void deleteTeamAttendance(Long teamId, LocalDateTime date);
 }
