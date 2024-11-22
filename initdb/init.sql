@@ -54,8 +54,13 @@ create table blogs  (
 
 create table user_attendance (
     id bigint primary key generated always as identity,
-    date timestamp not null,
+    user_id bigint not null,
+    team_id bigint not null,
+    date timestamp not null default current_timestamp,
     status boolean not null,
+    foreign key (user_id) references users(id),
+    foreign key (team_id) references teams(id)
+
 )
 
 alter table users
@@ -93,7 +98,8 @@ insert into user_roles (user_id, role_id) values
 (2, 2), -- Jane Smith with TEAM_LEAD role
 (3, 3); -- Michael Johnson with PRODUCT_MANAGER role
 
+-- Attendance Insert
 insert into user_attendance (user_id, team_id, date, status) values
-('1', '1', '2024-11-06 12:00', 'True'),
-('2', '1', '2024-11-06 12:02', 'True'),
-('3', '2', '2024-11-06 12:10', 'True')
+('1', '1', '2024-11-06 12:00', true),
+('2', '1', '2024-11-06 12:02', true),
+('3', '2', '2024-11-06 12:10', true)
