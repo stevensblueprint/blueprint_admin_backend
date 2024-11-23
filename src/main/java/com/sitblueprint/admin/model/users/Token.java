@@ -22,43 +22,27 @@ import lombok.Setter;
 @Entity
 @Builder
 public class Token {
-  @Id
-  @SequenceGenerator(
-      name = "sequence_token",
-      sequenceName = "token_sequence",
-      allocationSize = 1
-  )
-  @GeneratedValue(
-      strategy = GenerationType.SEQUENCE,
-      generator = "token_sequence"
-  )
-  private Long id;
+	@Id
+	@SequenceGenerator(name = "sequence_token", sequenceName = "token_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "token_sequence")
+	private Long id;
 
-  @Column(nullable = false)
-  private String token;
+	@Column(nullable = false)
+	private String token;
 
-  @Column(nullable = false)
-  private LocalDateTime createdAt;
+	@Column(nullable = false)
+	private LocalDateTime createdAt;
 
-  @Column(nullable = false)
-  private LocalDateTime expiresAt;
+	@Column(nullable = false)
+	private LocalDateTime expiresAt;
 
-  private LocalDateTime confirmedAt;
+	private LocalDateTime confirmedAt;
 
-  @ManyToOne
-  @JoinColumn(
-      nullable = false,
-      name = "member_id"
-  )
-  private Member member;
+	@ManyToOne
+	@JoinColumn(nullable = false, name = "member_id")
+	private Member member;
 
-  public static Token of(String token, LocalDateTime createdAt, LocalDateTime expiresAt,
-      Member member) {
-    return Token.builder()
-        .token(token)
-        .createdAt(createdAt)
-        .expiresAt(expiresAt)
-        .member(member)
-        .build();
-  }
+	public static Token of(String token, LocalDateTime createdAt, LocalDateTime expiresAt, Member member) {
+		return Token.builder().token(token).createdAt(createdAt).expiresAt(expiresAt).member(member).build();
+	}
 }

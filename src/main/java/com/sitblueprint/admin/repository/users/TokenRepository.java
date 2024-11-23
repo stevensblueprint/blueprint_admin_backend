@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TokenRepository extends JpaRepository<Token, Long> {
-  Token findByToken(String token);
+	Token findByToken(String token);
 
-  @Transactional
-  @Modifying
-  @Query("UPDATE Token c " + "SET c.confirmedAt = ?2 " + "WHERE c.token = ?1")
-  int updateConfirmedAt(String token, LocalDateTime localDateTime);
+	@Transactional
+	@Modifying
+	@Query("UPDATE Token c " + "SET c.confirmedAt = ?2 " + "WHERE c.token = ?1")
+	int updateConfirmedAt(String token, LocalDateTime localDateTime);
 }

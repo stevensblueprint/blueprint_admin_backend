@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmailDomain {
-  String message() default "Domain must be stevens.edu";
-  String domain() default "stevens.edu";
-  Class<?>[] groups() default {};
-  Class<? extends Payload>[] payload() default {};
+	String message() default "Domain must be stevens.edu";
+	String domain() default "stevens.edu";
+	Class<?>[] groups() default {};
+	Class<? extends Payload>[] payload() default {};
 }

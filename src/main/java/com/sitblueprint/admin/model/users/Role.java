@@ -19,13 +19,13 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    @Column(nullable = false)
-    private String name; // E-BOARD, TEAM_LEAD, PRODUCT_MANAGER, DEVELOPER, BLUEPRINT_INTERNAL_TEAM
+	@Column(nullable = false)
+	private String name; // E-BOARD, TEAM_LEAD, PRODUCT_MANAGER, DEVELOPER, BLUEPRINT_INTERNAL_TEAM
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<Member> members;
+	@ManyToMany(mappedBy = "roles")
+	private Set<Member> members;
 }

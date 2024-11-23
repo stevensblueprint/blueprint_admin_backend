@@ -1,39 +1,58 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.3'
-	id 'io.spring.dependency-management' version '1.1.4'
+   id 'java'
+   id 'org.springframework.boot' version '3.2.3'
+   id 'io.spring.dependency-management' version '1.1.4'
+   id "com.diffplug.spotless" version "5.16.0"
 }
 
 group = 'com.sitblueprint'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+   sourceCompatibility = '17'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+   compileOnly {
+      extendsFrom annotationProcessor
+   }
 }
 
 repositories {
-	mavenCentral()
+   mavenCentral()
+}
+
+spotless {
+   // optional: limit format enforcement to just the files changed by this feature branch
+//   ratchetFrom 'origin/main'
+   format 'misc', {
+      // define the files to apply `misc` to
+      target '*.gradle', '*.md', '.gitignore'
+      // define the steps to apply to those files
+      trimTrailingWhitespace()
+      indentWithSpaces(3) // or spaces. Takes an integer argument if you don't like 4
+      endWithNewline()
+      setEncoding('utf-8')
+   }
+   java {
+      eclipse() // I like eclipse formatting over google
+//      googleJavaFormat('1.11.0').aosp().reflowLongStrings(), this is the other option
+   }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.data:spring-data-rest-hal-explorer'
-	implementation "org.springframework.boot:spring-boot-starter-security"
-	implementation 'org.hibernate:hibernate-validator:6.0.13.Final'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	runtimeOnly 'org.postgresql:postgresql:42.2.23'
+   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+   implementation 'org.springframework.boot:spring-boot-starter-web'
+   implementation 'org.springframework.data:spring-data-rest-hal-explorer'
+   implementation "org.springframework.boot:spring-boot-starter-security"
+   implementation 'org.hibernate:hibernate-validator:6.0.13.Final'
+   compileOnly 'org.projectlombok:lombok'
+   runtimeOnly 'com.h2database:h2'
+   annotationProcessor 'org.projectlombok:lombok'
+   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+   runtimeOnly 'org.postgresql:postgresql:42.2.23'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+   useJUnitPlatform()
 }

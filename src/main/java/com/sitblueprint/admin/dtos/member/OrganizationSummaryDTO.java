@@ -12,6 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class OrganizationSummaryDTO {
-  private Long id;
-  private String name;
+	private Long id;
+	private String name;
 }

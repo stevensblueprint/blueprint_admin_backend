@@ -4,7 +4,7 @@ import com.sitblueprint.admin.model.users.Token;
 import java.util.Optional;
 
 public interface TokenService {
-  void saveConfirmationToken(Token token);
-  Token getToken(String token);
-  int setConfirmedAt(String token);
+	void saveConfirmationToken(Token token);
+	Token getToken(String token);
+	int setConfirmedAt(String token);
 }

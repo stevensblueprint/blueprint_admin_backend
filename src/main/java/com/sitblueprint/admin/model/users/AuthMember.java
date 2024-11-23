@@ -9,19 +9,19 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthMember {
-    String username;
-    String displayName;
-    String email;
-    String password;
-    Boolean disabled;
-    Set<Role> roles;
+	String username;
+	String displayName;
+	String email;
+	String password;
+	Boolean disabled;
+	Set<Role> roles;
 
-    public AuthMember(Member member) {
-        this.username = member.getUsername();
-        this.displayName = member.getName();
-        this.email = member.getEmail();
-        this.password = member.getPassword();
-        this.disabled = member.isActive();
-        this.roles = member.getRoles();
-    }
+	public AuthMember(Member member) {
+		this.username = member.getUsername();
+		this.displayName = member.getName();
+		this.email = member.getEmail();
+		this.password = member.getPassword();
+		this.disabled = member.isActive();
+		this.roles = member.getRoles();
+	}
 }

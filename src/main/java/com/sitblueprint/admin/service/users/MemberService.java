@@ -6,21 +6,21 @@ import com.sitblueprint.admin.dtos.member.RegistrationRequestDTO;
 import java.util.List;
 
 public interface MemberService {
-    List<MemberDTO> getAllMembers();
+	List<MemberDTO> getAllMembers();
 
-    MemberDTO getMemberById(Long memberId);
+	MemberDTO getMemberById(Long memberId);
 
-    MemberDTO createMember(MemberDTO member);
+	MemberDTO createMember(MemberDTO member);
 
-    MemberDTO updateMember(MemberDTO member);
+	MemberDTO updateMember(MemberDTO member);
 
-    void deleteMemberById(Long memberId);
+	void deleteMemberById(Long memberId);
 
-    void enableMemberById(Long memberId);
+	void enableMemberById(Long memberId);
 
-    void disableMemberById(Long memberId);
+	void disableMemberById(Long memberId);
 
-    void resetPassword(Long memberId, String password);
+	void resetPassword(Long memberId, String password);
 
-    String signUpMember(RegistrationRequestDTO registrationRequestDTO);
+	String signUpMember(RegistrationRequestDTO registrationRequestDTO);
 }

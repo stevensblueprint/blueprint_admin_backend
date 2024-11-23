@@ -16,18 +16,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class RegistrationRequestDTO {
-  @NonNull
-  private String username;
+	@NonNull
+	private String username;
 
-  @NonNull
-  private String name;
+	@NonNull
+	private String name;
 
-  @NonNull
-  @Size(min = 8)
-  private String password;
+	@NonNull
+	@Size(min = 8)
+	private String password;
 
-  @NonNull
-  @Email
-  @EmailDomain
-  private String email;
+	@NonNull
+	@Email
+	@EmailDomain
+	private String email;
 }

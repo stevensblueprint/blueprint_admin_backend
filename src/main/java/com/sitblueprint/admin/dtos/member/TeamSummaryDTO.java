@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class TeamSummaryDTO {
-  private Long id;
-  private String name;
-  private OrganizationSummaryDTO organization;
+	private Long id;
+	private String name;
+	private OrganizationSummaryDTO organization;
 }
