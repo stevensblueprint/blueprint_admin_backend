@@ -1,5 +1,6 @@
 package com.sitblueprint.admin.dtos.member;
 
+import com.sitblueprint.admin.dtos.TeamSummaryDTO;
 import com.sitblueprint.admin.model.users.Member;
 import com.sitblueprint.admin.model.users.Role;
 import java.time.LocalDate;
@@ -24,7 +25,7 @@ public class MemberDTO {
 	private boolean isActive;
 	private LocalDate dateJoined;
 	private Set<RoleDTO> roles;
-	TeamSummaryDTO team;
+	private TeamSummaryDTO team;
 
 	public Member toEntity() {
 		return Member.builder().id(this.id).name(this.name).username(this.username).email(this.email)

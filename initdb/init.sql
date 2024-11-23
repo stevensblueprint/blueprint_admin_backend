@@ -74,6 +74,20 @@
    ALTER TABLE members
    ADD CONSTRAINT fk_team_id FOREIGN KEY (team_id) REFERENCES teams(id);
 
+create table user_attendance (
+    id bigint primary key generated always as identity,
+    user_id bigint not null,
+    team_id bigint not null,
+    date timestamp not null default current_timestamp,
+    foreign key (user_id) references users(id),
+    foreign key (team_id) references teams(id)
+
+)
+
+alter table users
+    add constraint fk_team_id
+        foreign key (team_id) references teams(id);
+
    -- Insert sample organizations
    INSERT INTO organizations (name, team_lead_id, project_manager_id) VALUES
    ('Strawberry Fields', NULL, NULL),
@@ -107,4 +121,3 @@
     UPDATE teams SET team_lead_id = 1, project_manager_id = 1, designer_id = 3 WHERE id = 2;
     UPDATE organizations SET team_lead_id = 2, project_manager_id = 2 WHERE id = 1;
     UPDATE organizations SET team_lead_id = 1, project_manager_id = 2 WHERE id = 2;
-

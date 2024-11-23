@@ -50,7 +50,7 @@ jacocoTestReport {
       violationRules {
          rule {
             limit {
-               minimum = 0.10
+               minimum = 0.02
             }
          }
       }

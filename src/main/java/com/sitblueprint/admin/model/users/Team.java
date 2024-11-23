@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Builder
 public class Team {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
