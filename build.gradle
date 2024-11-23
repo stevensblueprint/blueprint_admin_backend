@@ -3,6 +3,7 @@ plugins {
    id 'org.springframework.boot' version '3.2.3'
    id 'io.spring.dependency-management' version '1.1.4'
    id "com.diffplug.spotless" version "5.16.0"
+   id "jacoco"
    id "application"
 }
 
@@ -42,6 +43,20 @@ spotless {
    }
 }
 
+
+jacocoTestReport {
+   dependsOn test
+   jacocoTestCoverageVerification {
+      violationRules {
+         rule {
+            limit {
+               minimum = 0.10
+            }
+         }
+      }
+   }
+}
+
 dependencies {
    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
    implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -57,4 +72,5 @@ dependencies {
 
 tasks.named('test') {
    useJUnitPlatform()
+   finalizedBy jacocoTestCoverageVerification
 }
