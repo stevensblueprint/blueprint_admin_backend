@@ -2,7 +2,7 @@ package com.sitblueprint.admin.service.users;
 
 import com.sitblueprint.admin.model.users.Attendance;
 import com.sitblueprint.admin.model.users.Team;
-import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.model.users.Member;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,9 +18,12 @@ public interface TeamService {
 
 	void deleteTeam(Long teamId);
 
-	User getTeamLeadById(Long teamId);
+	Member getTeamLeadById(Long teamId);
 
-	User getProductManagerById(Long teamId);
+	Member getProjectManagerById(Long teamId);
+
+	Member getDesignerById(Long teamId);
+	Member getProductManagerById(Long teamId);
 
     List<Attendance> markTeamAttendance(Long teamId, LocalDateTime date);
 

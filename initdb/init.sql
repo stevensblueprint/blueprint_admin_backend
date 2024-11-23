@@ -22,7 +22,7 @@
        email VARCHAR(255) UNIQUE,
        password VARCHAR(255) NOT NULL,
        is_active BOOLEAN,
-       date_joined TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+       date_joined DATE DEFAULT CURRENT_DATE NOT NULL,
        PRIMARY KEY (id)
    );
 
@@ -45,7 +45,7 @@
        team_lead_id BIGINT,
        project_manager_id BIGINT,
        designer_id BIGINT,
-       date_created TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+       date_created DATE DEFAULT CURRENT_DATE NOT NULL,
        PRIMARY KEY (id),
        FOREIGN KEY (organization_id) REFERENCES organizations(id),
        FOREIGN KEY (team_lead_id) REFERENCES members(id),
@@ -95,8 +95,8 @@ alter table users
 
    -- Insert sample teams
    INSERT INTO teams (organization_id, name, team_lead_id, project_manager_id, designer_id, date_created) VALUES
-   (1, 'Frontend Team', NULL, NULL, NULL, '2021-09-01 00:00:00'),
-   (2, 'Backend Team', NULL, NULL, NULL, '2024-10-01 00:00:00');
+   (1, 'Frontend Team', NULL, NULL, NULL, '2021-09-01'),
+   (2, 'Backend Team', NULL, NULL, NULL, '2024-10-01');
 
     -- Insert sample members
     INSERT INTO members (team_id, name, username, email, password, is_active) VALUES
