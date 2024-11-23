@@ -17,19 +17,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class TeamDTO {
-  private Long id;
-  private String name;
-  private OrganizationSummaryDTO organizationSummaryDTO;
-  private MemberSummaryDTO teamLead;
-  private MemberSummaryDTO projectManager;
-  private MemberSummaryDTO designer;
-  private LocalDate dateCreated;
-  private Set<MemberSummaryDTO> members;
+	private Long id;
+	private String name;
+	private OrganizationSummaryDTO organizationSummaryDTO;
+	private MemberSummaryDTO teamLead;
+	private MemberSummaryDTO projectManager;
+	private MemberSummaryDTO designer;
+	private LocalDate dateCreated;
+	private Set<MemberSummaryDTO> members;
 
-  public Team toEntity() {
-    return Team.builder()
-     .id(this.id)
-     .name(this.name)
-     .build();
-  }
+	public Team toEntity() {
+		return Team.builder().id(this.id).name(this.name).build();
+	}
 }

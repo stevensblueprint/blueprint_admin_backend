@@ -15,11 +15,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class MemberSummaryDTO {
-  private Long id;
-  private String name;
-  private String username;
-  private String email;
-  private boolean isActive;
-  private LocalDate dateJoined;
-  private Set<Role> roles;
+	private Long id;
+	private String name;
+	private String username;
+	private String email;
+	private boolean isActive;
+	private LocalDate dateJoined;
+	private Set<Role> roles;
 }

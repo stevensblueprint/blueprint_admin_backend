@@ -9,12 +9,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class TeamServiceTest {
-  @Mock
-  TeamRepository teamRepository;
+	@Mock
+	TeamRepository teamRepository;
 
-  @Mock
-  AttendanceRepository attendanceRepository;
+	@Mock
+	AttendanceRepository attendanceRepository;
 
-  private TeamService teamService;
-  private Team testTeam;
+	private TeamService teamService;
+	private Team testTeam;
 }
