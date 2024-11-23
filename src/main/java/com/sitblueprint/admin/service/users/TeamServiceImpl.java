@@ -18,15 +18,15 @@ import java.util.Optional;
 @Service
 public class TeamServiceImpl implements TeamService {
 	private final TeamRepository teamRepository;
-  private final AttendanceRepository attendanceRepository;
-  private final MemberRepository memberRepository;
+	private final AttendanceRepository attendanceRepository;
+	private final MemberRepository memberRepository;
 
-  public TeamServiceImpl(TeamRepository teamRepository, AttendanceRepository attendanceRepository, MemberRepository memberRepository) {
-    this.teamRepository = teamRepository;
-    this.attendanceRepository = attendanceRepository;
-    this.memberRepository = memberRepository;
-  }
-
+	public TeamServiceImpl(TeamRepository teamRepository, AttendanceRepository attendanceRepository,
+			MemberRepository memberRepository) {
+		this.teamRepository = teamRepository;
+		this.attendanceRepository = attendanceRepository;
+		this.memberRepository = memberRepository;
+	}
 
 	@Override
 	public List<Team> getAllTeams() {
@@ -63,91 +63,89 @@ public class TeamServiceImpl implements TeamService {
 		return optionalTeam.get().getTeamLead();
 	}
 
-  @Override
-  public Member getProjectManagerById(Long teamId) {
-    Optional<Team> optionalTeam = teamRepository.findById(teamId);
-    if (!optionalTeam.isPresent()) {
-      throw new RuntimeException("Team not found: " + teamId);
-    }
-    return optionalTeam.get().getProjectManager();
-  }
+	@Override
+	public Member getProjectManagerById(Long teamId) {
+		Optional<Team> optionalTeam = teamRepository.findById(teamId);
+		if (!optionalTeam.isPresent()) {
+			throw new RuntimeException("Team not found: " + teamId);
+		}
+		return optionalTeam.get().getProjectManager();
+	}
 
-  @Override
-  public Member getDesignerById(Long teamId) {
-    Optional<Team> optionalTeam = teamRepository.findById(teamId);
-    if (!optionalTeam.isPresent()) {
-      throw new RuntimeException("Team not found: " + teamId);
-    }
-    return optionalTeam.get().getDesigner();
-  }
+	@Override
+	public Member getDesignerById(Long teamId) {
+		Optional<Team> optionalTeam = teamRepository.findById(teamId);
+		if (!optionalTeam.isPresent()) {
+			throw new RuntimeException("Team not found: " + teamId);
+		}
+		return optionalTeam.get().getDesigner();
+	}
 
-  @Override
-  public List<Attendance> markTeamAttendance(Long teamId, LocalDateTime date) {
-    Team team = teamRepository.findById(teamId)
-        .orElseThrow(() -> new NoSuchElementException("Team not found"));
+	@Override
+	public List<Attendance> markTeamAttendance(Long teamId, LocalDateTime date) {
+		Team team = teamRepository.findById(teamId).orElseThrow(() -> new NoSuchElementException("Team not found"));
 
-    List<Member> teamMembers = new ArrayList<>(team.getMembers());
-    List<Attendance> attendanceList = new ArrayList<>();
+		List<Member> teamMembers = new ArrayList<>(team.getMembers());
+		List<Attendance> attendanceList = new ArrayList<>();
 
-    for (Member member : teamMembers) {
-      Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(member.getId(), date);
+		for (Member member : teamMembers) {
+			Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(member.getId(), date);
 
-      if (existingAttendance.isEmpty()) {
-        // Attendance attendance = new Attendance(null, date, member);
-        // attendanceList.add(attendanceRepository.save(attendance));
-      }
-    }
-    return attendanceList;
-  }
+			if (existingAttendance.isEmpty()) {
+				// Attendance attendance = new Attendance(null, date, member);
+				// attendanceList.add(attendanceRepository.save(attendance));
+			}
+		}
+		return attendanceList;
+	}
 
-  @Override
-  public List<Attendance> getTeamAttendance(Long teamId, LocalDateTime date) {
-    return attendanceRepository.findAllByTeamIdAndDate(teamId, date);
-  }
+	@Override
+	public List<Attendance> getTeamAttendance(Long teamId, LocalDateTime date) {
+		return attendanceRepository.findAllByTeamIdAndDate(teamId, date);
+	}
 
-  @Override
-  public List<Attendance> getTeamAllAttendance(Long teamId, LocalDateTime startDate, LocalDateTime endDate) {
-    if (startDate != null && endDate != null) {
-      return attendanceRepository.findAllByTeamIdAndDateBetween(teamId, startDate, endDate);
-    } else if (startDate != null) {
-      return attendanceRepository.findAllByTeamIdAndDateAfter(teamId, startDate);
-    } else if (endDate != null) {
-      return attendanceRepository.findAllByTeamIdAndDateBefore(teamId, endDate);
-    } else {
-      return attendanceRepository.findAllByTeamId(teamId);
-    }
-  }
+	@Override
+	public List<Attendance> getTeamAllAttendance(Long teamId, LocalDateTime startDate, LocalDateTime endDate) {
+		if (startDate != null && endDate != null) {
+			return attendanceRepository.findAllByTeamIdAndDateBetween(teamId, startDate, endDate);
+		} else if (startDate != null) {
+			return attendanceRepository.findAllByTeamIdAndDateAfter(teamId, startDate);
+		} else if (endDate != null) {
+			return attendanceRepository.findAllByTeamIdAndDateBefore(teamId, endDate);
+		} else {
+			return attendanceRepository.findAllByTeamId(teamId);
+		}
+	}
 
-  @Override
-  public List<Attendance> updateTeamAttendance(Long teamId, LocalDateTime date) {
-    Team team = teamRepository.findById(teamId)
-        .orElseThrow(() -> new NoSuchElementException("Team not found"));
+	@Override
+	public List<Attendance> updateTeamAttendance(Long teamId, LocalDateTime date) {
+		Team team = teamRepository.findById(teamId).orElseThrow(() -> new NoSuchElementException("Team not found"));
 
-    List<Member> teamMembers = new ArrayList<>(team.getMembers());
-    List<Attendance> attendanceList = new ArrayList<>();
+		List<Member> teamMembers = new ArrayList<>(team.getMembers());
+		List<Attendance> attendanceList = new ArrayList<>();
 
-    for (Member member : teamMembers) {
-      Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(member.getId(), date);
+		for (Member member : teamMembers) {
+			Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(member.getId(), date);
 
-      if (existingAttendance.isEmpty()) {
-        // Attendance attendance = new Attendance(null, date, member);
-        // attendanceList.add(attendanceRepository.save(attendance));
-      } else {
-        attendanceRepository.delete(existingAttendance.get());
-      }
-    }
+			if (existingAttendance.isEmpty()) {
+				// Attendance attendance = new Attendance(null, date, member);
+				// attendanceList.add(attendanceRepository.save(attendance));
+			} else {
+				attendanceRepository.delete(existingAttendance.get());
+			}
+		}
 
-    return attendanceList;
-  }
+		return attendanceList;
+	}
 
-  @Override
-  public void deleteTeamAttendance(Long teamId, LocalDateTime date) {
-    List<Attendance> attendances = attendanceRepository.findAllByTeamIdAndDate(teamId, date);
+	@Override
+	public void deleteTeamAttendance(Long teamId, LocalDateTime date) {
+		List<Attendance> attendances = attendanceRepository.findAllByTeamIdAndDate(teamId, date);
 
-    if (attendances.isEmpty()) {
-      throw new NoSuchElementException("No attendance records found.");
-    }
+		if (attendances.isEmpty()) {
+			throw new NoSuchElementException("No attendance records found.");
+		}
 
-    attendanceRepository.deleteAll(attendances);
-  }
+		attendanceRepository.deleteAll(attendances);
+	}
 }

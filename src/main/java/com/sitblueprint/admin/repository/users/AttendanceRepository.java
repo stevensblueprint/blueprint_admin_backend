@@ -11,14 +11,14 @@ import java.util.Optional;
 
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
-    List<Attendance> findAllByUserId(Long userId);
-    Optional<Attendance> findByUserIdAndDate(Long userId, LocalDateTime date);
-    List<Attendance> findAllByUserIdAndDateBetween(Long userId, LocalDateTime startDate, LocalDateTime endDate);
-    List<Attendance> findAllByUserIdAndDateAfter(Long userId, LocalDateTime startDate);
-    List<Attendance> findAllByUserIdAndDateBefore(Long userId, LocalDateTime endDate);
-    List<Attendance> findAllByTeamId(Long teamId);
-    List<Attendance> findAllByTeamIdAndDate( Long teamId, LocalDateTime date);
-    List<Attendance> findAllByTeamIdAndDateBetween(Long teamId, LocalDateTime startDate, LocalDateTime endDate);
-    List<Attendance> findAllByTeamIdAndDateAfter(Long teamId, LocalDateTime startDate);
-    List<Attendance> findAllByTeamIdAndDateBefore(Long teamId, LocalDateTime endDate);
+	List<Attendance> findAllByUserId(Long userId);
+	Optional<Attendance> findByUserIdAndDate(Long userId, LocalDateTime date);
+	List<Attendance> findAllByUserIdAndDateBetween(Long userId, LocalDateTime startDate, LocalDateTime endDate);
+	List<Attendance> findAllByUserIdAndDateAfter(Long userId, LocalDateTime startDate);
+	List<Attendance> findAllByUserIdAndDateBefore(Long userId, LocalDateTime endDate);
+	List<Attendance> findAllByTeamId(Long teamId);
+	List<Attendance> findAllByTeamIdAndDate(Long teamId, LocalDateTime date);
+	List<Attendance> findAllByTeamIdAndDateBetween(Long teamId, LocalDateTime startDate, LocalDateTime endDate);
+	List<Attendance> findAllByTeamIdAndDateAfter(Long teamId, LocalDateTime startDate);
+	List<Attendance> findAllByTeamIdAndDateBefore(Long teamId, LocalDateTime endDate);
 }
