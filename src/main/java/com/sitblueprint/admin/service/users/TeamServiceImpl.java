@@ -1,8 +1,9 @@
 package com.sitblueprint.admin.service.users;
 
 import com.sitblueprint.admin.model.users.Team;
-import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.model.users.Member;
 import com.sitblueprint.admin.repository.users.TeamRepository;
+import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ public class TeamServiceImpl implements TeamService {
 	public TeamServiceImpl(TeamRepository teamRepository) {
 		this.teamRepository = teamRepository;
 	}
+
 	@Override
 	public List<Team> getAllTeams() {
 		return teamRepository.findAll();
@@ -28,7 +30,7 @@ public class TeamServiceImpl implements TeamService {
 
 	@Override
 	public Team createTeam(Team team) {
-		team.setDateCreated(LocalDateTime.now());
+		team.setDateCreated(LocalDate.now());
 		return teamRepository.save(team);
 	}
 
@@ -43,7 +45,7 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public User getTeamLeadById(Long teamId) {
+	public Member getTeamLeadById(Long teamId) {
 		Optional<Team> optionalTeam = teamRepository.findById(teamId);
 		if (!optionalTeam.isPresent()) {
 			throw new RuntimeException("Team not found: " + teamId);
@@ -52,11 +54,20 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public User getProductManagerById(Long teamId) {
+	public Member getProjectManagerById(Long teamId) {
 		Optional<Team> optionalTeam = teamRepository.findById(teamId);
 		if (!optionalTeam.isPresent()) {
 			throw new RuntimeException("Team not found: " + teamId);
 		}
-		return optionalTeam.get().getProductManager();
+		return optionalTeam.get().getProjectManager();
+	}
+
+	@Override
+	public Member getDesignerById(Long teamId) {
+		Optional<Team> optionalTeam = teamRepository.findById(teamId);
+		if (!optionalTeam.isPresent()) {
+			throw new RuntimeException("Team not found: " + teamId);
+		}
+		return optionalTeam.get().getDesigner();
 	}
 }

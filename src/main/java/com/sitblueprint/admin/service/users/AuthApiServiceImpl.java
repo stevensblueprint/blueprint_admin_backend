@@ -1,6 +1,6 @@
 package com.sitblueprint.admin.service.users;
 
-import com.sitblueprint.admin.model.users.AuthUser;
+import com.sitblueprint.admin.model.users.AuthMember;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,8 @@ public class AuthApiServiceImpl implements AuthApiService {
 	}
 
 	@Override
-	public AuthUser createAuthUser(AuthUser user) {
-		final String endpoint = "/users/user";
+	public AuthMember createAuthMember(AuthMember member) {
+		final String endpoint = "/members/member";
 		final String url = baseUrl + endpoint;
 
 		// Set Headers
@@ -30,60 +30,62 @@ public class AuthApiServiceImpl implements AuthApiService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		// Create HTTP Entity
-		HttpEntity<AuthUser> requestEntity = new HttpEntity<>(user, headers);
+		HttpEntity<AuthMember> requestEntity = new HttpEntity<>(member, headers);
 
-		ResponseEntity<AuthUser> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, AuthUser.class);
+		ResponseEntity<AuthMember> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity,
+				AuthMember.class);
 		return response.getBody();
 	}
 
 	@Override
-	public AuthUser updateAuthUser(AuthUser authUser) {
-		final String username = authUser.getUsername();
-		final String endpoint = "/users/user?username={username}";
+	public AuthMember updateAuthMember(AuthMember member) {
+		final String username = member.getUsername();
+		final String endpoint = "/members/member?username={username}";
 
 		// Map URI variables
 		Map<String, String> uriVariables = returnURIWithUsername(username);
 		final String url = baseUrl + endpoint;
-		final ResponseEntity<AuthUser> response = restTemplate.exchange(url, HttpMethod.PUT, null, AuthUser.class);
+		final ResponseEntity<AuthMember> response = restTemplate.exchange(url, HttpMethod.PUT, null, AuthMember.class);
 		return response.getBody();
 	}
 
 	@Override
-	public AuthUser deleteAuthUser(String username) {
-		final String endpoint = "/users/user?username={username}";
+	public AuthMember deleteAuthMember(String username) {
+		final String endpoint = "/members/member?username={username}";
 
 		// Map URI variables
 		final Map<String, String> uriVariables = returnURIWithUsername(username);
 		final String url = baseUrl + endpoint;
-		final ResponseEntity<AuthUser> response = restTemplate.exchange(url, HttpMethod.DELETE, null, AuthUser.class);
+		final ResponseEntity<AuthMember> response = restTemplate.exchange(url, HttpMethod.DELETE, null,
+				AuthMember.class);
 		return response.getBody();
 	}
 
 	@Override
-	public AuthUser disableAuthUser(String username) {
-		final String endpoint = "/users/user/disable?username={username}";
+	public AuthMember disableAuthMember(String username) {
+		final String endpoint = "/members/member/disable?username={username}";
 		// Map URI variables
 		final Map<String, String> uriVariables = returnURIWithUsername(username);
 		final String url = baseUrl + endpoint;
-		final ResponseEntity<AuthUser> response = restTemplate.exchange(url, HttpMethod.POST, null, AuthUser.class,
+		final ResponseEntity<AuthMember> response = restTemplate.exchange(url, HttpMethod.POST, null, AuthMember.class,
 				uriVariables);
 		return response.getBody();
 	}
 
 	@Override
-	public AuthUser enableAuthUser(String username) {
-		final String endpoint = "/users/user/enable?username={username}";
+	public AuthMember enableAuthMember(String username) {
+		final String endpoint = "/members/member/enable?username={username}";
 		// Map URI variables
 		final Map<String, String> uriVariables = returnURIWithUsername(username);
 		final String url = baseUrl + endpoint;
-		final ResponseEntity<AuthUser> response = restTemplate.exchange(url, HttpMethod.POST, null, AuthUser.class,
+		final ResponseEntity<AuthMember> response = restTemplate.exchange(url, HttpMethod.POST, null, AuthMember.class,
 				uriVariables);
 		return response.getBody();
 	}
 
 	@Override
-	public AuthUser resetPasswordAuthUser(String username, String password) {
-		final String endpoint = "/users/reset_password";
+	public AuthMember resetPasswordAuthMember(String username, String password) {
+		final String endpoint = "/members/reset_password";
 		final String url = baseUrl + endpoint;
 		Map<String, String> requestBody = new HashMap<>();
 		requestBody.put("username", username);
@@ -97,8 +99,8 @@ public class AuthApiServiceImpl implements AuthApiService {
 		HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
 
 		// Make POST request
-		final ResponseEntity<AuthUser> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity,
-				AuthUser.class);
+		final ResponseEntity<AuthMember> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity,
+				AuthMember.class);
 		return response.getBody();
 	}
 

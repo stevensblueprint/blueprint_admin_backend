@@ -3,7 +3,8 @@ plugins {
    id 'org.springframework.boot' version '3.2.3'
    id 'io.spring.dependency-management' version '1.1.4'
    id "com.diffplug.spotless" version "5.16.0"
-   id 'application'
+   id "jacoco"
+   id "application"
 }
 
 group = 'com.sitblueprint'
@@ -27,11 +28,9 @@ repositories {
 spotless {
    // optional: limit format enforcement to just the files changed by this feature branch
 //   ratchetFrom 'origin/main'
-
    format 'misc', {
       // define the files to apply `misc` to
       target '*.gradle', '*.md', '.gitignore'
-
       // define the steps to apply to those files
       trimTrailingWhitespace()
       indentWithSpaces(3) // or spaces. Takes an integer argument if you don't like 4
@@ -44,10 +43,26 @@ spotless {
    }
 }
 
+
+jacocoTestReport {
+   dependsOn test
+   jacocoTestCoverageVerification {
+      violationRules {
+         rule {
+            limit {
+               minimum = 0.10
+            }
+         }
+      }
+   }
+}
+
 dependencies {
    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
    implementation 'org.springframework.boot:spring-boot-starter-web'
    implementation 'org.springframework.data:spring-data-rest-hal-explorer'
+   implementation "org.springframework.boot:spring-boot-starter-security"
+   implementation 'org.hibernate:hibernate-validator:6.0.13.Final'
    compileOnly 'org.projectlombok:lombok'
    runtimeOnly 'com.h2database:h2'
    annotationProcessor 'org.projectlombok:lombok'
@@ -57,4 +72,5 @@ dependencies {
 
 tasks.named('test') {
    useJUnitPlatform()
+   finalizedBy jacocoTestCoverageVerification
 }
