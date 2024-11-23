@@ -22,7 +22,7 @@
        email VARCHAR(255) UNIQUE,
        password VARCHAR(255) NOT NULL,
        is_active BOOLEAN,
-       date_joined TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+       date_joined DATE DEFAULT CURRENT_DATE NOT NULL,
        PRIMARY KEY (id)
    );
 
@@ -45,7 +45,7 @@
        team_lead_id BIGINT,
        project_manager_id BIGINT,
        designer_id BIGINT,
-       date_created TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+       date_created DATE DEFAULT CURRENT_DATE NOT NULL,
        PRIMARY KEY (id),
        FOREIGN KEY (organization_id) REFERENCES organizations(id),
        FOREIGN KEY (team_lead_id) REFERENCES members(id),
@@ -74,6 +74,20 @@
    ALTER TABLE members
    ADD CONSTRAINT fk_team_id FOREIGN KEY (team_id) REFERENCES teams(id);
 
+create table user_attendance (
+    id bigint primary key generated always as identity,
+    user_id bigint not null,
+    team_id bigint not null,
+    date timestamp not null default current_timestamp,
+    foreign key (user_id) references users(id),
+    foreign key (team_id) references teams(id)
+
+)
+
+alter table users
+    add constraint fk_team_id
+        foreign key (team_id) references teams(id);
+
    -- Insert sample organizations
    INSERT INTO organizations (name, team_lead_id, project_manager_id) VALUES
    ('Strawberry Fields', NULL, NULL),
@@ -81,8 +95,8 @@
 
    -- Insert sample teams
    INSERT INTO teams (organization_id, name, team_lead_id, project_manager_id, designer_id, date_created) VALUES
-   (1, 'Frontend Team', NULL, NULL, NULL, '2021-09-01 00:00:00'),
-   (2, 'Backend Team', NULL, NULL, NULL, '2024-10-01 00:00:00');
+   (1, 'Frontend Team', NULL, NULL, NULL, '2021-09-01'),
+   (2, 'Backend Team', NULL, NULL, NULL, '2024-10-01');
 
     -- Insert sample members
     INSERT INTO members (team_id, name, username, email, password, is_active) VALUES
@@ -107,4 +121,3 @@
     UPDATE teams SET team_lead_id = 1, project_manager_id = 1, designer_id = 3 WHERE id = 2;
     UPDATE organizations SET team_lead_id = 2, project_manager_id = 2 WHERE id = 1;
     UPDATE organizations SET team_lead_id = 1, project_manager_id = 2 WHERE id = 2;
-

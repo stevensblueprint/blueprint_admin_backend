@@ -1,12 +1,14 @@
 package com.sitblueprint.admin.controller.users;
 
 import com.sitblueprint.admin.model.users.Team;
-import com.sitblueprint.admin.model.users.User;
+import com.sitblueprint.admin.model.users.Member;
+import com.sitblueprint.admin.model.users.Attendance;
 import com.sitblueprint.admin.service.users.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -42,12 +44,44 @@ public class TeamController {
 	}
 
 	@GetMapping("teamLead/{teamId}")
-	public User getTeamLeadById(@PathVariable("teamId") String teamId) {
+	public Member getTeamLeadById(@PathVariable("teamId") String teamId) {
 		return teamService.getTeamLeadById(Long.parseLong(teamId));
 	}
 
 	@GetMapping("productManager/{teamId}")
-	public User getProductManagerById(@PathVariable("teamId") String teamId) {
-		return teamService.getProductManagerById(Long.parseLong(teamId));
+	public Member getProductManagerById(@PathVariable("teamId") String teamId) {
+		return teamService.getProjectManagerById(Long.parseLong(teamId));
+	}
+
+	@GetMapping("designer/{teamId}")
+	public Member getDesignerById(@PathVariable("teamId") String teamId) {
+		return teamService.getDesignerById(Long.parseLong(teamId));
+	}
+
+	@PostMapping("attendance")
+	public List<Attendance> markTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
+		return teamService.markTeamAttendance(teamId, date);
+	}
+
+	@GetMapping("attendance")
+	public List<Attendance> getTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
+		return teamService.getTeamAttendance(teamId, date);
+	}
+
+	@GetMapping("attendance/all")
+	public List<Attendance> getTeamAllAttendance(@RequestParam Long teamId,
+			@RequestParam(required = false) LocalDateTime startDate,
+			@RequestParam(required = false) LocalDateTime endDate) {
+		return teamService.getTeamAllAttendance(teamId, startDate, endDate);
+	}
+
+	@PutMapping("attendance")
+	public List<Attendance> updateTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
+		return teamService.updateTeamAttendance(teamId, date);
+	}
+
+	@DeleteMapping("attendance")
+	public void deleteTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
+		teamService.deleteTeamAttendance(teamId, date);
 	}
 }
