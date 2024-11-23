@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Blog {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    private String author;
-    private String title;
+	private String author;
+	private String title;
 
-    @Column(nullable = false)
-    private LocalDateTime dateCreated;
+	@Column(nullable = false)
+	private LocalDateTime dateCreated;
 }
