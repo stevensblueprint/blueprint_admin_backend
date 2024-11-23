@@ -13,12 +13,14 @@ import static org.mockito.Mockito.when;
 import com.sitblueprint.admin.dtos.member.MemberDTO;
 import com.sitblueprint.admin.dtos.member.RegistrationRequestDTO;
 import com.sitblueprint.admin.model.users.Member;
+import com.sitblueprint.admin.model.users.Role;
 import com.sitblueprint.admin.model.users.Token;
 import com.sitblueprint.admin.repository.users.MemberRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +43,7 @@ public class MemberServiceTest {
 	void setUp() {
 		memberService = new MemberServiceImpl(memberRepository, tokenService);
 		testMember = Member.builder().id(1L).username("testUsername").name("Test Name").password("Test Password")
-				.isActive(true).build();
+				.isActive(true).roles(Set.of(Role.of("E-BOARD"))).build();
 
 		testMemberDTO = testMember.toDTO();
 	}

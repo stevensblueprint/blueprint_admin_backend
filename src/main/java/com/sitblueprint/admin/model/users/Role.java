@@ -28,4 +28,8 @@ public class Role {
 
 	@ManyToMany(mappedBy = "roles")
 	private Set<Member> members;
+
+	public static Role of(String name) {
+		return Role.builder().name(name).build();
+	}
 }
