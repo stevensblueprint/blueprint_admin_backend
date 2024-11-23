@@ -19,13 +19,10 @@ import java.util.Optional;
 public class TeamServiceImpl implements TeamService {
 	private final TeamRepository teamRepository;
 	private final AttendanceRepository attendanceRepository;
-	private final MemberRepository memberRepository;
 
-	public TeamServiceImpl(TeamRepository teamRepository, AttendanceRepository attendanceRepository,
-			MemberRepository memberRepository) {
+	public TeamServiceImpl(TeamRepository teamRepository, AttendanceRepository attendanceRepository) {
 		this.teamRepository = teamRepository;
 		this.attendanceRepository = attendanceRepository;
-		this.memberRepository = memberRepository;
 	}
 
 	@Override

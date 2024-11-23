@@ -33,7 +33,7 @@ public class MemberServiceTest {
 	@Mock
 	private TokenService tokenService;
 
-	private MemberServiceImpl memberService;
+	private MemberService memberService;
 	private Member testMember;
 	private MemberDTO testMemberDTO;
 

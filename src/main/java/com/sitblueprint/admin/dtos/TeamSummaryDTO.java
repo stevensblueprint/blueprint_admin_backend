@@ -1,4 +1,4 @@
-package com.sitblueprint.admin.dtos.member;
+package com.sitblueprint.admin.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
