@@ -1,17 +1,16 @@
 package com.sitblueprint.admin.service.users;
 
-import com.sitblueprint.admin.model.users.AuthUser;
+import com.sitblueprint.admin.model.users.AuthMember;
 
 public interface AuthApiService {
-    // Define Methods to interact with the external API service
-    AuthUser createAuthUser(AuthUser authUser);
-    AuthUser updateAuthUser(AuthUser authUser);
+	AuthMember createAuthMember(AuthMember authMember);
+	AuthMember updateAuthMember(AuthMember authMember);
 
-    AuthUser deleteAuthUser(String username);
+	AuthMember deleteAuthMember(String username);
 
-    AuthUser disableAuthUser(String username);
+	AuthMember disableAuthMember(String username);
 
-    AuthUser enableAuthUser(String username);
+	AuthMember enableAuthMember(String username);
 
-    AuthUser resetPasswordAuthUser(String username, String password);
+	AuthMember resetPasswordAuthMember(String username, String password);
 }
