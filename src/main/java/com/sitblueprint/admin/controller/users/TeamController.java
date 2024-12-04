@@ -57,31 +57,4 @@ public class TeamController {
 	public Member getDesignerById(@PathVariable("teamId") String teamId) {
 		return teamService.getDesignerById(Long.parseLong(teamId));
 	}
-
-	@PostMapping("attendance")
-	public List<Attendance> markTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
-		return teamService.markTeamAttendance(teamId, date);
-	}
-
-	@GetMapping("attendance")
-	public List<Attendance> getTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
-		return teamService.getTeamAttendance(teamId, date);
-	}
-
-	@GetMapping("attendance/all")
-	public List<Attendance> getTeamAllAttendance(@RequestParam Long teamId,
-			@RequestParam(required = false) LocalDateTime startDate,
-			@RequestParam(required = false) LocalDateTime endDate) {
-		return teamService.getTeamAllAttendance(teamId, startDate, endDate);
-	}
-
-	@PutMapping("attendance")
-	public List<Attendance> updateTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
-		return teamService.updateTeamAttendance(teamId, date);
-	}
-
-	@DeleteMapping("attendance")
-	public void deleteTeamAttendance(@RequestParam Long teamId, @RequestParam LocalDateTime date) {
-		teamService.deleteTeamAttendance(teamId, date);
-	}
 }
