@@ -1,8 +1,6 @@
 package com.sitblueprint.admin.model.users;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sitblueprint.admin.dtos.member.MemberDTO;
 import com.sitblueprint.admin.dtos.OrganizationSummaryDTO;
 import com.sitblueprint.admin.dtos.member.RoleDTO;
@@ -29,7 +27,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @Getter
 @Builder
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Member implements UserDetails {
 	private static final Map<String, Integer> roleRanking = Map.of("E-BOARD", 1, "TEAM_LEAD", 2, "PRODUCT_MANAGER", 3,
 			"DEVELOPER", 3, "DESIGNER", 4, "BLUEPRINT_INTERNAL_TEAM", 5);
