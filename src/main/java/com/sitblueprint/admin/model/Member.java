@@ -16,9 +16,6 @@ import java.util.stream.Collectors;
 import lombok.*;
 
 import java.util.Set;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "members")
@@ -27,7 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @Getter
 @Builder
-public class Member implements UserDetails {
+public class Member {
 	private static final Map<String, Integer> roleRanking = Map.of("E-BOARD", 1, "TEAM_LEAD", 2, "PRODUCT_MANAGER", 3,
 			"DEVELOPER", 3, "DESIGNER", 4, "BLUEPRINT_INTERNAL_TEAM", 5);
 
@@ -101,35 +98,5 @@ public class Member implements UserDetails {
 
 	private String getHighestRankedRole() {
 		return this.roles.stream().max(Comparator.comparingInt(roleRanking::get)).map(Role::getName).orElse(null);
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		String highestRole = getHighestRankedRole();
-		if (highestRole == null) {
-			return List.of();
-		}
-		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(highestRole);
-		return Collections.singletonList(authority);
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return !this.isActive;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return !this.isActive;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return !this.isActive;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return this.isActive;
 	}
 }

@@ -30,8 +30,7 @@ public class MemberDTO {
 	public Member toEntity() {
 		return Member.builder().id(this.id).name(this.name).username(this.username).email(this.email)
 				.dateJoined(this.dateJoined).isActive(this.isActive)
-				.roles(this.roles
-						.stream()
+				.roles(this.roles.stream()
 						.map(roleDTO -> Role.builder().id(roleDTO.getId()).name(roleDTO.getName()).build())
 						.collect(Collectors.toSet()))
 				.build();
