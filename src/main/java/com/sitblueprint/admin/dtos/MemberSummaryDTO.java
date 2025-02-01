@@ -1,6 +1,6 @@
 package com.sitblueprint.admin.dtos;
 
-import com.sitblueprint.admin.model.users.Role;
+import com.sitblueprint.admin.model.Role;
 import java.time.LocalDate;
 import java.util.Set;
 import lombok.AllArgsConstructor;

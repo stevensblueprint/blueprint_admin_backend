@@ -2,7 +2,7 @@ package com.sitblueprint.admin.dtos.team;
 
 import com.sitblueprint.admin.dtos.MemberSummaryDTO;
 import com.sitblueprint.admin.dtos.OrganizationSummaryDTO;
-import com.sitblueprint.admin.model.users.Team;
+import com.sitblueprint.admin.model.Team;
 import java.time.LocalDate;
 import java.util.Set;
 import lombok.AllArgsConstructor;
