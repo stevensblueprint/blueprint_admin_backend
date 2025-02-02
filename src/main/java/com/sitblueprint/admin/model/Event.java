@@ -30,11 +30,7 @@ public class Event {
 	private LocalDate date;
 
 	@ManyToMany
-	@JoinTable(
-			name = "event_members",
-      joinColumns = @JoinColumn(name = "event_id"),
-      inverseJoinColumns = @JoinColumn(name = "member_id")
-	)
+	@JoinTable(name = "event_members", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "member_id"))
 	private List<Member> organizers;
 
 	@Enumerated(EnumType.STRING)
