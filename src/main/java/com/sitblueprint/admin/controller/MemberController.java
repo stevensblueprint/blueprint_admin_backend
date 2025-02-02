@@ -59,8 +59,4 @@ public class MemberController {
 		memberService.disableMemberById(Long.parseLong(memberId));
 	}
 
-	@PutMapping("reset_password")
-	public void resetPassword(@RequestBody String memberId, @RequestBody String newPassword) {
-		memberService.resetPassword(Long.parseLong(memberId), newPassword);
-	}
 }

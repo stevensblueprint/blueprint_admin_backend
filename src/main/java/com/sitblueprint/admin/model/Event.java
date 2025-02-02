@@ -6,6 +6,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
@@ -26,8 +29,13 @@ public class Event {
 
 	private LocalDate date;
 
-	@OneToMany(mappedBy = "events")
-	private List<Member> organizer;
+	@ManyToMany
+	@JoinTable(
+			name = "event_members",
+      joinColumns = @JoinColumn(name = "event_id"),
+      inverseJoinColumns = @JoinColumn(name = "member_id")
+	)
+	private List<Member> organizers;
 
 	@Enumerated(EnumType.STRING)
 	private EventType eventType;

@@ -1,6 +1,5 @@
 package com.sitblueprint.admin.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sitblueprint.admin.dtos.member.MemberDTO;
 import com.sitblueprint.admin.dtos.OrganizationSummaryDTO;
 import com.sitblueprint.admin.dtos.member.RoleDTO;
