@@ -32,18 +32,15 @@ public class MemberServiceTest {
 	@Mock
 	private MemberRepository memberRepository;
 
-	@Mock
-	private TokenService tokenService;
-
 	private MemberService memberService;
 	private Member testMember;
 	private MemberDTO testMemberDTO;
 
 	@BeforeEach
 	void setUp() {
-		memberService = new MemberServiceImpl(memberRepository, tokenService);
-		testMember = Member.builder().id(1L).username("testUsername").name("Test Name").password("Test Password")
-				.isActive(true).roles(Set.of(Role.of("E-BOARD"))).build();
+		memberService = new MemberServiceImpl(memberRepository);
+		testMember = Member.builder().id(1L).username("testUsername").name("Test Name").isActive(true)
+				.roles(Set.of(Role.of("E-BOARD"))).build();
 
 		testMemberDTO = testMember.toDTO();
 	}
@@ -177,55 +174,4 @@ public class MemberServiceTest {
 		assertFalse(testMember.isActive());
 	}
 
-	@Test
-	void resetPassword_WhenMemberExists_ShouldUpdatePassword() {
-		// Arrange
-		when(memberRepository.findById(1L)).thenReturn(Optional.of(testMember));
-		when(memberRepository.save(any(Member.class))).thenReturn(testMember);
-		String newPassword = "newPassword123";
-
-		// Act
-		memberService.resetPassword(1L, newPassword);
-
-		// Assert
-		verify(memberRepository).save(any(Member.class));
-		assertEquals(newPassword, testMember.getPassword());
-	}
-
-	@Test
-	void signUpMember_WhenUsernameNotTaken_ShouldCreateMemberAndReturnToken() {
-		// Arrange
-		RegistrationRequestDTO request = new RegistrationRequestDTO();
-		request.setUsername("newUser");
-		request.setName("New User");
-		request.setEmail("new@example.com");
-		request.setPassword("password123");
-
-		when(memberRepository.findByUsername("newUser")).thenReturn(null);
-		when(memberRepository.save(any(Member.class))).thenReturn(testMember);
-		doNothing().when(tokenService).saveConfirmationToken(any(Token.class));
-
-		// Act
-		String token = memberService.signUpMember(request);
-
-		// Assert
-		assertNotNull(token);
-		verify(memberRepository).save(any(Member.class));
-		verify(tokenService).saveConfirmationToken(any(Token.class));
-	}
-
-	@Test
-	void signUpMember_WhenUsernameExists_ShouldThrowException() {
-		// Arrange
-		RegistrationRequestDTO request = new RegistrationRequestDTO();
-		request.setUsername("existingUser");
-		request.setName("Existing User");
-		request.setEmail("existing@example.com");
-		request.setPassword("password123");
-
-		when(memberRepository.findByUsername("existingUser")).thenReturn(testMember);
-
-		// Act & Assert
-		assertThrows(IllegalStateException.class, () -> memberService.signUpMember(request));
-	}
 }

@@ -15,27 +15,27 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-  private static final List<String> ALLOWED_ORIGINS = List.of("http://localhost:3000");
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    return http
-        .csrf(AbstractHttpConfigurer::disable)
-        .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource(ALLOWED_ORIGINS)))
-        .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/**").permitAll()
-            .requestMatchers(HttpMethod.POST, "/**").permitAll())
-        .build();
-  }
+	private static final List<String> ALLOWED_ORIGINS = List.of("http://localhost:3000");
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		return http.csrf(AbstractHttpConfigurer::disable)
+				.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
+						.configurationSource(corsConfigurationSource(ALLOWED_ORIGINS)))
+				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/**").permitAll()
+						.requestMatchers(HttpMethod.POST, "/**").permitAll())
+				.build();
+	}
 
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource(List<String> allowedOrigins) {
-    CorsConfiguration corsConfiguration = new CorsConfiguration();
-    corsConfiguration.setAllowedOrigins(allowedOrigins);
-    corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-    corsConfiguration.setAllowCredentials(true);
-    corsConfiguration.setAllowedHeaders(List.of("*"));
-    corsConfiguration.setMaxAge(3600L);
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", corsConfiguration);
-    return source;
-  }
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource(List<String> allowedOrigins) {
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		corsConfiguration.setAllowedOrigins(allowedOrigins);
+		corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+		corsConfiguration.setAllowCredentials(true);
+		corsConfiguration.setAllowedHeaders(List.of("*"));
+		corsConfiguration.setMaxAge(3600L);
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", corsConfiguration);
+		return source;
+	}
 }

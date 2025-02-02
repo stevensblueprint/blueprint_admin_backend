@@ -20,6 +20,7 @@ public class TeamDTO {
 	private Long id;
 	private String name;
 	private OrganizationSummaryDTO organizationSummaryDTO;
+	private int memberCount;
 	private MemberSummaryDTO teamLead;
 	private MemberSummaryDTO projectManager;
 	private MemberSummaryDTO designer;

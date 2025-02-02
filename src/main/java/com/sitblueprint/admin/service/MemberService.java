@@ -19,8 +19,4 @@ public interface MemberService {
 	void enableMemberById(Long memberId);
 
 	void disableMemberById(Long memberId);
-
-	void resetPassword(Long memberId, String password);
-
-	String signUpMember(RegistrationRequestDTO registrationRequestDTO);
 }

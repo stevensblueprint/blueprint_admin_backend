@@ -7,10 +7,7 @@ import com.sitblueprint.admin.dtos.member.RoleDTO;
 import com.sitblueprint.admin.dtos.TeamSummaryDTO;
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.*;
@@ -45,9 +42,11 @@ public class Member {
 	@Column(unique = true)
 	private String email;
 
-	@JsonIgnore
-	@Column(nullable = false)
-	private String password;
+	@Column(unique = true)
+	private String githubUsername;
+
+	@Column
+	private String classStanding;
 
 	@Column(nullable = false)
 	private boolean isActive;
@@ -58,21 +57,6 @@ public class Member {
 	@ManyToMany
 	@JoinTable(name = "member_roles", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
-
-	@OneToMany(mappedBy = "teamLead")
-	private Set<Organization> teamLeadOrganizations;
-
-	@OneToMany(mappedBy = "projectManager")
-	private Set<Organization> managedOrganizations;
-
-	@OneToMany(mappedBy = "teamLead")
-	private Set<Team> leadTeams;
-
-	@OneToMany(mappedBy = "projectManager")
-	private Set<Team> managedTeams;
-
-	@OneToMany(mappedBy = "designer")
-	private Set<Team> designedTeams;
 
 	public MemberDTO toDTO() {
 		MemberDTO memberDTO = MemberDTO.builder().id(this.id).name(this.name).username(this.username).email(this.email)
