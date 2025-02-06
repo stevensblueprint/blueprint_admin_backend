@@ -63,6 +63,7 @@ dependencies {
    implementation 'org.springframework.data:spring-data-rest-hal-explorer'
    implementation "org.springframework.boot:spring-boot-starter-security"
    implementation 'org.hibernate:hibernate-validator:6.0.13.Final'
+   implementation 'org.springframework.boot:spring-boot-starter-actuator'
    compileOnly 'org.projectlombok:lombok'
    runtimeOnly 'com.h2database:h2'
    annotationProcessor 'org.projectlombok:lombok'
