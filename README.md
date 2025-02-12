@@ -25,57 +25,6 @@ com.sitblueprint.admin.BlueprintAdmin    : Started BlueprintAdmin in 2.255 secon
 You can also run the server directly from the terminal
 
 
-## Available Endpoints
-For users:
-```
-GET /api/v1/team/all
-```
-```
-GET /api/v1/team/{teamId}
-```
-```
-POST /api/v1/team/
-```
-```
-PUT /api/v1/team/
-```
-```
-DELETE /api/v1/team/
-```
-```
-POST /api/v1/user/enable/{userId}
-```
-```
-POST /api/v1/user/disable/{userId}
-```
-```
-PUT /api/v1/user/reset_password
-```
-
-For teams:
-```
-GET /api/v1/user/all
-```
-```
-GET /api/v1/user/{userId}
-```
-```
-POST /api/v1/user/
-```
-```
-PUT /api/v1/user/
-```
-```
-DELETE /api/v1/user/
-```
-```
-GET
-```
-```
-GET
-```
-
-
 ## How to connect to database in Docker Container?
 Start the docker container
 ```
