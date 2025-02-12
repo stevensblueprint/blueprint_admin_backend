@@ -19,11 +19,17 @@ You should see the following output in your terminal
 ```
 o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
 com.sitblueprint.admin.BlueprintAdmin    : Started BlueprintAdmin in 2.255 seconds (process running for 2.392)
-
 ```
 
 You can also run the server directly from the terminal
 
+## Troubleshooting
+If you are having issues running the postgres db with Docker try the following
+```bash
+docker-compose down -v
+rm -rf postgres-data
+docker-compose up --build
+```
 
 ## How to connect to database in Docker Container?
 Start the docker container
