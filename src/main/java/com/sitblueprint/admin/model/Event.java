@@ -35,4 +35,44 @@ public class Event {
 
 	@Enumerated(EnumType.STRING)
 	private EventType eventType;
+
+	public LocalDate getDate(){
+		return date;
+	}
+
+	public void setId(Long id){
+		this.id = id;
+	}
+
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void setLocation(String location){
+		this.location = location;
+	}
+
+	public void setEventTime(String eventTime){
+		this.eventTime = eventTime;
+	}
+
+	public void setDate(LocalDate date){
+		this.date = date;
+	}
+
+	public Long getId(){
+		return id;
+	}
+
+	public String getName(){
+		return name;
+	}
+
+	public String getLocation(){
+		return location;
+	}
+
+	public String getEventTime(){
+		return eventTime;
+	}
 }
