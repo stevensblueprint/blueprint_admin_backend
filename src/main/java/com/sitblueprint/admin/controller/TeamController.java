@@ -1,6 +1,7 @@
 package com.sitblueprint.admin.controller;
 
 import com.sitblueprint.admin.model.Team;
+import com.sitblueprint.admin.dtos.team.TeamDTO;
 import com.sitblueprint.admin.model.Member;
 import com.sitblueprint.admin.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,15 @@ public class TeamController {
 	@GetMapping("designer/{teamId}")
 	public Member getDesignerById(@PathVariable("teamId") String teamId) {
 		return teamService.getDesignerById(Long.parseLong(teamId));
+	}
+
+	@GetMapping("teams/{date}")
+	public List<Team> getTeamsByDate(@PathVariable String date) {
+		return teamService.getTeamsByDate(date);
+	}
+
+	@GetMapping("teams/{teamId}")
+	public TeamDTO getTeamDetailsById(@PathVariable Long teamId) {
+		return teamService.getTeamDetailsById(teamId);
 	}
 }

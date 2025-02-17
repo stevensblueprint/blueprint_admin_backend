@@ -1,6 +1,9 @@
 package com.sitblueprint.admin.service;
 
 import com.sitblueprint.admin.model.Team;
+import com.sitblueprint.admin.dtos.MemberSummaryDTO;
+import com.sitblueprint.admin.dtos.OrganizationSummaryDTO;
+import com.sitblueprint.admin.dtos.team.TeamDTO;
 import com.sitblueprint.admin.model.Member;
 import com.sitblueprint.admin.repository.TeamRepository;
 import java.time.LocalDate;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -69,4 +73,34 @@ public class TeamServiceImpl implements TeamService {
 		}
 		return optionalTeam.get().getDesigner();
 	}
+	// New Method: Fetch Teams by Date
+	@Override
+	public List<Team> getTeamsByDate(String date) {
+		return teamRepository.findByDate(LocalDate.parse(date));
+	}
+
+	// New Method: Fetch Team Details by ID
+	@Override
+	public TeamDTO getTeamDetailsById(Long teamId) {
+		Team team = teamRepository.findById(teamId)
+				.orElseThrow(() -> new RuntimeException("Team not found: " + teamId));
+
+		// Convert Team entity to TeamDTO
+		return new TeamDTO(team.getId(), team.getName(), new OrganizationSummaryDTO(team.getOrganization()), // Assuming
+																												// OrganizationSummaryDTO
+																												// has a
+																												// constructor
+																												// that
+																												// accepts
+																												// Organization
+				team.getMembers().size(), new MemberSummaryDTO(team.getTeamLead()), // Assuming MemberSummaryDTO has a
+																					// constructor that accepts Member
+				new MemberSummaryDTO(team.getProjectManager()), new MemberSummaryDTO(team.getDesigner()),
+				team.getDateCreated(),
+				team.getMembers().stream().map(MemberSummaryDTO::new).collect(Collectors.toSet()), // Convert members to
+																									// MemberSummaryDTOs
+				team.getProposalUrl(), team.getDevelopmentEnvUrl(), team.getProductionEnvUrl(),
+				team.getAwsConsoleUrl());
+	}
+
 }

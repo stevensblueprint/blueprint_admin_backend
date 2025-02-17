@@ -1,6 +1,7 @@
 package com.sitblueprint.admin.service;
 
 import com.sitblueprint.admin.model.Team;
+import com.sitblueprint.admin.dtos.team.TeamDTO;
 import com.sitblueprint.admin.model.Member;
 
 import java.util.List;
@@ -21,4 +22,11 @@ public interface TeamService {
 	Member getProjectManagerById(Long teamId);
 
 	Member getDesignerById(Long teamId);
+
+	// Fetch teams by date
+	List<Team> getTeamsByDate(String date);
+
+	// Fetch detailed team information
+	TeamDTO getTeamDetailsById(Long teamId);
+
 }
