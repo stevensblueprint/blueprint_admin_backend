@@ -41,4 +41,16 @@ public class Team {
 
 	@OneToMany(mappedBy = "team")
 	private Set<Member> members;
+
+	@Column(name = "proposal_url")
+	private String proposalUrl;
+
+	@Column(name = "develop_env_url")
+	private String developEnvUrl;
+
+	@Column(name = "prod_env_url")
+	private String prodEnvUrl;
+
+	@Column(name = "aws_console_url")
+	private String awsConsoleUrl;
 }
