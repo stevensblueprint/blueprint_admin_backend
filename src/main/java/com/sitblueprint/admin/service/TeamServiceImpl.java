@@ -1,5 +1,9 @@
 package com.sitblueprint.admin.service;
 
+import com.sitblueprint.admin.dtos.MemberSummaryDTO;
+import com.sitblueprint.admin.dtos.OrganizationSummaryDTO;
+import com.sitblueprint.admin.dtos.team.TeamDTO;
+import com.sitblueprint.admin.model.Organization;
 import com.sitblueprint.admin.model.Team;
 import com.sitblueprint.admin.model.Member;
 import com.sitblueprint.admin.repository.TeamRepository;
@@ -7,8 +11,10 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 import java.time.Month;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -16,6 +22,53 @@ public class TeamServiceImpl implements TeamService {
 
 	public TeamServiceImpl(TeamRepository teamRepository) {
 		this.teamRepository = teamRepository;
+	}
+
+	@Override
+	public TeamDTO getTeamDTOById(Long teamId){
+		Team team = teamRepository.findById(teamId)
+				.orElseThrow(() -> new RuntimeException("Team not found: " + teamId));
+		return toTeamDTO(team);
+	}
+
+	private TeamDTO toTeamDTO(Team team){
+		Organization org = team.getOrganization();
+		Member teamLead = team.getTeamLead();
+		Member projectManager = team.getProjectManager();
+		Member designer = team.getDesigner();
+
+		Set<MemberSummaryDTO> memberSumSet = new HashSet<>();
+		for (Member member : team.getMembers()) {
+			memberSumSet.add(toMemberSummaryDTO(member));  // Convert each member and add to the set
+		}
+
+		return TeamDTO.builder()
+				.id(team.getId()).name(team.getName())
+				.organizationSummaryDTO(new OrganizationSummaryDTO(org.getId(), org.getName()))
+				.memberCount(team.getMembers().size())
+				.teamLead(toMemberSummaryDTO(teamLead))
+				.projectManager(toMemberSummaryDTO(projectManager))
+				.designer(toMemberSummaryDTO(designer))
+				.dateCreated(team.getDateCreated())
+				.members(memberSumSet)
+				.proposalUrl(team.getProposalUrl())
+				.developEnvUrl(team.getDevelopEnvUrl())
+				.prodEnvUrl(team.getProdEnvUrl())
+				.awsConsoleUrl(team.getAwsConsoleUrl())
+				.build();
+	}
+
+	private MemberSummaryDTO toMemberSummaryDTO(Member member){
+		if(member == null){return null;}
+		return MemberSummaryDTO.builder()
+				.id(member.getId())
+				.name(member.getName())
+				.username(member.getUsername())
+				.email(member.getEmail())
+				.isActive(member.isActive())
+				.dateJoined(member.getDateJoined())
+				.roles(member.getRoles())
+				.build();
 	}
 
 	@Override
