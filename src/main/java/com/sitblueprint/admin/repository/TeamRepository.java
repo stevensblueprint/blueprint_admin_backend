@@ -9,5 +9,5 @@ import  java.util.List;
 
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
-    List<Team> findDateCreatedBetween(LocalDate start, LocalDate end);
+    List<Team> findByDateCreatedBetween(LocalDate start, LocalDate end);
 }

@@ -18,6 +18,7 @@ public class TeamServiceImpl implements TeamService {
 		this.teamRepository = teamRepository;
 	}
 
+	@Override
 	public List<Team> getTeamsByDate(LocalDate date) {
 		//Logic for filtering teams by date
 		int year = date.getYear();
@@ -33,7 +34,7 @@ public class TeamServiceImpl implements TeamService {
 			end = LocalDate.of(year, Month.DECEMBER, 31);
 		}
 		//Get the teams within the determined range
-		return teamRepository.findDateCreatedBetween(start, end);
+		return teamRepository.findByDateCreatedBetween(start, end);
 	}
 
 	@Override
