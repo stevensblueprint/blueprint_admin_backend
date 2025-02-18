@@ -15,3 +15,21 @@ services:
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
       - ./initdb:/docker-entrypoint-initdb.d
+
+  backend:
+    build: .
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - JAVA_OPTS=-Dspring.boot.admin.client.enabled=false -Dspring.metrics.enabled=false
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.actuate.autoconfigure.metrics.SystemMetricsAutoConfiguration
