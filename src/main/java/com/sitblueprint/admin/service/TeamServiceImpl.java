@@ -25,13 +25,13 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public TeamDTO getTeamDTOById(Long teamId){
+	public TeamDTO getTeamDTOById(Long teamId) {
 		Team team = teamRepository.findById(teamId)
 				.orElseThrow(() -> new RuntimeException("Team not found: " + teamId));
 		return toTeamDTO(team);
 	}
 
-	private TeamDTO toTeamDTO(Team team){
+	private TeamDTO toTeamDTO(Team team) {
 		Organization org = team.getOrganization();
 		Member teamLead = team.getTeamLead();
 		Member projectManager = team.getProjectManager();
@@ -39,36 +39,25 @@ public class TeamServiceImpl implements TeamService {
 
 		Set<MemberSummaryDTO> memberSumSet = new HashSet<>();
 		for (Member member : team.getMembers()) {
-			memberSumSet.add(toMemberSummaryDTO(member));  // Convert each member and add to the set
+			memberSumSet.add(toMemberSummaryDTO(member)); // Convert each member and add to the set
 		}
 
-		return TeamDTO.builder()
-				.id(team.getId()).name(team.getName())
+		return TeamDTO.builder().id(team.getId()).name(team.getName())
 				.organizationSummaryDTO(new OrganizationSummaryDTO(org.getId(), org.getName()))
-				.memberCount(team.getMembers().size())
-				.teamLead(toMemberSummaryDTO(teamLead))
-				.projectManager(toMemberSummaryDTO(projectManager))
-				.designer(toMemberSummaryDTO(designer))
-				.dateCreated(team.getDateCreated())
-				.members(memberSumSet)
-				.proposalUrl(team.getProposalUrl())
-				.developEnvUrl(team.getDevelopEnvUrl())
-				.prodEnvUrl(team.getProdEnvUrl())
-				.awsConsoleUrl(team.getAwsConsoleUrl())
-				.build();
+				.memberCount(team.getMembers().size()).teamLead(toMemberSummaryDTO(teamLead))
+				.projectManager(toMemberSummaryDTO(projectManager)).designer(toMemberSummaryDTO(designer))
+				.dateCreated(team.getDateCreated()).members(memberSumSet).proposalUrl(team.getProposalUrl())
+				.developEnvUrl(team.getDevelopEnvUrl()).prodEnvUrl(team.getProdEnvUrl())
+				.awsConsoleUrl(team.getAwsConsoleUrl()).build();
 	}
 
-	private MemberSummaryDTO toMemberSummaryDTO(Member member){
-		if(member == null){return null;}
-		return MemberSummaryDTO.builder()
-				.id(member.getId())
-				.name(member.getName())
-				.username(member.getUsername())
-				.email(member.getEmail())
-				.isActive(member.isActive())
-				.dateJoined(member.getDateJoined())
-				.roles(member.getRoles())
-				.build();
+	private MemberSummaryDTO toMemberSummaryDTO(Member member) {
+		if (member == null) {
+			return null;
+		}
+		return MemberSummaryDTO.builder().id(member.getId()).name(member.getName()).username(member.getUsername())
+				.email(member.getEmail()).isActive(member.isActive()).dateJoined(member.getDateJoined())
+				.roles(member.getRoles()).build();
 	}
 
 	@Override
@@ -104,16 +93,16 @@ public class TeamServiceImpl implements TeamService {
 	public Team createTeam(Team team) {
 		team.setDateCreated(LocalDate.now());
 
-		if(team.getProposalUrl() == null || team.getProposalUrl().isEmpty()){
+		if (team.getProposalUrl() == null || team.getProposalUrl().isEmpty()) {
 			team.setProposalUrl("No proposal URL provided yet!");
 		}
-		if(team.getDevelopEnvUrl() == null || team.getDevelopEnvUrl().isEmpty()){
+		if (team.getDevelopEnvUrl() == null || team.getDevelopEnvUrl().isEmpty()) {
 			team.setDevelopEnvUrl("No development URL provided yet!");
 		}
-		if(team.getProdEnvUrl() == null || team.getProdEnvUrl().isEmpty()){
+		if (team.getProdEnvUrl() == null || team.getProdEnvUrl().isEmpty()) {
 			team.setProdEnvUrl("No production URL provided yet!");
 		}
-		if(team.getAwsConsoleUrl() == null || team.getAwsConsoleUrl().isEmpty()){
+		if (team.getAwsConsoleUrl() == null || team.getAwsConsoleUrl().isEmpty()) {
 			team.setAwsConsoleUrl("No AWS console URL provided yet!");
 		}
 		return teamRepository.save(team);

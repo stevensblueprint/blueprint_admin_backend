@@ -19,11 +19,11 @@ public class TeamController {
 	TeamService teamService;
 
 	@GetMapping("teams/{teamId}")
-	public TeamDTO getTeamDTOById(@PathVariable("teamId") Long teamId){
+	public TeamDTO getTeamDTOById(@PathVariable("teamId") Long teamId) {
 		return teamService.getTeamDTOById(teamId);
 	}
 
-	@GetMapping("teams/{date}")
+	@GetMapping("{date}")
 	public List<Team> getTeamsByDate(@PathVariable("date") LocalDate date) {
 		return teamService.getTeamsByDate(date);
 	}
