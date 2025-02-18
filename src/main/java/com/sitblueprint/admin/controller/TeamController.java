@@ -1,5 +1,6 @@
 package com.sitblueprint.admin.controller;
 
+import com.sitblueprint.admin.dtos.team.TeamDTO;
 import com.sitblueprint.admin.model.Team;
 import com.sitblueprint.admin.model.Member;
 import com.sitblueprint.admin.service.TeamService;
@@ -16,6 +17,11 @@ public class TeamController {
 
 	@Autowired
 	TeamService teamService;
+
+	@GetMapping("teams/{teamId}")
+	public TeamDTO getTeamDTOById(@PathVariable("teamId") Long teamId){
+		return teamService.getTeamDTOById(teamId);
+	}
 
 	@GetMapping("teams/{date}")
 	public List<Team> getTeamsByDate(@PathVariable("date") LocalDate date) {
