@@ -17,9 +17,15 @@ public class TeamServiceImpl implements TeamService {
 		this.teamRepository = teamRepository;
 	}
 
+	public List<Team> getTeamsByDate(LocalDate date) {
+		return teamRepository.findBySemester();
+				//add date filter logic onto this return, put semester stirg into finBySem param
+	}
+
 	@Override
 	public List<Team> getAllTeams() {
 		return teamRepository.findAll();
+		//add query
 	}
 
 	@Override

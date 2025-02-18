@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -15,6 +16,11 @@ public class TeamController {
 
 	@Autowired
 	TeamService teamService;
+
+	@GetMapping("teams/{date}")
+	public List<Team> getTeamsByDate(@PathVariable("date") LocalDate date){
+		return teamService.getTeamsByDate(date);
+	}
 
 	@GetMapping("all")
 	public List<Team> getAllTeams() {
