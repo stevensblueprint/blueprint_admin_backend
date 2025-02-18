@@ -18,7 +18,7 @@ public class TeamController {
 	TeamService teamService;
 
 	@GetMapping("teams/{date}")
-	public List<Team> getTeamsByDate(@PathVariable("date") LocalDate date){
+	public List<Team> getTeamsByDate(@PathVariable("date") LocalDate date) {
 		return teamService.getTeamsByDate(date);
 	}
 

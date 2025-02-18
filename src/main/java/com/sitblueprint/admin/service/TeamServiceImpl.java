@@ -20,27 +20,26 @@ public class TeamServiceImpl implements TeamService {
 
 	@Override
 	public List<Team> getTeamsByDate(LocalDate date) {
-		//Logic for filtering teams by date
+		// Logic for filtering teams by date
 		int year = date.getYear();
 		int month = date.getMonthValue();
 		int day = date.getDayOfMonth();
 		LocalDate start;
 		LocalDate end;
-		if(month < 6){ //If within Jan - May -> spring semester
+		if (month < 6) { // If within Jan - May -> spring semester
 			start = LocalDate.of(year, Month.JANUARY, 1);
 			end = LocalDate.of(year, Month.MAY, 31);
-		}else {  //June - Dec -> fall semester
+		} else { // June - Dec -> fall semester
 			start = LocalDate.of(year, Month.JUNE, 1);
 			end = LocalDate.of(year, Month.DECEMBER, 31);
 		}
-		//Get the teams within the determined range
+		// Get the teams within the determined range
 		return teamRepository.findByDateCreatedBetween(start, end);
 	}
 
 	@Override
 	public List<Team> getAllTeams() {
 		return teamRepository.findAll();
-		//add query
 	}
 
 	@Override
