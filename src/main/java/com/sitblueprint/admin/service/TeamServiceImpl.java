@@ -50,6 +50,19 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public Team createTeam(Team team) {
 		team.setDateCreated(LocalDate.now());
+
+		if(team.getProposalUrl() == null || team.getProposalUrl().isEmpty()){
+			team.setProposalUrl("No proposal URL provided yet!");
+		}
+		if(team.getDevelopEnvUrl() == null || team.getDevelopEnvUrl().isEmpty()){
+			team.setDevelopEnvUrl("No development URL provided yet!");
+		}
+		if(team.getProdEnvUrl() == null || team.getProdEnvUrl().isEmpty()){
+			team.setProdEnvUrl("No production URL provided yet!");
+		}
+		if(team.getAwsConsoleUrl() == null || team.getAwsConsoleUrl().isEmpty()){
+			team.setAwsConsoleUrl("No AWS console URL provided yet!");
+		}
 		return teamRepository.save(team);
 	}
 

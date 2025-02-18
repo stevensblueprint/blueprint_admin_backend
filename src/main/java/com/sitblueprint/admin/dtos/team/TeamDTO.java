@@ -29,7 +29,7 @@ public class TeamDTO {
 
 	private String proposalUrl;
 	private String developEnvUrl;
-	private String  prodEnvUrl;
+	private String prodEnvUrl;
 	private String awsConsoleUrl;
 
 	public Team toEntity() {
