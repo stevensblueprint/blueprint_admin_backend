@@ -6,6 +6,7 @@ import com.sitblueprint.admin.repository.TeamRepository;
 import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,21 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	public List<Team> getTeamsByDate(LocalDate date) {
-		return teamRepository.findBySemester();
-				//add date filter logic onto this return, put semester stirg into finBySem param
+		//Logic for filtering teams by date
+		int year = date.getYear();
+		int month = date.getMonthValue();
+		int day = date.getDayOfMonth();
+		LocalDate start;
+		LocalDate end;
+		if(month < 6){ //If within Jan - May -> spring semester
+			start = LocalDate.of(year, Month.JANUARY, 1);
+			end = LocalDate.of(year, Month.MAY, 31);
+		}else {  //June - Dec -> fall semester
+			start = LocalDate.of(year, Month.JUNE, 1);
+			end = LocalDate.of(year, Month.DECEMBER, 31);
+		}
+		//Get the teams within the determined range
+		return teamRepository.findDateCreatedBetween(start, end);
 	}
 
 	@Override
