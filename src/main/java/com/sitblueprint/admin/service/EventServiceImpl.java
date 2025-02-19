@@ -24,9 +24,10 @@ public class EventServiceImpl implements EventService {
 		List<Event> afterFilter = new ArrayList<>();
 
 		for (Event e : beforeFilter) {
-			if (e.getDate().isEqual(fromDate) || e.getDate().isAfter(fromDate) && (e.getDate().isEqual(toDate) || e.getDate().isBefore(toDate))) {
-            	afterFilter.add(e);
-        }
+			if (e.getDate().isEqual(fromDate)
+					|| e.getDate().isAfter(fromDate) && (e.getDate().isEqual(toDate) || e.getDate().isBefore(toDate))) {
+				afterFilter.add(e);
+			}
 		}
 
 		return afterFilter;
