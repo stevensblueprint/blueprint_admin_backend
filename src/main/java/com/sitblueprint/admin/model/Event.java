@@ -9,8 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,13 +23,17 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
+	@Setter
+    @Getter
+    private String name;
 
 	private String location;
 
 	private String eventTime;
 
-	private LocalDate date;
+	@Getter
+    private LocalDate date;
+
 
 	@ManyToMany
 	@JoinTable(name = "event_members", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "member_id"))
@@ -35,4 +41,6 @@ public class Event {
 
 	@Enumerated(EnumType.STRING)
 	private EventType eventType;
+
+
 }
