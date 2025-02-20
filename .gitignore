@@ -39,4 +39,7 @@ out/
 ### Docker ###
 postgres-data
 
-.env
+.envgradle-*.zip
+
+gradle-*.zip
+
