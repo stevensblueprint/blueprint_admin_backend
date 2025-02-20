@@ -72,7 +72,7 @@ CREATE TABLE blogs (
 );
 
 CREATE TABLE events (
-                        id BIGINT PRIMARY KEY,
+                        id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
                         name VARCHAR(255),
                         location VARCHAR(255),
                         event_time VARCHAR(255),

@@ -1,5 +1,8 @@
 package com.sitblueprint.admin.model;
 
+
+import com.sitblueprint.admin.dtos.event.EventDTO;
+import com.sitblueprint.admin.dtos.member.MemberDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,13 +12,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.*;
+
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "events")
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +45,16 @@ public class Event {
 
 	@Enumerated(EnumType.STRING)
 	private EventType eventType;
+
+	public EventDTO toDTO() {
+		EventDTO eventDTO = EventDTO.builder().id(this.id).name(this.name).location(this.location)
+				.eventTime(this.eventTime).date(this.date).eventType(this.eventType).build();
+
+		if (this.organizers != null) {
+			List<MemberDTO> organizers = this.organizers.stream().map(Member::toDTO).collect(Collectors.toList());
+			eventDTO.setOrganizers(organizers);
+		}
+
+		return eventDTO;
+	}
 }
