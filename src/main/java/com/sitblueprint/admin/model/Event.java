@@ -1,6 +1,5 @@
 package com.sitblueprint.admin.model;
 
-
 import com.sitblueprint.admin.dtos.event.EventDTO;
 import com.sitblueprint.admin.dtos.member.MemberDTO;
 import jakarta.persistence.Entity;

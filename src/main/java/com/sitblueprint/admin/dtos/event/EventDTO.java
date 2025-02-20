@@ -1,6 +1,5 @@
 package com.sitblueprint.admin.dtos.event;
 
-
 import com.sitblueprint.admin.dtos.member.MemberDTO;
 import com.sitblueprint.admin.model.Event;
 import com.sitblueprint.admin.model.EventType;
