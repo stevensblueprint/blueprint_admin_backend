@@ -1,6 +1,5 @@
 package com.sitblueprint.admin.repository;
 
-import com.sitblueprint.admin.dtos.team.TeamDTO;
 import com.sitblueprint.admin.model.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
