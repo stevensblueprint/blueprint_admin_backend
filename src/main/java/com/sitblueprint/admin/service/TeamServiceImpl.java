@@ -4,6 +4,8 @@ import com.sitblueprint.admin.model.Team;
 import com.sitblueprint.admin.model.Member;
 import com.sitblueprint.admin.repository.TeamRepository;
 import java.time.LocalDate;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +15,21 @@ import java.util.Optional;
 public class TeamServiceImpl implements TeamService {
 	private final TeamRepository teamRepository;
 
+	@Autowired
 	public TeamServiceImpl(TeamRepository teamRepository) {
 		this.teamRepository = teamRepository;
+	}
+
+	@Override
+	public List<Team> getTeamsBySemester(LocalDate semesterDate) {
+		LocalDate semesterStart = semesterDate.getMonthValue() <= 5
+				? LocalDate.of(semesterDate.getYear(), 1, 1)
+				: LocalDate.of(semesterDate.getYear(), 5, 1);
+		LocalDate semesterEnd = semesterDate.getMonthValue() <= 5
+				? LocalDate.of(semesterDate.getYear(), 5, 31)
+				: LocalDate.of(semesterDate.getYear(), 12, 31);
+
+		return teamRepository.findByDateCreatedBetween(semesterStart, semesterEnd);
 	}
 
 	@Override

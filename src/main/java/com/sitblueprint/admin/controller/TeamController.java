@@ -1,6 +1,9 @@
 package com.sitblueprint.admin.controller;
 
 import com.sitblueprint.admin.model.Team;
+import com.sitblueprint.admin.dtos.MemberSummaryDTO;
+import com.sitblueprint.admin.dtos.OrganizationSummaryDTO;
+import com.sitblueprint.admin.dtos.team.TeamDTO;
 import com.sitblueprint.admin.model.Member;
 import com.sitblueprint.admin.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +11,42 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/v1/team/")
 public class TeamController {
 
+	private final TeamService teamService;
+
 	@Autowired
-	TeamService teamService;
+	public TeamController(TeamService teamService) {
+		this.teamService = teamService;
+	}
+
+	@GetMapping("byDate/{date}")
+	public List<TeamDTO> getTeamsBySemester(@PathVariable("date") String date) {
+		LocalDate semesterDate = LocalDate.parse(date);
+		List<Team> teams = teamService.getTeamsBySemester(semesterDate);
+
+		List<TeamDTO> teamDTOs = teams.stream()
+				.map(team -> TeamDTO.builder().id(team.getId()).name(team.getName()).build())
+				.collect(Collectors.toList());
+
+		return teamDTOs;
+	}
+
+	@GetMapping("/{teamId}")
+	public TeamDTO getTeamDetails(@PathVariable("teamId") Long teamId) {
+		Team team = teamService.getTeamById(teamId);
+
+		if (team == null) {
+			return null;
+		}
+
+		return TeamDTO.builder().id(team.getId()).name(team.getName()).build();
+	}
 
 	@GetMapping("all")
 	public List<Team> getAllTeams() {

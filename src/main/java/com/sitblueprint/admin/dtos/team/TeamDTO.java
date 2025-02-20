@@ -2,6 +2,7 @@ package com.sitblueprint.admin.dtos.team;
 
 import com.sitblueprint.admin.dtos.MemberSummaryDTO;
 import com.sitblueprint.admin.dtos.OrganizationSummaryDTO;
+import com.sitblueprint.admin.dtos.member.MemberDTO;
 import com.sitblueprint.admin.model.Team;
 import java.time.LocalDate;
 import java.util.Set;
@@ -25,7 +26,12 @@ public class TeamDTO {
 	private MemberSummaryDTO projectManager;
 	private MemberSummaryDTO designer;
 	private LocalDate dateCreated;
-	private Set<MemberSummaryDTO> members;
+	private Set<MemberDTO> members;
+
+	private String proposalUrl;
+	private String devEnvUrl;
+	private String prodEnvUrl;
+	private String awsConsoleUrl;
 
 	public Team toEntity() {
 		return Team.builder().id(this.id).name(this.name).build();
