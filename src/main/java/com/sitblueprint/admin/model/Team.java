@@ -1,5 +1,6 @@
 package com.sitblueprint.admin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import lombok.*;
@@ -19,6 +20,7 @@ public class Team {
 	private long id;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "organization_id", nullable = false)
 	private Organization organization;
 

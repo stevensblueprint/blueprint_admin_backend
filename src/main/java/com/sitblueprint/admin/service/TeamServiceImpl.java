@@ -29,7 +29,6 @@ public class TeamServiceImpl implements TeamService {
 
 	@Override
 	public Team createTeam(Team team) {
-		team.setDateCreated(LocalDate.now());
 		return teamRepository.save(team);
 	}
 
