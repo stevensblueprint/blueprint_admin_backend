@@ -1,12 +1,16 @@
 package com.sitblueprint.admin.controller;
 
+import com.sitblueprint.admin.dtos.team.TeamDTO;
 import com.sitblueprint.admin.model.Team;
 import com.sitblueprint.admin.model.Member;
 import com.sitblueprint.admin.service.TeamService;
+import main.java.com.sitblueprint.admin.service.SemesterPeriod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -55,4 +59,18 @@ public class TeamController {
 	public Member getDesignerById(@PathVariable("teamId") String teamId) {
 		return teamService.getDesignerById(Long.parseLong(teamId));
 	}
+
+	
+	
+	@GetMapping("teams/{date}")
+    public List<Team> getTeamsBySemester(@PathVariable("date") LocalDate inputDate) {
+		return teamService.getTeamsBySemester(inputDate);
+	}
+
+
+	@GetMapping("teams/{teamID}")
+	public TeamDTO getTeamDetails(@PathVariable Long teamId) {
+		return teamService.getTeamDetails(teamId);
+	}
+
 }

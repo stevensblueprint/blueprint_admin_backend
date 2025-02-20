@@ -46,12 +46,20 @@ CREATE TABLE teams (
                        project_manager_id BIGINT,
                        designer_id BIGINT,
                        date_created DATE DEFAULT CURRENT_DATE NOT NULL,
+
+                       proposal_url VARCHAR(255),
+                       evelopment_env_url VARCHAR(255),
+                       production_env_url VARCHAR(255),
+                       aws_console_url VARCHAR(255),
+
                        PRIMARY KEY (id),
                        FOREIGN KEY (organization_id) REFERENCES organizations(id),
                        FOREIGN KEY (team_lead_id) REFERENCES members(id),
                        FOREIGN KEY (project_manager_id) REFERENCES members(id),
                        FOREIGN KEY (designer_id) REFERENCES members(id)
 );
+
+
 
 -- Create member_roles table (to handle many-to-many relationship between members and roles)
 CREATE TABLE member_roles (
@@ -99,9 +107,9 @@ INSERT INTO organizations (name, team_lead_id, project_manager_id) VALUES
                                                                        ('Fields of Gold',  NULL, NULL);
 
 -- Insert sample teams
-INSERT INTO teams (organization_id, name, team_lead_id, project_manager_id, designer_id, date_created) VALUES
-                                                                                                           (1, 'Frontend Team', NULL, NULL, NULL, '2021-09-01'),
-                                                                                                           (2, 'Backend Team', NULL, NULL, NULL, '2024-10-01');
+INSERT INTO teams (organization_id, name, team_lead_id, project_manager_id, designer_id, date_created, proposal_url, evelopment_env_url, production_env_url, aws_console_url) VALUES
+                                                                                                           (1, 'Frontend Team', NULL, NULL, NULL, '2021-09-01', "team1proposal", "team1evelopment", "team1production", "team1aws"),
+                                                                                                           (2, 'Backend Team', NULL, NULL, NULL, '2024-10-01', "team2proposal", "team2evelopment", "team2production", "team2aws");
 
 -- Insert sample members
 INSERT INTO members (team_id, name, username, email, password, is_active) VALUES

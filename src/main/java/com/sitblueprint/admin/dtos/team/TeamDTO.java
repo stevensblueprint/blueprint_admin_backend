@@ -26,8 +26,14 @@ public class TeamDTO {
 	private MemberSummaryDTO designer;
 	private LocalDate dateCreated;
 	private Set<MemberSummaryDTO> members;
+	
+	private String proposalUrl;
+	private String developmentEnvUrl;
+	private String productionEnvUrl;
+	private String awsConsoleUrl;
 
 	public Team toEntity() {
 		return Team.builder().id(this.id).name(this.name).build();
 	}
+
 }
