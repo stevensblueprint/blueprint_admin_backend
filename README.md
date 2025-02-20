@@ -19,62 +19,17 @@ You should see the following output in your terminal
 ```
 o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
 com.sitblueprint.admin.BlueprintAdmin    : Started BlueprintAdmin in 2.255 seconds (process running for 2.392)
-
 ```
 
 You can also run the server directly from the terminal
 
-
-## Available Endpoints
-For users:
+## Troubleshooting
+If you are having issues running the postgres db with Docker try the following
+```bash
+docker-compose down -v
+rm -rf postgres-data
+docker-compose up --build
 ```
-GET /api/v1/team/all
-```
-```
-GET /api/v1/team/{teamId}
-```
-```
-POST /api/v1/team/
-```
-```
-PUT /api/v1/team/
-```
-```
-DELETE /api/v1/team/
-```
-```
-POST /api/v1/user/enable/{userId}
-```
-```
-POST /api/v1/user/disable/{userId}
-```
-```
-PUT /api/v1/user/reset_password
-```
-
-For teams:
-```
-GET /api/v1/user/all
-```
-```
-GET /api/v1/user/{userId}
-```
-```
-POST /api/v1/user/
-```
-```
-PUT /api/v1/user/
-```
-```
-DELETE /api/v1/user/
-```
-```
-GET
-```
-```
-GET
-```
-
 
 ## How to connect to database in Docker Container?
 Start the docker container
