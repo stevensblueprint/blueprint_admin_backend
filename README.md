@@ -25,6 +25,15 @@ You can also run the server directly from the terminal
 
 ## Troubleshooting
 If you are having issues running the postgres db with Docker try the following
+
+### For Windows
+```powershell
+docker-compose down -v
+Remove-Item postgres-data
+docker-compose up --build
+```
+
+### For Mac/Linux
 ```bash
 docker-compose down -v
 rm -rf postgres-data
