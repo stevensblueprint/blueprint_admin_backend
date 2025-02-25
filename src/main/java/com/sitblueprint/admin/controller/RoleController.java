@@ -14,9 +14,9 @@ public class RoleController {
 	RoleService roleService;
 
 	@Autowired
-  public RoleController(RoleService roleService) {
-    this.roleService = roleService;
-  }
+	public RoleController(RoleService roleService) {
+		this.roleService = roleService;
+	}
 
 	@GetMapping
 	public List<Role> getAllRoles() {
