@@ -11,11 +11,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/role/")
 public class RoleController {
-
-	@Autowired
 	RoleService roleService;
 
-	@GetMapping("all")
+	@Autowired
+  public RoleController(RoleService roleService) {
+    this.roleService = roleService;
+  }
+
+	@GetMapping
 	public List<Role> getAllRoles() {
 		return roleService.getAllRoles();
 	}
