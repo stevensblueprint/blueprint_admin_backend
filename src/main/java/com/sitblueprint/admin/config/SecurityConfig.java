@@ -20,16 +20,18 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http.csrf(AbstractHttpConfigurer::disable)
 				.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
-						.configurationSource(corsConfigurationSource(ALLOWED_ORIGINS)))
-				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/**").permitAll()
+						.configurationSource(corsConfigurationSource()))
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers(HttpMethod.GET, "/**").permitAll()
 						.requestMatchers(HttpMethod.POST, "/**").permitAll())
 				.build();
 	}
 
+
 	@Bean
-	public CorsConfigurationSource corsConfigurationSource(List<String> allowedOrigins) {
+	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowedOrigins(allowedOrigins);
+		corsConfiguration.setAllowedOrigins(ALLOWED_ORIGINS);
 		corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
 		corsConfiguration.setAllowCredentials(true);
 		corsConfiguration.setAllowedHeaders(List.of("*"));
@@ -38,4 +40,5 @@ public class SecurityConfig {
 		source.registerCorsConfiguration("/**", corsConfiguration);
 		return source;
 	}
+
 }
