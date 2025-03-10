@@ -10,6 +10,6 @@ public class RootController {
 
 	@GetMapping("/hello_world")
 	public String root() {
-		return "Welcome to SIT Blueprint Admin API";
+		return "Welcome to Blueprint Admin API";
 	}
 }
