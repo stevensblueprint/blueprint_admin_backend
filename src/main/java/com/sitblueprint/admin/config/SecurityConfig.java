@@ -17,12 +17,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 	private static final List<String> ALLOWED_ORIGINS = List.of("http://localhost:3000");
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource) throws Exception {
-		return http
-				.csrf(AbstractHttpConfigurer::disable)
+	public SecurityFilterChain filterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource)
+			throws Exception {
+		return http.csrf(AbstractHttpConfigurer::disable)
 				.cors(cors -> cors.configurationSource(corsConfigurationSource))
-				.authorizeHttpRequests(auth -> auth
-						.requestMatchers(HttpMethod.GET, "/**").permitAll()
+				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/**").permitAll()
 						.requestMatchers(HttpMethod.POST, "/**").permitAll())
 				.build();
 	}
@@ -39,4 +38,3 @@ public class SecurityConfig {
 		return source;
 	}
 }
-
