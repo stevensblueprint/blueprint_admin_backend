@@ -7,6 +7,6 @@ RUN gradle clean build --no-daemon
 
 FROM openjdk:17
 WORKDIR /app
-COPY --from=builder /app/build/libs/*.jar app.jar
+COPY --from=builder /app/build/libs/*.jar /app/libs/
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
