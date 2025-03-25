@@ -17,14 +17,11 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
-				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/actuator/**").permitAll()
-						.requestMatchers("/**").permitAll()
-						.anyRequest().authenticated())
+				.authorizeHttpRequests(authorize -> authorize.requestMatchers("/actuator/**").permitAll()
+						.requestMatchers("/**").permitAll().anyRequest().authenticated())
 				.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
 						.configurationSource(corsConfigurationSource()))
-				.csrf(AbstractHttpConfigurer::disable)
-				.build();
+				.csrf(AbstractHttpConfigurer::disable).build();
 	}
 	private CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
